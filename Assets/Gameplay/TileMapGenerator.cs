@@ -14,6 +14,9 @@ public class TileMapGenerator : MonoBehaviour
     public float mapHeight;
     public int borderHeight;
 
+    [Header("Raft")]
+    public GameObject raft;
+
     private int[,] mapArray;
     private int riverAmplitude = 5;
 
@@ -68,6 +71,8 @@ public class TileMapGenerator : MonoBehaviour
         //Vector2Int riverStart = new Vector2Int(10, (int)Math.Round(mapHeight/2, 0));
 
         Vector2Int riverStart = new Vector2Int(10, 4);
+
+        raft.transform.position = new Vector3(riverStart.x + 5, riverStart.y + 3, -9);
 
         for (int x = 0; x < 100; x++)
         {

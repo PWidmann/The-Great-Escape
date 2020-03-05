@@ -10,7 +10,12 @@ public class PlayerController : MonoBehaviour
     int playerNumber;
     string playerControls;
     public Vector3 change;
-    public Vector2 changeNormalized;
+    public Vector2 changeToNormalize;
+    public GameObject raft;
+    
+
+    public bool isSteeringRaft = false;
+    public bool isOnRaft = false;
 
     void Start()
     {
@@ -31,7 +36,7 @@ public class PlayerController : MonoBehaviour
     {
         InputAxisHandling();
 
-        myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.deltaTime);
+        myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.deltaTime + Interactibles.instance.change);
     }
 
     string GetPlayerController()
@@ -81,86 +86,58 @@ public class PlayerController : MonoBehaviour
         if (playerControls == "Keyboard")
         {
             // Keyboard X Axis
-            if (Input.GetAxis("Horizontal") != 0f)
+            if (Input.GetAxisRaw("Horizontal") != 0)
             {
-                if (Input.GetAxis("Horizontal") > 0.01f) // Change to GetAxisRaw
-                {
-                    changeNormalized.x = 1;
-                }
-                if (Input.GetAxis("Horizontal") < -0.01f)
-                {
-                    changeNormalized.x = -1;
-                }
-                
+                changeToNormalize.x = Input.GetAxisRaw("Horizontal");
 
             }
             else
             {
-                changeNormalized.x = 0;
+                changeToNormalize.x = 0;
+
             }
 
             // Keyboard Y Axis
-            if (Input.GetAxis("Vertical") != 0f)
+            if (Input.GetAxisRaw("Vertical") != 0)
             {
-                if (Input.GetAxis("Vertical") > 0.01f)
-                {
-                    changeNormalized.y = 1;
-                }
-                if (Input.GetAxis("Vertical") < -0.01f)
-                {
-                    changeNormalized.y = -1;
-                }
+                changeToNormalize.y = Input.GetAxisRaw("Vertical");
+
             }
             else
             {
-                changeNormalized.y = 0;
+                changeToNormalize.y = 0;
+
             }
 
-            changeNormalized.Normalize();
-            change.x = changeNormalized.x;
-            change.y = changeNormalized.y;
+            changeToNormalize.Normalize();
+            change.x = changeToNormalize.x;
+            change.y = changeToNormalize.y;
         }
         else
         {
             // Gamepad X Axis
-            if (Input.GetAxis(playerControls + "Horizontal") != 0f)
+            if (Input.GetAxisRaw(playerControls + "Horizontal") != 0)
             {
-                if (Input.GetAxis(playerControls + "Horizontal") > 0.01f)
-                {
-                    changeNormalized.x = 1;
-                }
-                if (Input.GetAxis(playerControls + "Horizontal") < -0.01f)
-                {
-                    changeNormalized.x = -1;
-                }
-
-
+                changeToNormalize.x = Input.GetAxisRaw(playerControls + "Horizontal");
             }
             else
             {
-                changeNormalized.x = 0;
+                changeToNormalize.x = 0;
             }
 
             // Gamepad Y Axis
-            if (Input.GetAxis(playerControls + "Vertical") != 0f)
+            if (Input.GetAxisRaw(playerControls + "Vertical") != 0)
             {
-                if (Input.GetAxis(playerControls + "Vertical") > 0.01f)
-                {
-                    changeNormalized.y = 1;
-                }
-                if (Input.GetAxis(playerControls + "Vertical") < -0.01f)
-                {
-                    changeNormalized.y = -1;
-                }
+                changeToNormalize.y = Input.GetAxisRaw(playerControls + "Vertical");
             }
             else
             {
-                changeNormalized.y = 0;
+                changeToNormalize.y = 0;
             }
 
-            changeNormalized.Normalize();
-            change.x = changeNormalized.x;
-            change.y = changeNormalized.y;
+            changeToNormalize.Normalize();
+            change.x = changeToNormalize.x;
+            change.y = changeToNormalize.y;
         }
     }
 
@@ -196,6 +173,55 @@ public class PlayerController : MonoBehaviour
                         Destroy(gameObject);
                 }
                 break;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "SteeringWheel")
+        {
+            Debug.Log(playerControls + " is near the steering wheel!");
+        }
+
+        if (other.gameObject.tag == "Raft")
+        {
+            isOnRaft = true;
+        }
+    }
+
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        
+
+        if (other.gameObject.tag == "SteeringWheel")
+        {
+            if (playerControls == "Keyboard")
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    Debug.Log(playerControls + " is steering the raft!");
+                }
+            }
+            else
+            {
+                if (Input.GetButtonDown(playerControls + "ButtonA"))
+                {
+                    Debug.Log(playerControls + " is steering the raft!");
+                }
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "SteeringWheel")
+        {
+            Debug.Log("Left Steering Wheel");
+        }
+        if (other.gameObject.tag == "Raft")
+        {
+            isOnRaft = false;
         }
     }
 }
