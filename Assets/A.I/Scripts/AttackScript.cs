@@ -135,13 +135,13 @@ public class AttackScript : MonoBehaviour
         if (SceneManager.GetActiveScene().name.Equals("The Great Escape"))
         {
             if (PlayerHandler.instance.player1active)
-                players.Add(GameObject.Find("Player"));
+                players.Add(GameObject.FindGameObjectWithTag("Player"));
             else if (PlayerHandler.instance.player2active)
-                players.Add(GameObject.Find("Player2"));
+                players.Add(GameObject.FindGameObjectWithTag("Player"));
             else if (PlayerHandler.instance.player3active)
-                players.Add(GameObject.Find("Player3"));
+                players.Add(GameObject.FindGameObjectWithTag("Player"));
             else if (PlayerHandler.instance.player4active)
-                players.Add(GameObject.Find("Player4"));
+                players.Add(GameObject.FindGameObjectWithTag("Player"));
             isChecked = true;
         }
     }
