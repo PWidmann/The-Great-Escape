@@ -4,21 +4,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class TileMapGenerator : MonoBehaviour
 {
+    public static TileMapGenerator instance = null;
+
     [Header("Map Tiles")]
     public Tile[] tileArray = new Tile[10];
     public Tilemap groundTilemap;
+    public Tilemap waterTilemap;
     public float mapWidth;
     public float mapHeight;
     public int borderHeight;
 
+    public Transform player1;
+    public Transform player2;
+    public Transform player3;
+    public Transform player4;
+
+    [Header("Pickup Objects")]
+    public GameObject[] pickUps = new GameObject[4];
+    public Transform instanceGrouping;
+
+    int riverWidth = 15;
+
     [Header("Raft")]
     public GameObject raft;
 
-    private int[,] mapArray;
-    private int riverAmplitude = 5;
+    public int[,] mapArray;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(this);
+        }
+    }
 
     private void Start()
     {
@@ -34,6 +60,7 @@ public class TileMapGenerator : MonoBehaviour
         // Y: Increasing bottom to top
 
         GenerateMapArray();
+        
 
         for (int x = 0; x < mapWidth; x++)
         {
@@ -47,13 +74,15 @@ public class TileMapGenerator : MonoBehaviour
                         break;
                     case 1:
                         // Set water tile
-                        groundTilemap.SetTile(new Vector3Int(x, y, 0), tileArray[1]);
+                        waterTilemap.SetTile(new Vector3Int(x, y, 0), tileArray[1]);
                         break;
                     default:
                         break;
                 }
             }
         }
+        GeneratePickups();
+
     }
 
     public void GenerateMapArray()
@@ -68,17 +97,69 @@ public class TileMapGenerator : MonoBehaviour
         }
 
         // Draw river
-        //Vector2Int riverStart = new Vector2Int(10, (int)Math.Round(mapHeight/2, 0));
+        // Vector2Int riverStart = new Vector2Int(10, (int)Math.Round(mapHeight/2, 0));
 
-        Vector2Int riverStart = new Vector2Int(10, 4);
+        Vector2Int riverStart = new Vector2Int(10, borderHeight + 10);
 
-        raft.transform.position = new Vector3(riverStart.x + 5, riverStart.y + 3, -9);
+        // Place Players
+        if (player1)
+            player1.position = new Vector3( -10, 2);
+        if (player2)
+            player2.position = new Vector3(-10, 4);
+        if (player3)
+            player3.position = new Vector3(-10, 6);
+        if (player4)
+            player4.position = new Vector3(-10, 8);
 
-        for (int x = 0; x < 100; x++)
+        raft.transform.position = new Vector2(riverStart.x + 5, riverStart.y + 7);
+
+        int riverHeightChange = 1;
+
+        for (int x = 0; x < mapWidth - 20; x++)
         {
-            for (int y = 0; y < 20; y++)
+            for (int y = 0; y < riverWidth; y++)
             {
-                mapArray[riverStart.x + x, riverStart.y + y] = 1;
+                mapArray[riverStart.x + x, riverStart.y + y] = 1;   
+            }
+
+            if (x % 7 == 0)
+            {
+                riverStart.y += riverHeightChange;
+
+
+            }
+            if (x % 35 == 0 && x != 0)
+            {
+                riverHeightChange *= -1;
+            }
+        }
+    }
+
+    public void GeneratePickups()
+    {
+        for (int x = 0; x < mapWidth; x++)
+        {
+            for (int y = 0; y < mapHeight; y++)
+            {
+                if (mapArray[x, y] == 1)
+                {
+                    int rnd = Random.Range(0, 100);
+                    int pickupItem = Random.Range(0, 3);
+
+                    if (rnd > 98)
+                    {
+                        switch (pickupItem)
+                        {
+                            case 0:
+                                Instantiate(pickUps[0], new Vector3(x, y, -3f), pickUps[0].transform.rotation).transform.SetParent(instanceGrouping);
+                                break;
+                            case 1:
+                                Instantiate(pickUps[1], new Vector3(x, y, -3f), pickUps[1].transform.rotation).transform.SetParent(instanceGrouping);
+                                break;
+                        }
+                        
+                    }
+                }
             }
         }
     }

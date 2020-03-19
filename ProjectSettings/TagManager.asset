@@ -6,6 +6,13 @@ TagManager:
   tags:
   - SteeringWheel
   - Raft
+  - LandTile
+  - WaterTile
+  - Pickup
+  - Hook
+  - Weapon
+  - "Flo\xDF"
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -15,11 +22,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Land
+  - Raft
+  - Player
+  - RaftColliderForLand
+  - Enemy
   - 
   - 
   - 

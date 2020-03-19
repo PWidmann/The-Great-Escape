@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,16 +13,24 @@ public class PlayerController : MonoBehaviour
     public Vector3 change;
     public Vector2 changeToNormalize;
     public GameObject raft;
-    
 
     public bool isSteeringRaft = false;
     public bool isOnRaft = false;
+
+    public bool raftCanMove = true;
+
+    
+
+    //User Interface
+
+    public float playerHealth = 100;
 
     void Start()
     {
         if (PlayerHandler.instance.playSceneActive)
         {
             myRigidbody = GetComponent<Rigidbody2D>();
+
             playerControls = GetPlayerController();
             DestroyPlayerObjectIfNotActive();
         }
@@ -30,13 +39,58 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Move();
+        RaftHandling();
+
+        UpdatePlayerHealth();
+    }
+
+    void UpdatePlayerHealth()
+    {
+        if (PlayerHandler.instance.playSceneActive)
+        {
+            switch (playerNumber)
+            {
+                case 1:
+                    PlayerInterface.instance.player1health.GetComponent<Text>().text = "Player 1 HP: " + playerHealth.ToString();
+                    break;
+                case 2:
+                    PlayerInterface.instance.player2health.GetComponent<Text>().text = "Player 2 HP: " + playerHealth.ToString();
+                    break;
+                case 3:
+                    PlayerInterface.instance.player3health.GetComponent<Text>().text = "Player 3 HP: " + playerHealth.ToString();
+                    break;
+                case 4:
+                    PlayerInterface.instance.player4health.GetComponent<Text>().text = "Player 4 HP: " + playerHealth.ToString();
+                    break;
+            }
+        }
+            
     }
 
     void Move()
     {
         InputAxisHandling();
 
-        myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.deltaTime + Interactibles.instance.change);
+        if (isOnRaft)
+        {
+            if (isSteeringRaft)
+            {
+                RaftController.instance.change = change;
+
+                //Move the character with the raft
+                myRigidbody.MovePosition(transform.position + RaftController.instance.change * RaftController.instance.moveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                //Move the character with the raft
+                myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.deltaTime + RaftController.instance.change * RaftController.instance.moveSpeed * Time.deltaTime);
+            }
+        }
+        else
+        {
+            myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.deltaTime);
+        }
+        
     }
 
     string GetPlayerController()
@@ -176,49 +230,60 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void RaftHandling()
+    {
+        // Enter steering mode
+        float distance = Vector2.Distance(transform.position, RaftController.instance.rudder.transform.position);
+
+        if (playerControls == "Keyboard")
+        {
+            if (distance < 1f && Input.GetKeyDown(KeyCode.E) && !RaftController.instance.raftIsInUse && !isSteeringRaft)
+            {
+                isSteeringRaft = true;
+                RaftController.instance.raftIsInUse = true;
+                RaftController.instance.raftUser = playerNumber.ToString();
+                Debug.Log(RaftController.instance.raftUser + " is steering raft!");
+            }
+            else if (isSteeringRaft && Input.GetKeyDown(KeyCode.E))
+            {
+                isSteeringRaft = false;
+                RaftController.instance.raftIsInUse = false;
+                RaftController.instance.raftUser = null;
+                Debug.Log("Player " + playerNumber + " stopped steering raft");
+            }
+        }
+        else // Gamepad
+        {
+            if (distance < 1f && Input.GetButtonDown(playerControls + "ButtonA") && !RaftController.instance.raftIsInUse && !isSteeringRaft)
+            {
+                isSteeringRaft = true;
+                RaftController.instance.raftIsInUse = true;
+                RaftController.instance.raftUser = playerNumber.ToString();
+                Debug.Log(RaftController.instance.raftUser + " is steering raft!");
+            }
+            else if (isSteeringRaft && Input.GetButtonDown(playerControls + "ButtonA"))
+            {
+                isSteeringRaft = false;
+                RaftController.instance.raftIsInUse = false;
+                RaftController.instance.raftUser = null;
+                Debug.Log("Player " + playerNumber + " stopped steering raft");
+            }
+        }
+        
+    }
+
+    //For movement handling on raft
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "SteeringWheel")
-        {
-            Debug.Log(playerControls + " is near the steering wheel!");
-        }
-
         if (other.gameObject.tag == "Raft")
         {
             isOnRaft = true;
         }
     }
 
-
-    void OnTriggerStay2D(Collider2D other)
-    {
-        
-
-        if (other.gameObject.tag == "SteeringWheel")
-        {
-            if (playerControls == "Keyboard")
-            {
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    Debug.Log(playerControls + " is steering the raft!");
-                }
-            }
-            else
-            {
-                if (Input.GetButtonDown(playerControls + "ButtonA"))
-                {
-                    Debug.Log(playerControls + " is steering the raft!");
-                }
-            }
-        }
-    }
-
+    //For movement handling on raft
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag == "SteeringWheel")
-        {
-            Debug.Log("Left Steering Wheel");
-        }
         if (other.gameObject.tag == "Raft")
         {
             isOnRaft = false;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Debugging : MonoBehaviour
 {
@@ -13,6 +14,6 @@ public class Debugging : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 }

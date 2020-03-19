@@ -35,6 +35,11 @@ public class PlayerHandler : MonoBehaviour
     public bool player3assigned = false;
     public bool player4assigned = false;
 
+    public float player1health = 100;
+    public float player2health = 100;
+    public float player3health = 100;
+    public float player4health = 100;
+
     public int playerCount = 0;
 
     private void Start()
@@ -46,6 +51,8 @@ public class PlayerHandler : MonoBehaviour
     {
         ListenForPlayers();
     }
+
+
 
     private void ListenForPlayers()
     {
