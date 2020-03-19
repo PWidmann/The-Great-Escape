@@ -356,6 +356,10 @@ MonoBehaviour:
   player2assigned: 0
   player3assigned: 0
   player4assigned: 0
+  player1health: 100
+  player2health: 100
+  player3health: 100
+  player4health: 100
   playerCount: 0
 --- !u!1 &349135742
 GameObject:
@@ -574,9 +578,9 @@ RectTransform:
   m_Father: {fileID: 495369874}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 714, y: -432}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -80, y: 15}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &600434698

@@ -211,6 +211,7 @@ GameObject:
   - component: {fileID: 119013015}
   - component: {fileID: 119013014}
   - component: {fileID: 119013017}
+  - component: {fileID: 119013018}
   m_Layer: 10
   m_Name: Player3
   m_TagString: Player
@@ -349,6 +350,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.87099123, y: 0.5226612}
   m_EdgeRadius: 0
+--- !u!114 &119013018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119013012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e10555983caab42a481cb88e0b22b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raftTransform: {fileID: 2070067097}
 --- !u!1 &418068500
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,6 +376,7 @@ GameObject:
   - component: {fileID: 418068502}
   - component: {fileID: 418068504}
   - component: {fileID: 418068505}
+  - component: {fileID: 418068506}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -500,6 +515,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8792186, y: 0.52960205}
   m_EdgeRadius: 0
+--- !u!114 &418068506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418068500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e10555983caab42a481cb88e0b22b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raftTransform: {fileID: 2070067097}
 --- !u!1 &513284229
 GameObject:
   m_ObjectHideFlags: 0
@@ -2218,7 +2246,7 @@ PrefabInstance:
     - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
         type: 3}
       propertyPath: players.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
         type: 3}
@@ -2348,6 +2376,7 @@ GameObject:
   - component: {fileID: 1464611055}
   - component: {fileID: 1464611054}
   - component: {fileID: 1464611056}
+  - component: {fileID: 1464611057}
   m_Layer: 10
   m_Name: Player2
   m_TagString: Player
@@ -2486,6 +2515,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7917962, y: 0.50663185}
   m_EdgeRadius: 0
+--- !u!114 &1464611057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464611051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e10555983caab42a481cb88e0b22b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raftTransform: {fileID: 2070067097}
 --- !u!1 &1508514472
 GameObject:
   m_ObjectHideFlags: 0
@@ -2830,6 +2872,7 @@ GameObject:
   - component: {fileID: 2038882287}
   - component: {fileID: 2038882286}
   - component: {fileID: 2038882289}
+  - component: {fileID: 2038882290}
   m_Layer: 10
   m_Name: Player4
   m_TagString: Player
@@ -2968,6 +3011,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.95011854, y: 0.5851593}
   m_EdgeRadius: 0
+--- !u!114 &2038882290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038882284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e10555983caab42a481cb88e0b22b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raftTransform: {fileID: 2070067097}
 --- !u!1 &2070067095
 GameObject:
   m_ObjectHideFlags: 0
@@ -3133,3 +3189,10 @@ MonoBehaviour:
   player2transform: {fileID: 1464611052}
   player3transform: {fileID: 119013013}
   player4transform: {fileID: 2038882285}
+  hookThrowerTransform: {fileID: 2128353052}
+--- !u!4 &2128353052 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 875218373475308718, guid: d1938bc31a041424595173b905400a6f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1449051073}
+  m_PrefabAsset: {fileID: 0}

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AttackScript : MonoBehaviour
 {
@@ -29,6 +30,17 @@ public class AttackScript : MonoBehaviour
     float coolDownTimeInSeconds = 5f;
     float nextThrowAfterCooldown;
     int randomNumber;
+    bool isChecked;
+
+    PlayerHandler playerHandler;
+
+    private void Start()
+    {
+        players = new List<GameObject>();
+        playerHandler = new PlayerHandler();
+        
+
+    }
 
     public void Attack()
     {
@@ -95,7 +107,12 @@ public class AttackScript : MonoBehaviour
 
     void Update()
     {
-        if (HookThrower.BoatHooked && weaponInstantiated && FlossController.IscollidingWithWall)
+        if (!isChecked)
+            CheckForActivePlayers();
+
+        Debug.Log("Player List Count: " + players.Count);
+        Debug.Log("which player active" + playerHandler.player3active);
+        if (HookThrower.BoatHooked && weaponInstantiated && RaftController.IscollidingWithWall)
         {
             GameObject weapon = null;
             if (gameObject.GetComponent<StoneThrower>() is StoneThrower || 
@@ -109,6 +126,23 @@ public class AttackScript : MonoBehaviour
                 aiController.hitAccuracy, aiController.throwSpeed);
             Debug.Log("Throw path: " +
                 players[Random.Range(0, players.Count)].GetComponent<PlayerTracker>().OldPosition);
+        }
+    }
+
+    void CheckForActivePlayers()
+    {
+        // Not adding gameObject to list for some reason. This is the whole problem.
+        if (SceneManager.GetActiveScene().name.Equals("The Great Escape"))
+        {
+            if (PlayerHandler.instance.player1active)
+                players.Add(GameObject.Find("Player"));
+            else if (PlayerHandler.instance.player2active)
+                players.Add(GameObject.Find("Player2"));
+            else if (PlayerHandler.instance.player3active)
+                players.Add(GameObject.Find("Player3"));
+            else if (PlayerHandler.instance.player4active)
+                players.Add(GameObject.Find("Player4"));
+            isChecked = true;
         }
     }
 }

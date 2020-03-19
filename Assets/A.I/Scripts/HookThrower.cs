@@ -80,12 +80,12 @@ public class HookThrower : MonoBehaviour
         // When hook is instantiated and the hook doesn't hit the target then it gets destroyed.
         if (hookInstantiated)
         {
-            if (hook.transform.position == FlossController.OldPosition && !boatHooked)
+            if (hook.transform.position == RaftController.OldPosition && !boatHooked)
             {
                 DestroyHook(hook);
                 hookInstantiated = false;
                 isInstantiating = false;
-                FlossController.HookMoving = false;
+                RaftController.HookMoving = false;
             }
         }
 
@@ -106,13 +106,13 @@ public class HookThrower : MonoBehaviour
     {
         hook = Instantiate(hookPrefab, transform.position, Quaternion.identity);
         hookInstantiated = true;
-        FlossController.HookMoving = true;
+        RaftController.HookMoving = true;
     }
 
     public void ThrowHook(float hitAccuracy, float throwSpeed)
     {
         hook.transform.position = Vector2.MoveTowards(hook.transform.position,
-            FlossController.OldPosition * hitAccuracy, Time.deltaTime * throwSpeed);
+            RaftController.OldPosition * hitAccuracy, Time.deltaTime * throwSpeed);
 
     }
 
@@ -127,7 +127,7 @@ public class HookThrower : MonoBehaviour
         Destroy(hookPrefab);
         boatHooked = false;
         hookInstantiated = false;
-        FlossController.HookMoving = false;
+        RaftController.HookMoving = false;
         isInstantiating = false;
     }
 }
