@@ -20,7 +20,8 @@ public class AttackScript : MonoBehaviour
     [SerializeField] GameObject stonePrefab;
     [SerializeField] AIController aiController;
 
-    public List<GameObject> players;
+    public static List<GameObject> players;
+    public static AttackScript instance; // need for method call
 
     GameObject stone;
     GameObject spear;
@@ -144,5 +145,14 @@ public class AttackScript : MonoBehaviour
                 players.Add(GameObject.FindGameObjectWithTag("Player"));
             isChecked = true;
         }
+    }
+
+    public static GameObject GetActivePlayers()
+    {
+        foreach (GameObject player in players)
+        {
+            return player;
+        }
+        return null;
     }
 }

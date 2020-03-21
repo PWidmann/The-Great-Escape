@@ -10,12 +10,8 @@ public class Movement : MonoBehaviour
     
     public void Move()
     {
+        gameObject.SetActive(true);
         transform.position = Vector2.MoveTowards(
             transform.position, targetfloßObject.position, Time.deltaTime * movementSpeed);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        
     }
 }

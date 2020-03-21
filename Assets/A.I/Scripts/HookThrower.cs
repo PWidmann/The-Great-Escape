@@ -69,7 +69,7 @@ public class HookThrower : MonoBehaviour
     void Update()
     {
         // First instanitation of hook object.
-        if (!hookInstantiated && !isInstantiating) 
+        if (!hookInstantiated && !isInstantiating && RaftController.AllPlayersOnRaft) 
         {
             Invoke("InstantiateHook", Random.Range(5f, 10f));
             isInstantiating = true;

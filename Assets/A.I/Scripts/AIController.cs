@@ -18,7 +18,7 @@ public class AIController : MonoBehaviour
     {
         if (HookThrower.BoatHooked)
             AttackTrigger.Invoke();
-        else if (!HookThrower.BoatHooked)
+        else if (!HookThrower.BoatHooked && RaftController.AllPlayersOnRaft)
             RunTrigger.Invoke();
     }
 }

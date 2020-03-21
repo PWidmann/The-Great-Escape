@@ -47,11 +47,13 @@ public class RaftController : MonoBehaviour
     static Vector3 oldPosition;
     static bool hookMoving = false;
     static bool iscollidingWithWall = false; // Preventing the raft to collide multiple times when pulled to shore.
+    static bool allPlayersOnRaft = false;
 
     public static Vector3 CurrentPosition { get => currentPosition; set => currentPosition = value; }
     public static Vector3 OldPosition { get => oldPosition; set => oldPosition = value; }
     public static bool HookMoving { get => hookMoving; set => hookMoving = value; }
     public static bool IscollidingWithWall { get => iscollidingWithWall; set => iscollidingWithWall = value; }
+    public static bool AllPlayersOnRaft { get => allPlayersOnRaft; set => allPlayersOnRaft = value; }
 
     void Awake()
     {
@@ -163,6 +165,12 @@ public class RaftController : MonoBehaviour
             HookThrower.BoatHooked = true;
             Debug.Log("Hooked!");
         }
+        // OnTriggerEnter got called when scene got loaded. Somehow this prevented it from happening.
+        else if (collision.gameObject.tag.Equals("WaterTile"))
+            Debug.Log("Raft is in Water!"); 
+        else if (collision.gameObject.name.Equals(AttackScript.GetActivePlayers().name))
+            allPlayersOnRaft = true;
+
     }
 
     void UpdateRaftPostion()

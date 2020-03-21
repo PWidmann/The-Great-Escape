@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 119013014}
   - component: {fileID: 119013017}
   - component: {fileID: 119013018}
+  - component: {fileID: 119013019}
   m_Layer: 10
   m_Name: Player3
   m_TagString: Player
@@ -363,6 +364,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raftTransform: {fileID: 2070067097}
+--- !u!61 &119013019
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119013012}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.9375, y: 1.4375}
+    newSize: {x: 0.9375, y: 1.4375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.9375, y: 1.4375}
+  m_EdgeRadius: 0
 --- !u!1 &418068500
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,6 +404,7 @@ GameObject:
   - component: {fileID: 418068504}
   - component: {fileID: 418068505}
   - component: {fileID: 418068506}
+  - component: {fileID: 418068507}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -528,6 +556,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raftTransform: {fileID: 2070067097}
+--- !u!61 &418068507
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418068500}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.9375, y: 1.375}
+    newSize: {x: 0.9375, y: 1.375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.9375, y: 1.375}
+  m_EdgeRadius: 0
 --- !u!1 &513284229
 GameObject:
   m_ObjectHideFlags: 0
@@ -2168,6 +2222,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 875218373475308712, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 875218373475308717, guid: d1938bc31a041424595173b905400a6f,
         type: 3}
       propertyPath: "targetflo\xDFObject"
@@ -2377,6 +2436,7 @@ GameObject:
   - component: {fileID: 1464611054}
   - component: {fileID: 1464611056}
   - component: {fileID: 1464611057}
+  - component: {fileID: 1464611058}
   m_Layer: 10
   m_Name: Player2
   m_TagString: Player
@@ -2528,6 +2588,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raftTransform: {fileID: 2070067097}
+--- !u!61 &1464611058
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464611051}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.9375, y: 1.25}
+    newSize: {x: 0.9375, y: 1.25}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.9375, y: 1.25}
+  m_EdgeRadius: 0
 --- !u!1 &1508514472
 GameObject:
   m_ObjectHideFlags: 0
@@ -2873,6 +2959,7 @@ GameObject:
   - component: {fileID: 2038882286}
   - component: {fileID: 2038882289}
   - component: {fileID: 2038882290}
+  - component: {fileID: 2038882291}
   m_Layer: 10
   m_Name: Player4
   m_TagString: Player
@@ -3024,6 +3111,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raftTransform: {fileID: 2070067097}
+--- !u!61 &2038882291
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038882284}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1.5}
+    newSize: {x: 1, y: 1.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.5}
+  m_EdgeRadius: 0
 --- !u!1 &2070067095
 GameObject:
   m_ObjectHideFlags: 0
