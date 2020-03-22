@@ -31,7 +31,6 @@ public class AttackScript : MonoBehaviour
     float coolDownTimeInSeconds = 5f;
     float nextThrowAfterCooldown;
     int randomNumber;
-    bool isChecked;
 
     PlayerHandler playerHandler;
 
@@ -108,7 +107,7 @@ public class AttackScript : MonoBehaviour
 
     void Update()
     {
-        if (!isChecked)
+        if (!aiController.isChecked)
             CheckForActivePlayers();
 
         Debug.Log("Player List Count: " + players.Count);
@@ -135,7 +134,7 @@ public class AttackScript : MonoBehaviour
         // Not adding gameObject to list for some reason. This is the whole problem.
         if (SceneManager.GetActiveScene().name.Equals("The Great Escape"))
         {
-            if (PlayerHandler.instance.player1active)
+            if (PlayerHandler.instance.player1active) 
                 players.Add(GameObject.FindGameObjectWithTag("Player"));
             else if (PlayerHandler.instance.player2active)
                 players.Add(GameObject.FindGameObjectWithTag("Player"));
@@ -143,7 +142,8 @@ public class AttackScript : MonoBehaviour
                 players.Add(GameObject.FindGameObjectWithTag("Player"));
             else if (PlayerHandler.instance.player4active)
                 players.Add(GameObject.FindGameObjectWithTag("Player"));
-            isChecked = true;
+            aiController.isChecked = true;
+            Debug.Log("Players count: " + players.Count);
         }
     }
 

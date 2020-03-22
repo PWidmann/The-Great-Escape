@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public bool isOnRaft = false;
 
     public bool raftCanMove = true;
+    public BoxCollider2D collider;
 
     
 
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        collider = GetComponent<BoxCollider2D>();
         if (PlayerHandler.instance.playSceneActive)
         {
             myRigidbody = GetComponent<Rigidbody2D>();
@@ -192,6 +194,23 @@ public class PlayerController : MonoBehaviour
             changeToNormalize.Normalize();
             change.x = changeToNormalize.x;
             change.y = changeToNormalize.y;
+        }
+
+        // Player unable to fall off the raft.
+        if (isOnRaft)
+        {
+            if (transform.position.x >= raft.transform.position.x + collider.bounds.size.x / 
+                raft.transform.localScale.x)
+                transform.position = new Vector2(transform.position.x - 0.1f, transform.position.y);
+            else if (transform.position.x <= raft.transform.position.x - collider.bounds.size.x /
+                raft.transform.localScale.x)
+                transform.position = new Vector2(transform.position.x + 0.1f, transform.position.y);
+            else if (transform.position.y >= raft.transform.position.y + collider.bounds.size.y /
+                raft.transform.localScale.y)
+                transform.position = new Vector2(transform.position.x, transform.position.y - 0.1f);
+            else if (transform.position.y <= raft.transform.position.y - collider.bounds.size.y /
+                raft.transform.localScale.y)
+                transform.position = new Vector2(transform.position.x, transform.position.y + 0.1f);
         }
     }
 

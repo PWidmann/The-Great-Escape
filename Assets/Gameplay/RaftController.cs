@@ -160,16 +160,22 @@ public class RaftController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        int playerCounter = 0;
+
         if (collision.gameObject.tag.Equals("Hook"))
         {
             HookThrower.BoatHooked = true;
             Debug.Log("Hooked!");
         }
-        // OnTriggerEnter got called when scene got loaded. Somehow this prevented it from happening.
-        else if (collision.gameObject.tag.Equals("WaterTile"))
-            Debug.Log("Raft is in Water!"); 
+        else if (collision.gameObject.tag.Equals("Pickup"))
+            Debug.Log("IgnoreColling pick up for now."); 
         else if (collision.gameObject.name.Equals(AttackScript.GetActivePlayers().name))
-            allPlayersOnRaft = true;
+        {
+            playerCounter++;
+            if (playerCounter == AttackScript.players.Count)
+                allPlayersOnRaft = true;
+        }
+            
 
     }
 

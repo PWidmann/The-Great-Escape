@@ -8,6 +8,8 @@ public class AIController : MonoBehaviour
     public UnityEvent AttackTrigger;
     public UnityEvent RunTrigger;
 
+    [HideInInspector] public bool isChecked;
+
     public static AIController instance;
 
     [Range(0.0f, 1f)] public float hitAccuracy;
