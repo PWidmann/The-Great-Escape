@@ -33,12 +33,16 @@ public class AttackScript : MonoBehaviour
     int randomNumber;
 
     PlayerHandler playerHandler;
+    Vector2 target;
+    bool hasTargetLocked = false;
 
     private void Start()
     {
         players = new List<GameObject>();
         playerHandler = new PlayerHandler();
-        
+
+        if (instance == null)
+            instance = this;
 
     }
 
@@ -51,9 +55,6 @@ public class AttackScript : MonoBehaviour
             {
                 nextThrowAfterCooldown = Time.time + coolDownTimeInSeconds;
                 stone = Instantiate(stonePrefab, transform.position, Quaternion.identity);
-                Debug.Log("We threw a stone!");
-                Debug.Log("Length " + players.Count);
-                Debug.Log("Stone " + stone);
                 /*
                  * Stone should be thrown at:
                  * Player1 from both Stone- and Hookthrower or
@@ -62,10 +63,10 @@ public class AttackScript : MonoBehaviour
                  * Player2 "    "           "  "    
                  * => Make random number. -> Done
                  */
-                randomNumber = Random.Range(0, 2);
-                Debug.Log("Random number: " + randomNumber);
+                randomNumber = Random.Range(0, players.Count);
+                // Debug.Log("Random number: " + randomNumber);
                 weaponInstantiated = true;
-                StartCoroutine(WeaponObjectsToDestroyTimer(stone, 3f));
+                //StartCoroutine(WeaponObjectsToDestroyTimer(stone, 3f));
             }
         }
         else if (gameObject.GetComponent<SpearThrower>() is SpearThrower)
@@ -74,10 +75,10 @@ public class AttackScript : MonoBehaviour
             {
                 nextThrowAfterCooldown = Time.time + coolDownTimeInSeconds;
                 spear = Instantiate(spearPrefab, transform.position, Quaternion.identity);
-                Debug.Log("I threw a spear!");
+                // Debug.Log("I threw a spear!");
                 weaponInstantiated = true;
-                randomNumber = Random.Range(0, 2);
-                StartCoroutine(WeaponObjectsToDestroyTimer(spear, 3f));
+                randomNumber = Random.Range(0, players.Count);
+                //StartCoroutine(WeaponObjectsToDestroyTimer(spear, 3f));
             }
         }
     }
@@ -88,21 +89,23 @@ public class AttackScript : MonoBehaviour
         Destroy(weapons);
         PlayerTracker.IsColliding = false;
         weaponInstantiated = false;
+        hasTargetLocked = false;
         foreach (GameObject player in players)
         {
             player.GetComponent<PlayerTracker>().WeaponMoving = false;
         }
     }
 
-    void ThrowWeapon(Transform weapon, Vector3 start, Vector3 target, float hitAccuracy, float throwSpeed)
+    void ThrowWeapon(GameObject weapon, Vector3 start, Vector3 target, float hitAccuracy, float throwSpeed)
     {
-        weapon.position = Vector2.MoveTowards(start, target * hitAccuracy, 
-            Time.deltaTime * throwSpeed);
+        weapon.GetComponent<Rigidbody2D>().AddForce((target - start) * hitAccuracy * throwSpeed);
         foreach (GameObject player in players)
         {
             player.GetComponent<PlayerTracker>().WeaponMoving = true;
         }
         Debug.Log("Weapon: " + weapon);
+        if (weapon.transform.position.y > target.y && !PlayerTracker.IsColliding)
+            DestroyWeapon(weapon);
     }
 
     void Update()
@@ -112,26 +115,32 @@ public class AttackScript : MonoBehaviour
 
         Debug.Log("Player List Count: " + players.Count);
         Debug.Log("which player active" + playerHandler.player3active);
-        if (HookThrower.BoatHooked && weaponInstantiated && RaftController.IscollidingWithWall)
+    }
+
+    private void FixedUpdate()
+    {
+        if (weaponInstantiated && !PlayerTracker.IsColliding)
         {
             GameObject weapon = null;
-            if (gameObject.GetComponent<StoneThrower>() is StoneThrower || 
+            if (gameObject.GetComponent<StoneThrower>() is StoneThrower ||
                 gameObject.GetComponent<HookThrower>() is HookThrower)
                 weapon = stone;
             else if (gameObject.GetComponent<SpearThrower>() is SpearThrower)
                 weapon = spear;
 
-            ThrowWeapon(weapon.transform, weapon.transform.position,
-                players[randomNumber].GetComponent<PlayerTracker>().OldPosition,
-                aiController.hitAccuracy, aiController.throwSpeed);
-            Debug.Log("Throw path: " +
-                players[Random.Range(0, players.Count)].GetComponent<PlayerTracker>().OldPosition);
+            if (!hasTargetLocked)
+            {
+                target = players[randomNumber].GetComponent<PlayerTracker>().GetPlayerPos();
+                hasTargetLocked = true;
+            }
+            else if (hasTargetLocked && weapon != null)
+                ThrowWeapon(weapon, weapon.transform.position, target,
+                    aiController.hitAccuracy, aiController.throwSpeed);
         }
     }
 
     void CheckForActivePlayers()
     {
-        // Not adding gameObject to list for some reason. This is the whole problem.
         if (SceneManager.GetActiveScene().name.Equals("The Great Escape"))
         {
             if (PlayerHandler.instance.player1active) 
@@ -154,5 +163,17 @@ public class AttackScript : MonoBehaviour
             return player;
         }
         return null;
+    }
+
+    public void DestroyWeapon(GameObject weapon)
+    {
+        Destroy(weapon);
+        PlayerTracker.IsColliding = false;
+        weaponInstantiated = false;
+        hasTargetLocked = false;
+        foreach (GameObject player in players)
+        {
+            player.GetComponent<PlayerTracker>().WeaponMoving = false;
+        }
     }
 }

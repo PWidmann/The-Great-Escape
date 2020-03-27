@@ -4,40 +4,22 @@ using UnityEngine;
 
 public class PlayerTracker : MonoBehaviour
 {
-    /*
-     * Same algorithm needed as in "FlossController.cs" for the CURRENT and OLD position. 
-     */
-
-    Vector3 currentPosition;
-    Vector3 oldPosition;
     static bool weaponMoving = false;
     static bool isColliding = false;
 
     [SerializeField] Transform raftTransform;
 
-    public Vector3 CurrentPosition { get => currentPosition; set => currentPosition = value; }
-    public Vector3 OldPosition { get => oldPosition; set => oldPosition = value; }
     public bool WeaponMoving { get => weaponMoving; set => weaponMoving = value; }
     public static bool IsColliding { get => isColliding; set => isColliding = value; }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        CurrentPosition = transform.position;
-        OldPosition = CurrentPosition;
-    }
-
     void Update()
     {
-        TrackPlayer();
+        GetPlayerPos();
     }
 
-    void TrackPlayer()
+    public Vector2 GetPlayerPos()
     {
-        if (transform.position != OldPosition)
-            CurrentPosition = transform.position;
-        OldPosition = CurrentPosition;
-        Debug.Log("[Player pos] Current: " + CurrentPosition + "Old: " + OldPosition);
+        return transform.position;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -45,7 +27,7 @@ public class PlayerTracker : MonoBehaviour
         if (collision.gameObject.tag.Equals("Weapon"))
         {
             isColliding = true;
-            collision.gameObject.SetActive(false);
+            AttackScript.instance.DestroyWeapon(collision.gameObject);
             Debug.Log("Collsion!");
         }
     }

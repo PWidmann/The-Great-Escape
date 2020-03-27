@@ -30,27 +30,10 @@ public class RaftController : MonoBehaviour
 
     public Transform hookThrowerTransform;
 
-    /* 
-    So the CURRENT raft position is at e.g. (0, 0)
-    Now the player moves it left for 1 unit. It is then (-1, 0)
-    Now the CURRENT position is (-1, 0) and the OLD position is (0, 0).
-    Create fields that contains current position and old position. -> Done
-    How does the OLD position gets saved? When I do OLD = CURRENT before the movement happens.
-    Again CURRENT = (0, 0) -> CURRENT = OLD -> move 1 u left => CURRENT = (-1, 0), OLD = (0, 0).
-    But everytime it stops moving -> CURRENT = OLD => (-1, 0) = (-1, 0).
-    => Making return in Update to jump out of the function when I don't need it. -> Done
-    But as soon as the player moves the raft it updates the position while it is not arrived.
-    A boolean field e.g hookMoving needed that turns true when thrown. 
-    */
-
-    static Vector3 currentPosition;
-    static Vector3 oldPosition;
     static bool hookMoving = false;
     static bool iscollidingWithWall = false; // Preventing the raft to collide multiple times when pulled to shore.
     static bool allPlayersOnRaft = false;
 
-    public static Vector3 CurrentPosition { get => currentPosition; set => currentPosition = value; }
-    public static Vector3 OldPosition { get => oldPosition; set => oldPosition = value; }
     public static bool HookMoving { get => hookMoving; set => hookMoving = value; }
     public static bool IscollidingWithWall { get => iscollidingWithWall; set => iscollidingWithWall = value; }
     public static bool AllPlayersOnRaft { get => allPlayersOnRaft; set => allPlayersOnRaft = value; }
@@ -68,8 +51,6 @@ public class RaftController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rudderInteractText.SetActive(false);
         lastPos = rb.position;
-        CurrentPosition = transform.position;
-        OldPosition = CurrentPosition;
     }
     
     void Update()
@@ -89,7 +70,6 @@ public class RaftController : MonoBehaviour
             PullRaftToShore();
 
         SteeringInteraction();
-        UpdateRaftPostion();
     }
 
     void SteeringInteraction()
@@ -177,12 +157,5 @@ public class RaftController : MonoBehaviour
         }
             
 
-    }
-
-    void UpdateRaftPostion()
-    {
-        if (transform.position != oldPosition)
-            CurrentPosition = transform.position;
-        OldPosition = CurrentPosition;
     }
 }

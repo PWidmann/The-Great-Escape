@@ -46,6 +46,8 @@ public class HookThrower : MonoBehaviour
     static bool boatHooked = false;
     static bool hookInstantiated = false;
     bool isInstantiating = false; // used to control the sequence of update instructions.
+    bool hasTargetLocked = false; // used to make the hook not follow the raft when hook thrown.
+    Vector2 target;
 
     public static bool BoatHooked
     {
@@ -80,12 +82,13 @@ public class HookThrower : MonoBehaviour
         // When hook is instantiated and the hook doesn't hit the target then it gets destroyed.
         if (hookInstantiated)
         {
-            if (hook.transform.position == RaftController.OldPosition && !boatHooked)
+            if (hook.transform.position.Equals(target) && !boatHooked)
             {
                 DestroyHook(hook);
                 hookInstantiated = false;
                 isInstantiating = false;
                 RaftController.HookMoving = false;
+                hasTargetLocked = false;
             }
         }
 
@@ -111,8 +114,14 @@ public class HookThrower : MonoBehaviour
 
     public void ThrowHook(float hitAccuracy, float throwSpeed)
     {
-        hook.transform.position = Vector2.MoveTowards(hook.transform.position,
-            RaftController.OldPosition * hitAccuracy, Time.deltaTime * throwSpeed);
+        if (!hasTargetLocked)
+        {
+            target = GetRaftPos(); 
+            hasTargetLocked = true;
+        }
+        else 
+            hook.transform.position = Vector2.MoveTowards(hook.transform.position,
+                target * hitAccuracy, Time.deltaTime * throwSpeed);
 
     }
 
@@ -129,5 +138,11 @@ public class HookThrower : MonoBehaviour
         hookInstantiated = false;
         RaftController.HookMoving = false;
         isInstantiating = false;
+        hasTargetLocked = false;
+    }
+
+    Vector2 GetRaftPos()
+    {
+        return raftObject.position;
     }
 }

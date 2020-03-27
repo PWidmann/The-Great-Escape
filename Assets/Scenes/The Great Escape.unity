@@ -2234,6 +2234,11 @@ PrefabInstance:
       propertyPath: "targetflo\xDFObject"
       value: 
       objectReference: {fileID: 2070067097}
+    - target: {fileID: 875218373475308717, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: movementSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 875218373475308718, guid: d1938bc31a041424595173b905400a6f,
         type: 3}
       propertyPath: m_LocalPosition.x
