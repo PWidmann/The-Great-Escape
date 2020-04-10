@@ -121,6 +121,36 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &97896831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 97896832}
+  m_Layer: 9
+  m_Name: TargetForAI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &97896832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97896831}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -46.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2070067097}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &111666960
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,7 +1593,7 @@ PrefabInstance:
         type: 3}
       propertyPath: RunTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1449051074}
+      objectReference: {fileID: 1449051078}
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
       propertyPath: RunTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -2233,12 +2263,17 @@ PrefabInstance:
         type: 3}
       propertyPath: "targetflo\xDFObject"
       value: 
-      objectReference: {fileID: 2070067097}
+      objectReference: {fileID: 97896832}
     - target: {fileID: 875218373475308717, guid: d1938bc31a041424595173b905400a6f,
         type: 3}
       propertyPath: movementSpeed
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 875218373475308717, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: targetRaftObject
+      value: 
+      objectReference: {fileID: 2070067097}
     - target: {fileID: 875218373475308718, guid: d1938bc31a041424595173b905400a6f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2379,20 +2414,15 @@ PrefabInstance:
       propertyPath: players.Array.data[3]
       value: 
       objectReference: {fileID: 2038882284}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 875218373475308717, guid: d1938bc31a041424595173b905400a6f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d1938bc31a041424595173b905400a6f, type: 3}
---- !u!114 &1449051074 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 875218373475308717, guid: d1938bc31a041424595173b905400a6f,
+--- !u!1 &1449051074 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 875218373475308712, guid: d1938bc31a041424595173b905400a6f,
     type: 3}
   m_PrefabInstance: {fileID: 1449051073}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9ae1e18de6e78d4bb82dde0c9e94f14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1449051075 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 875218373160718349, guid: d1938bc31a041424595173b905400a6f,
@@ -2423,12 +2453,26 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1449051073}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1449051074}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 392546f602500e04cbefa82ca0abe18e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1449051078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449051074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44fffc4f8d4bccb4ab295346b833c816, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raftTransform: {fileID: 2070067097}
+  movementSpeed: 10
 --- !u!1 &1464611051
 GameObject:
   m_ObjectHideFlags: 0
@@ -3234,6 +3278,7 @@ Transform:
   - {fileID: 1137688283}
   - {fileID: 519420032}
   - {fileID: 530278816}
+  - {fileID: 97896832}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
