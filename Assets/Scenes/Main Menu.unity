@@ -1171,6 +1171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 635a2479baefb7243b525a8fc36c714e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startButton: {fileID: 862562975}
+  startButtonText: {fileID: 220527528}
+  optionsButton: {fileID: 1363943747}
+  optionsButtonText: {fileID: 760833052}
+  quitButton: {fileID: 1611000851}
+  quitButtonText: {fileID: 835295777}
 --- !u!4 &2033568288
 Transform:
   m_ObjectHideFlags: 0

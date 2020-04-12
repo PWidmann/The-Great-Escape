@@ -22,6 +22,10 @@ public class PreGame : MonoBehaviour
     public Sprite controllerImage;
     public Sprite keyboardImage;
 
+    [Header("Confirm Player Text")]
+    public GameObject confirmText;
+    bool confirmPlayers = false;
+
     private void Start()
     {
         player1panel.SetActive(false);
@@ -29,10 +33,16 @@ public class PreGame : MonoBehaviour
         player3panel.SetActive(false);
         player4panel.SetActive(false);
 
-        
+
     }
     // Update is called once per frame
     void Update()
+    {
+        PlayerPanels();
+        ConfirmPlayers();
+    }
+
+    void PlayerPanels()
     {
         // Player 1 Panel
         if (PlayerHandler.instance.player1active)
@@ -76,6 +86,67 @@ public class PreGame : MonoBehaviour
         else
         {
             player4panel.SetActive(false);
+        }
+    }
+
+    void ConfirmPlayers()
+    {
+        if (confirmPlayers)
+        {
+            confirmText.SetActive(true);
+        }
+        else
+        {
+            confirmText.SetActive(false);
+        }
+        
+        // Keyboard confirmation
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            //Start game
+            if (PlayerHandler.instance.playerCount > 0 && confirmPlayers == true)
+            {
+                ButtonStart();
+            }
+
+            // Set confirmation active
+            if (PlayerHandler.instance.playerCount > 0 && confirmPlayers == false)
+            {
+                // Check if Panel for J1 is active
+                if (PlayerHandler.instance.player1controls == "Keyboard" || PlayerHandler.instance.player2controls == "Keyboard" || PlayerHandler.instance.player3controls == "Keyboard" || PlayerHandler.instance.player4controls == "Keyboard")
+                {
+                    confirmPlayers = true;
+                }
+            }
+        }
+
+        // Controller confirmation
+        if (Input.GetButtonDown("J1ButtonA"))
+        {
+            //Start game
+            if (PlayerHandler.instance.playerCount > 0 && confirmPlayers == true)
+            {
+                ButtonStart();
+            }
+
+            // Set confirmation active
+            if (PlayerHandler.instance.playerCount > 0 && confirmPlayers == false)
+            {
+                // Check if Panel for J1 is active
+                if (PlayerHandler.instance.player1controls == "J1" || PlayerHandler.instance.player2controls == "J1" || PlayerHandler.instance.player3controls == "J1" || PlayerHandler.instance.player4controls == "J1")
+                {
+                    confirmPlayers = true;
+                } 
+            }
+        }
+
+        // Cancel confirmation
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("J1ButtonB"))
+        {
+            if (confirmPlayers)
+            {
+                confirmPlayers = false;
+            }
         }
     }
 
