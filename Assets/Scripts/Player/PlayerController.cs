@@ -77,6 +77,12 @@ public class PlayerController : MonoBehaviour
         {
             if (isSteeringRaft)
             {
+                if ((change.x > 0 || change.y > 0) && !SoundManager.instance.soundFxSource.isPlaying)
+                {
+                    SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[4];
+                    SoundManager.instance.soundFxSource.Play();
+                }
+
                 RaftController.instance.change = change;
 
                 //Move the character with the raft

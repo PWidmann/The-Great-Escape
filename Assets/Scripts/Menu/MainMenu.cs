@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     int selectedButton = 1;
+    public static MainMenu instance = null;
 
     [Header("Start Button")]
     [SerializeField] Button startButton;
@@ -22,7 +23,16 @@ public class MainMenu : MonoBehaviour
 
     // Gamepad
     bool oneTimeStickMovement = false;
+    static bool controllerMovementStopped = false;
 
+    public int SelectedButton { get => selectedButton; set => selectedButton = value; }
+    public static bool ControllerMovementStopped { get => controllerMovementStopped; set => controllerMovementStopped = value; }
+
+    private void Awake()
+    {
+        if (instance = null)
+            instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -36,57 +46,96 @@ public class MainMenu : MonoBehaviour
         KeyboardInput();
         ControllerInput();
 
-        ChangeButtonAppearance(selectedButton);
+        ChangeButtonAppearance(SelectedButton);
     }
 
+    /// <summary>
+    /// Loads pre game scene
+    /// </summary>
     public void ButtonStart()
     {
         SceneManager.LoadScene("Pre Game");
     }
 
+    /// <summary>
+    /// Opens options menu with sliders and buttons.
+    /// </summary>
     public void ButtonOptions()
     {
+        UIManagement.instance.startButton.gameObject.SetActive(false);
+        UIManagement.instance.optionButton.gameObject.SetActive(false);
+        UIManagement.instance.quitButton.gameObject.SetActive(false);
 
+        UIManagement.instance.saveSettingsButton.gameObject.SetActive(true);
+        UIManagement.instance.masterVolumeSlider.gameObject.SetActive(true);
+        UIManagement.instance.soundFxSlider.gameObject.SetActive(true);
+        UIManagement.instance.musicVolumeSlider.gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// Closes the game.
+    /// </summary>
     public void ButtonQuit()
     {
         Application.Quit();
     }
 
+    /// <summary>
+    /// Saves all changes made and goes back to the titlescreen.
+    /// </summary>
+    public void ButtonSaveSettings()
+    {
+        PlayerPrefs.Save();
+
+        UIManagement.instance.saveSettingsButton.gameObject.SetActive(false);
+        UIManagement.instance.masterVolumeSlider.gameObject.SetActive(false);
+        UIManagement.instance.soundFxSlider.gameObject.SetActive(false);
+        UIManagement.instance.musicVolumeSlider.gameObject.SetActive(false);
+
+        UIManagement.instance.startButton.gameObject.SetActive(true);
+        UIManagement.instance.optionButton.gameObject.SetActive(true);
+        UIManagement.instance.quitButton.gameObject.SetActive(true);
+
+    }
     void KeyboardInput()
     {
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) && !controllerMovementStopped)
         {
-            selectedButton -= 1;
+            SoundManager.instance.PlayMenuPointerSoundFx();
+            SelectedButton -= 1;
 
-            if (selectedButton == 0)
+            if (SelectedButton == 0)
             {
-                selectedButton = 3;
+                SelectedButton = 3;
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) && !controllerMovementStopped)
         {
-            selectedButton += 1;
+            SoundManager.instance.PlayMenuPointerSoundFx();
+            SelectedButton += 1;
 
-            if (selectedButton == 4)
+            if (SelectedButton == 4)
             {
-                selectedButton = 1;
+                SelectedButton = 1;
             }
         }
 
         // Confirm selected button
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            switch (selectedButton)
+            switch (SelectedButton)
             {
                 case 1:
+                    SoundManager.instance.PlayMenuClickSoundFx();
                     ButtonStart();
                     break;
                 case 2:
+                    SoundManager.instance.PlayMenuClickSoundFx();
+                    ButtonOptions();
                     break;
                 case 3:
+                    SoundManager.instance.PlayMenuClickSoundFx();
                     ButtonQuit();
                     break;
             }
@@ -96,24 +145,26 @@ public class MainMenu : MonoBehaviour
     void ControllerInput()
     {
         // Up
-        if (Input.GetAxisRaw("J1Vertical") < 0 && !oneTimeStickMovement)
+        if (Input.GetAxisRaw("J1Vertical") < 0 && !oneTimeStickMovement && !controllerMovementStopped)
         {
-            selectedButton += 1;
-            if (selectedButton == 4)
+            SelectedButton += 1;
+            SoundManager.instance.PlayMenuPointerSoundFx();
+            if (SelectedButton == 4)
             {
-                selectedButton = 1;
+                SelectedButton = 1;
             }
 
             oneTimeStickMovement = true;
         }
 
         // Down
-        if (Input.GetAxisRaw("J1Vertical") > 0 && !oneTimeStickMovement)
+        if (Input.GetAxisRaw("J1Vertical") > 0 && !oneTimeStickMovement && !controllerMovementStopped)
         {
-            selectedButton -= 1;
-            if (selectedButton == 0)
+            SoundManager.instance.PlayMenuPointerSoundFx();
+            SelectedButton -= 1;
+            if (SelectedButton == 0)
             {
-                selectedButton = 3;
+                SelectedButton = 3;
             }
 
             oneTimeStickMovement = true;
@@ -122,14 +173,18 @@ public class MainMenu : MonoBehaviour
         // A Button
         if (Input.GetButtonDown("J1ButtonA"))
         {
-            switch (selectedButton)
+            switch (SelectedButton)
             {
                 case 1:
+                    SoundManager.instance.PlayMenuClickSoundFx();
                     ButtonStart();
                     break;
                 case 2:
+                    SoundManager.instance.PlayMenuClickSoundFx();
+                    ButtonOptions();
                     break;
                 case 3:
+                    SoundManager.instance.PlayMenuClickSoundFx();
                     ButtonQuit();
                     break;
             }
@@ -167,7 +222,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    void ColorTurnSelected(Button btn, Text txt)
+    public void ColorTurnSelected(Button btn, Text txt)
     {
         //Button Color
         ColorBlock colors = btn.colors;
@@ -178,7 +233,7 @@ public class MainMenu : MonoBehaviour
         txt.color = Color.white;
     }
 
-    void ColorTurnUnselected(Button btn, Text txt)
+    public void ColorTurnUnselected(Button btn, Text txt)
     {
         //Button Color
         ColorBlock colors = btn.colors;
@@ -187,6 +242,15 @@ public class MainMenu : MonoBehaviour
         btn.colors = colors;
 
         txt.color = Color.black;
+    }
+
+    /// <summary>
+    /// On pointer event function. Highlights the button over which the mouse hovers or points.
+    /// </summary>
+    /// <param name="selectedButton">the button that's selected int</param>
+    public void SelectButtonDisplay(int selectedButton)
+    {
+        SelectedButton = selectedButton;
     }
 }
 

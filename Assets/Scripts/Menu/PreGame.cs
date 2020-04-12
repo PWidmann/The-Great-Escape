@@ -24,7 +24,9 @@ public class PreGame : MonoBehaviour
 
     [Header("Confirm Player Text")]
     public GameObject confirmText;
+
     bool confirmPlayers = false;
+    int sfxPlayCount = 0;
 
     private void Start()
     {
@@ -93,6 +95,14 @@ public class PreGame : MonoBehaviour
     {
         if (confirmPlayers)
         {
+            // Play sound fx only once.
+            if (!SoundManager.instance.soundFxSource.isPlaying && sfxPlayCount == 0)
+            {
+                SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
+                SoundManager.instance.soundFxSource.Play();
+                sfxPlayCount++;
+            }
+
             confirmText.SetActive(true);
         }
         else
@@ -106,6 +116,7 @@ public class PreGame : MonoBehaviour
             //Start game
             if (PlayerHandler.instance.playerCount > 0 && confirmPlayers == true)
             {
+                SoundManager.instance.PlayMenuPointerSoundFx();
                 ButtonStart();
             }
 
@@ -126,6 +137,7 @@ public class PreGame : MonoBehaviour
             //Start game
             if (PlayerHandler.instance.playerCount > 0 && confirmPlayers == true)
             {
+                SoundManager.instance.PlayMenuClickSoundFx();
                 ButtonStart();
             }
 
