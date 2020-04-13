@@ -36,6 +36,9 @@ public class RaftController : MonoBehaviour
     AudioSource raftAudio;
     Collider2D raftCollider;
 
+    float soundFxReplayTimer = 1.5f;
+    float nextRudderInteractSoundfx = 0f;
+
     static bool hookMoving = false;
     static bool iscollidingWithWall = false; // Preventing the raft to collide multiple times when pulled to shore.
     static bool allPlayersOnRaft = false;
@@ -116,8 +119,10 @@ public class RaftController : MonoBehaviour
         {
             if (p1distance < 1f || p2distance < 1f || p3distance < 1f || p4distance < 1f)
             {
-                if (!SoundManager.instance.soundFxSource.isPlaying && Time.time > 5f)
+                if (!SoundManager.instance.soundFxSource.isPlaying && Time.time > nextRudderInteractSoundfx &&
+                    !HookThrower.BoatHooked)
                 {
+                    nextRudderInteractSoundfx = Time.time + soundFxReplayTimer;
                     SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[11];
                     SoundManager.instance.soundFxSource.Play();
                 }
