@@ -13,6 +13,8 @@ TagManager:
   - Weapon
   - "Flo\xDF"
   - Wall
+  - Spear
+  - Stone
   layers:
   - Default
   - TransparentFX
@@ -28,7 +30,7 @@ TagManager:
   - RaftColliderForLand
   - Enemy
   - Weapon
-  - 
+  - IgnoreCollision
   - 
   - 
   - 

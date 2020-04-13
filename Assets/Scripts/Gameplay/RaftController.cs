@@ -42,10 +42,12 @@ public class RaftController : MonoBehaviour
     static bool hookMoving = false;
     static bool iscollidingWithWall = false; // Preventing the raft to collide multiple times when pulled to shore.
     static bool allPlayersOnRaft = false;
+    bool isHitByStone = false;
 
     public static bool HookMoving { get => hookMoving; set => hookMoving = value; }
     public static bool IscollidingWithWall { get => iscollidingWithWall; set => iscollidingWithWall = value; }
     public static bool AllPlayersOnRaft { get => allPlayersOnRaft; set => allPlayersOnRaft = value; }
+    public bool IsHitByStone { get => isHitByStone; set => isHitByStone = value; }
 
     void Awake()
     {
@@ -200,10 +202,12 @@ public class RaftController : MonoBehaviour
             HookThrower.BoatHooked = true;
             Debug.Log("Hooked!");
         }
-        else if (collision.gameObject.tag.Equals("Weapon"))
+        else if (collision.gameObject.tag.Equals("Stone"))
         {
             raftAudio.clip = SoundManager.instance.soundFx[8];
             raftAudio.Play();
+            IsHitByStone = true;
+
         }
         else if (collision.gameObject.tag.Equals("Pickup"))
             Debug.Log("IgnoreColling pick up for now."); 

@@ -40,6 +40,8 @@ public class AttackScript : MonoBehaviour
     AudioSource audio;
     bool hasNoWeaponInHand = false;
     Collider2D stoneCollider;
+    bool instantiatedStoneHasColliderComponent = false;
+    LayerMask layer;
 
     private void Start()
     {
@@ -50,7 +52,7 @@ public class AttackScript : MonoBehaviour
             instance = this;
 
         audio = GetComponent<AudioSource>();
-        stoneCollider = GetComponent<Collider2D>();
+        
     }
 
     public void Attack()
@@ -60,8 +62,17 @@ public class AttackScript : MonoBehaviour
         {
             if (Time.time > nextThrowAfterCooldown)
             {
+                if (!weaponInstantiated)
+                {
+                    stone = Instantiate(stonePrefab, transform.position, Quaternion.identity);
+                    weaponInstantiated = true;
+                }
+                else
+                {
+                    EnableWeapon(stone);
+                    stone.transform.position = transform.position;
+                }
                 nextThrowAfterCooldown = Time.time + coolDownTimeInSeconds;
-                stone = Instantiate(stonePrefab, transform.position, Quaternion.identity);
 
                 // Offset of throw in x dirction
                 randomNumberInRaftBoundsX = Random.Range(-RaftController.instance.GetRaftColliderBoundSize().x,
@@ -71,16 +82,24 @@ public class AttackScript : MonoBehaviour
                 randomNumberInRaftBoundsY = Random.Range(-RaftController.instance.GetRaftColliderBoundSize().y,
                     RaftController.instance.GetRaftColliderBoundSize().y);
 
-                weaponInstantiated = true;
+
             }
         }
         else if (gameObject.GetComponent<SpearThrower>() is SpearThrower)
         {
             if (Time.time > nextThrowAfterCooldown)
             {
+                if (!weaponInstantiated)
+                {
+                    spear = Instantiate(spearPrefab, transform.position, Quaternion.identity);
+                    weaponInstantiated = true;
+                }
+                else
+                {
+                    EnableWeapon(spear);
+                    spear.transform.position = transform.position;
+                }
                 nextThrowAfterCooldown = Time.time + coolDownTimeInSeconds;
-                spear = Instantiate(spearPrefab, transform.position, Quaternion.identity);
-                weaponInstantiated = true;
 
                 // Picks random Player as target.
                 randomPlayerNumber = Random.Range(0, players.Count);
@@ -96,26 +115,28 @@ public class AttackScript : MonoBehaviour
             audio.Play();
         }
 
+        /*if ((weapon.tag.Equals("Stone") && Vector2.Distance(weapon.transform.position, target) >= 0.5f) || 
+            RaftController.instance.IsHitByStone)
+        {
+            stone.layer = LayerMask.NameToLayer("IgnoreCollision");
+        }
+        else
+        (weapon.tag.Equals("Stone") && Vector2.Distance(weapon.transform.position, target) < 0.5f)
+        {
+            stone.layer = LayerMask.NameToLayer("Default");
+            //DissableWeapon(weapon);
+        }*/
         weapon.GetComponent<Rigidbody2D>().AddForce((target - start) * hitAccuracy * throwSpeed);
-        hasTargetLocked = true;
         hasNoWeaponInHand = true;
         foreach (GameObject player in players)
         {
             player.GetComponent<PlayerTracker>().WeaponMoving = true;
         }
         Debug.Log("Weapon: " + weapon);
-        if (weapon.transform.position.y > target.y && !PlayerTracker.IsColliding)
-            DestroyWeapon(weapon);
-        else if (weapon.Equals(stone) && weapon.transform.position.y < target.y)
-        {
-            Physics2D.IgnoreCollision(stoneCollider, RaftController.instance.GetRaftCollider(), true);
-            Debug.Log("IgnoringCollisions!");
-        }
-        else if (weapon.Equals(stone) && weapon.transform.position.y >= target.y)
-        {
-            Physics2D.IgnoreCollision(stoneCollider, RaftController.instance.GetRaftCollider(), true);
-            DestroyWeapon(weapon);
-        }
+        if (weapon.tag.Equals("Spear") && weapon.transform.position.y >= target.y && !PlayerTracker.IsColliding)
+            DissableWeapon(weapon);
+        else if (weapon.tag.Equals("Stone") && weapon.transform.position.y >= target.y)
+            DissableWeapon(weapon);
     }
 
     void Update()
@@ -137,22 +158,22 @@ public class AttackScript : MonoBehaviour
 
             if (!hasTargetLocked)
             {
-                if (weapon.Equals(stone))
+                if (weapon.tag.Equals("Stone"))
                 {
                     target = new Vector2(RaftController.instance.GetRaftPos().x + randomNumberInRaftBoundsX,
                         RaftController.instance.GetRaftPos().y + randomNumberInRaftBoundsY);
-                    //hasTargetLocked = true;
+                    hasTargetLocked = true;
                 }
                 else
                 {
                     target = players[randomPlayerNumber].GetComponent<PlayerTracker>().GetPlayerPos();
-                    //hasTargetLocked = true;
+                    hasTargetLocked = true;
                 }
             }
         }
-        if (weapon != null)
+        if (weapon != null && hasTargetLocked)
             ThrowWeapon(weapon, weapon.transform.position, target,
-                aiController.hitAccuracy, aiController.throwSpeed);
+                aiController.hitAccuracy, 1);
     }
 
     void CheckForActivePlayers()
@@ -180,9 +201,11 @@ public class AttackScript : MonoBehaviour
         return null;
     }
 
-    public void DestroyWeapon(GameObject weapon)
+    public void DissableWeapon(GameObject weapon)
     {
-        Destroy(weapon);
+        weapon.SetActive(false);
+        if (weapon.tag.Equals("Stone"))
+            RaftController.instance.IsHitByStone = false;
         PlayerTracker.IsColliding = false;
         weaponInstantiated = false;
         hasTargetLocked = false;
@@ -191,5 +214,10 @@ public class AttackScript : MonoBehaviour
         {
             player.GetComponent<PlayerTracker>().WeaponMoving = false;
         }
+    }
+
+    public void EnableWeapon(GameObject weapon)
+    {
+        weapon.SetActive(true);
     }
 }
