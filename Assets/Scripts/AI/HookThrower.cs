@@ -122,19 +122,18 @@ public class HookThrower : MonoBehaviour
         {
             target = target = new Vector2(RaftController.instance.GetRaftPos().x + randomNumberWithinRaftBoundsX,
                         RaftController.instance.GetRaftPos().y + randomNumberWithinRaftBoundsY);
-            hasTargetLocked = true;
+            //hasTargetLocked = true;
         }
-        else
+
+        if (!hasNoHookInHand)
         {
-            if (!hasNoHookInHand)
-            {
-                hookThrowerSfx.clip = SoundManager.instance.soundFx[5];
-                hookThrowerSfx.Play();
-            }
-            hook.transform.position = Vector2.MoveTowards(hook.transform.position,
-                target * hitAccuracy, Time.deltaTime * throwSpeed);
-            hasNoHookInHand = true;
+            hookThrowerSfx.clip = SoundManager.instance.soundFx[5];
+            hookThrowerSfx.Play();
         }
+        hook.transform.position = Vector2.MoveTowards(hook.transform.position,
+            target * hitAccuracy, Time.deltaTime * throwSpeed);
+        hasNoHookInHand = true;
+        hasTargetLocked = true;
 
     }
 

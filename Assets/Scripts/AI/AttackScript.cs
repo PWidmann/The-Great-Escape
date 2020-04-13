@@ -97,6 +97,7 @@ public class AttackScript : MonoBehaviour
         }
 
         weapon.GetComponent<Rigidbody2D>().AddForce((target - start) * hitAccuracy * throwSpeed);
+        hasTargetLocked = true;
         hasNoWeaponInHand = true;
         foreach (GameObject player in players)
         {
@@ -125,9 +126,9 @@ public class AttackScript : MonoBehaviour
 
     private void FixedUpdate()
     {
+        GameObject weapon = null;
         if (weaponInstantiated && !PlayerTracker.IsColliding)
         {
-            GameObject weapon = null;
             if (gameObject.GetComponent<StoneThrower>() is StoneThrower ||
                 gameObject.GetComponent<HookThrower>() is HookThrower)
                 weapon = stone;
@@ -140,18 +141,18 @@ public class AttackScript : MonoBehaviour
                 {
                     target = new Vector2(RaftController.instance.GetRaftPos().x + randomNumberInRaftBoundsX,
                         RaftController.instance.GetRaftPos().y + randomNumberInRaftBoundsY);
-                    hasTargetLocked = true;
+                    //hasTargetLocked = true;
                 }
                 else
                 {
                     target = players[randomPlayerNumber].GetComponent<PlayerTracker>().GetPlayerPos();
-                    hasTargetLocked = true;
+                    //hasTargetLocked = true;
                 }
             }
-            else if (hasTargetLocked && weapon != null)
-                ThrowWeapon(weapon, weapon.transform.position, target,
-                    aiController.hitAccuracy, aiController.throwSpeed);
         }
+        if (weapon != null)
+            ThrowWeapon(weapon, weapon.transform.position, target,
+                aiController.hitAccuracy, aiController.throwSpeed);
     }
 
     void CheckForActivePlayers()
