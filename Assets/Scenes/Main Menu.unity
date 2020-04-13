@@ -1074,7 +1074,7 @@ RectTransform:
   - {fileID: 564404148}
   - {fileID: 1357648115}
   m_Father: {fileID: 1799245426}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2038,7 +2038,7 @@ RectTransform:
   m_Children:
   - {fileID: 923421057}
   m_Father: {fileID: 1799245426}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2655,7 +2655,7 @@ RectTransform:
   - {fileID: 368350324}
   - {fileID: 1744086136}
   m_Father: {fileID: 1799245426}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3293,10 +3293,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1268429474}
-  - {fileID: 1593645360}
-  - {fileID: 729378004}
   - {fileID: 1807817413}
+  - {fileID: 729378004}
+  - {fileID: 1593645360}
+  - {fileID: 1268429474}
   - {fileID: 1360496396}
   - {fileID: 862562974}
   - {fileID: 1363943746}
@@ -3379,7 +3379,7 @@ RectTransform:
   - {fileID: 1080691868}
   - {fileID: 25011950}
   m_Father: {fileID: 1799245426}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3591,6 +3591,17 @@ MonoBehaviour:
   optionsButtonText: {fileID: 760833052}
   quitButton: {fileID: 1611000851}
   quitButtonText: {fileID: 835295777}
+  masterVolumeSliderImage: {fileID: 513514822}
+  musicVolumeSliderImage: {fileID: 584177583}
+  soundFxVolumeSliderImage: {fileID: 949708962}
+  saveButton: {fileID: 1268429471}
+  saveButtonText: {fileID: 923421058}
+  masterVolumeText: {fileID: 1080691869}
+  musicVolumeText: {fileID: 564404149}
+  soundFxVolumeText: {fileID: 368350325}
+  masterVolumeSlider: {fileID: 1807817414}
+  musicVolumeSlider: {fileID: 729378005}
+  soundFxVolumeSlider: {fileID: 1593645361}
 --- !u!4 &2033568288
 Transform:
   m_ObjectHideFlags: 0

@@ -111,7 +111,8 @@ public class TileMapGenerator : MonoBehaviour
         if (player4)
             player4.position = new Vector3(-10, 8);
 
-        raft.transform.position = new Vector2(riverStart.x + 5, riverStart.y + 7);
+        // Place raft
+        raft.transform.position = new Vector2(riverStart.x + 6, riverStart.y + 7);
 
         int riverHeightChange = 1;
 
