@@ -29,14 +29,17 @@ public class AttackScript : MonoBehaviour
     bool weaponInstantiated;
 
     float coolDownTimeInSeconds = 5f;
-    float nextThrowAfterCooldown;
-    int randomNumber;
+    float nextThrowAfterCooldown = 10f;
+    float randomNumberInRaftBoundsX;
+    float randomNumberInRaftBoundsY;
+    int randomPlayerNumber;
 
     PlayerHandler playerHandler;
     Vector2 target;
     bool hasTargetLocked = false;
     AudioSource audio;
     bool hasNoWeaponInHand = false;
+    Collider2D stoneCollider;
 
     private void Start()
     {
@@ -47,6 +50,7 @@ public class AttackScript : MonoBehaviour
             instance = this;
 
         audio = GetComponent<AudioSource>();
+        stoneCollider = GetComponent<Collider2D>();
     }
 
     public void Attack()
@@ -58,15 +62,15 @@ public class AttackScript : MonoBehaviour
             {
                 nextThrowAfterCooldown = Time.time + coolDownTimeInSeconds;
                 stone = Instantiate(stonePrefab, transform.position, Quaternion.identity);
-                /*
-                 * Stone should be thrown at:
-                 * Player1 from both Stone- and Hookthrower or
-                 * Player2 "    "    "      "   "           or
-                 * Player1 from Hookthrower or Stonethrower or
-                 * Player2 "    "           "  "    
-                 * => Make random number. -> Done
-                 */
-                randomNumber = Random.Range(0, players.Count);
+
+                // Offset of throw in x dirction
+                randomNumberInRaftBoundsX = Random.Range(-RaftController.instance.GetRaftColliderBoundSize().x,
+                    RaftController.instance.GetRaftColliderBoundSize().x);
+
+                // Offset in y direction
+                randomNumberInRaftBoundsY = Random.Range(-RaftController.instance.GetRaftColliderBoundSize().y,
+                    RaftController.instance.GetRaftColliderBoundSize().y);
+
                 weaponInstantiated = true;
             }
         }
@@ -77,7 +81,9 @@ public class AttackScript : MonoBehaviour
                 nextThrowAfterCooldown = Time.time + coolDownTimeInSeconds;
                 spear = Instantiate(spearPrefab, transform.position, Quaternion.identity);
                 weaponInstantiated = true;
-                randomNumber = Random.Range(0, players.Count);
+
+                // Picks random Player as target.
+                randomPlayerNumber = Random.Range(0, players.Count);
             }
         }
     }
@@ -99,6 +105,16 @@ public class AttackScript : MonoBehaviour
         Debug.Log("Weapon: " + weapon);
         if (weapon.transform.position.y > target.y && !PlayerTracker.IsColliding)
             DestroyWeapon(weapon);
+        else if (weapon.Equals(stone) && weapon.transform.position.y < target.y)
+        {
+            Physics2D.IgnoreCollision(stoneCollider, RaftController.instance.GetRaftCollider(), true);
+            Debug.Log("IgnoringCollisions!");
+        }
+        else if (weapon.Equals(stone) && weapon.transform.position.y >= target.y)
+        {
+            Physics2D.IgnoreCollision(stoneCollider, RaftController.instance.GetRaftCollider(), true);
+            DestroyWeapon(weapon);
+        }
     }
 
     void Update()
@@ -120,8 +136,17 @@ public class AttackScript : MonoBehaviour
 
             if (!hasTargetLocked)
             {
-                target = players[randomNumber].GetComponent<PlayerTracker>().GetPlayerPos();
-                hasTargetLocked = true;
+                if (weapon.Equals(stone))
+                {
+                    target = new Vector2(RaftController.instance.GetRaftPos().x + randomNumberInRaftBoundsX,
+                        RaftController.instance.GetRaftPos().y + randomNumberInRaftBoundsY);
+                    hasTargetLocked = true;
+                }
+                else
+                {
+                    target = players[randomPlayerNumber].GetComponent<PlayerTracker>().GetPlayerPos();
+                    hasTargetLocked = true;
+                }
             }
             else if (hasTargetLocked && weapon != null)
                 ThrowWeapon(weapon, weapon.transform.position, target,

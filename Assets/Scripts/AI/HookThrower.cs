@@ -22,7 +22,7 @@ public class HookThrower : MonoBehaviour
     // The hook object has to be pulled down too when the the raft gets pulled.
     // It just has to follow the raft when it is hooked but on the same location where it hit the raft.
     // -> Make it as child GameObject when it gets hooked. -> Done
-    
+
     [SerializeField] GameObject hookPrefab;
     [SerializeField] Transform raftObject;
 
@@ -34,10 +34,15 @@ public class HookThrower : MonoBehaviour
 
     static bool boatHooked = false;
     static bool hookInstantiated = false;
+
+    [Range(1f, 10f)] public float hookThrowSpeed = 5f;
+
     bool isInstantiating = false; // used to control the sequence of update instructions.
     bool hasTargetLocked = false; // used to make the hook not follow the raft when hook thrown.
     Vector2 target;
     bool hasNoHookInHand = false;
+    float randomNumberWithinRaftBoundsX;
+    float randomNumberWithinRaftBoundsY;
 
     public static bool BoatHooked
     {
@@ -63,11 +68,20 @@ public class HookThrower : MonoBehaviour
         // First instanitation of hook object.
         if (!hookInstantiated && !isInstantiating && RaftController.AllPlayersOnRaft) 
         {
-            Invoke("InstantiateHook", Random.Range(5f, 10f));
+            Invoke("InstantiateHook", Random.Range(3f, 6f));
+
+            // Offset of throw in x dirction
+            randomNumberWithinRaftBoundsX = Random.Range(-RaftController.instance.GetRaftColliderBoundSize().x,
+                RaftController.instance.GetRaftColliderBoundSize().x);
+
+            // Offset in y direction
+            randomNumberWithinRaftBoundsY = Random.Range(-RaftController.instance.GetRaftColliderBoundSize().y,
+                RaftController.instance.GetRaftColliderBoundSize().y);
+
             isInstantiating = true;
         }
         else if (hookInstantiated && !boatHooked)
-            ThrowHook(aiController.hitAccuracy, aiController.throwSpeed);
+            ThrowHook(aiController.hitAccuracy, hookThrowSpeed);
 
         // When hook is instantiated and the hook doesn't hit the target then it gets destroyed.
         if (hookInstantiated)
@@ -106,7 +120,8 @@ public class HookThrower : MonoBehaviour
     {
         if (!hasTargetLocked)
         {
-            target = GetRaftPos(); 
+            target = target = new Vector2(RaftController.instance.GetRaftPos().x + randomNumberWithinRaftBoundsX,
+                        RaftController.instance.GetRaftPos().y + randomNumberWithinRaftBoundsY);
             hasTargetLocked = true;
         }
         else
@@ -138,10 +153,5 @@ public class HookThrower : MonoBehaviour
         isInstantiating = false;
         hasTargetLocked = false;
         hasNoHookInHand = false;
-    }
-
-    Vector2 GetRaftPos()
-    {
-        return raftObject.position;
     }
 }

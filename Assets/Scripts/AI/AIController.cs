@@ -15,6 +15,7 @@ public class AIController : MonoBehaviour
     [Range(0.0f, 1f)] public float hitAccuracy;
     [Range(1f, 5f)] public float throwSpeed;
 
+
     // Update is called once per frame
     void Update()
     {

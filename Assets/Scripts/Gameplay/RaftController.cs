@@ -30,6 +30,9 @@ public class RaftController : MonoBehaviour
 
     public Transform hookThrowerTransform;
 
+    AudioSource raftAudio;
+    Collider2D raftCollider;
+
     static bool hookMoving = false;
     static bool iscollidingWithWall = false; // Preventing the raft to collide multiple times when pulled to shore.
     static bool allPlayersOnRaft = false;
@@ -51,6 +54,9 @@ public class RaftController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rudderInteractText.SetActive(false);
         lastPos = rb.position;
+
+        raftAudio = GetComponent<AudioSource>();
+        raftCollider = GetComponent<Collider2D>();
     }
     
     void Update()
@@ -64,10 +70,12 @@ public class RaftController : MonoBehaviour
         trackVelocity = (rb.position - lastPos) * 50;
         lastPos = rb.position;
 
-        if (!HookThrower.BoatHooked)
             rb.MovePosition(transform.position + change * moveSpeed * Time.deltaTime);
-        else
+        if (HookThrower.BoatHooked)
+        {
+            PlayerController.instance.isSteeringRaft = false;
             PullRaftToShore();
+        } 
 
         SteeringInteraction();
     }
@@ -102,6 +110,11 @@ public class RaftController : MonoBehaviour
         {
             if (p1distance < 1f || p2distance < 1f || p3distance < 1f || p4distance < 1f)
             {
+                if (!SoundManager.instance.soundFxSource.isPlaying && Time.time > 5f)
+                {
+                    SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[11];
+                    SoundManager.instance.soundFxSource.Play();
+                }
                 rudderInteractText.SetActive(true);
             }
             else
@@ -119,8 +132,15 @@ public class RaftController : MonoBehaviour
     {
         if (!IscollidingWithWall)
         {
-            transform.position = Vector2.MoveTowards(transform.position, hookThrowerTransform.position,
+            PlayerController.instance.RaftIsPulled = true;
+            PlayerController.instance.isOnRaft = false;
+            rb.MovePosition(transform.position + Vector3.down *
                 Time.deltaTime * 1);
+        }
+        else
+        {
+            PlayerController.instance.RaftIsPulled = false;
+            PlayerController.instance.isOnRaft = true;
         }
     }
 
@@ -144,8 +164,15 @@ public class RaftController : MonoBehaviour
 
         if (collision.gameObject.tag.Equals("Hook"))
         {
+            raftAudio.clip = SoundManager.instance.soundFx[8];
+            raftAudio.Play();
             HookThrower.BoatHooked = true;
             Debug.Log("Hooked!");
+        }
+        else if (collision.gameObject.tag.Equals("Weapon"))
+        {
+            raftAudio.clip = SoundManager.instance.soundFx[8];
+            raftAudio.Play();
         }
         else if (collision.gameObject.tag.Equals("Pickup"))
             Debug.Log("IgnoreColling pick up for now."); 
@@ -155,7 +182,20 @@ public class RaftController : MonoBehaviour
             if (playerCounter == AttackScript.players.Count)
                 allPlayersOnRaft = true;
         }
-            
+    }
 
+    public Vector2 GetRaftPos()
+    {
+        return transform.position;
+    }
+
+    public Vector2 GetRaftColliderBoundSize()
+    {
+        return raftCollider.bounds.size;
+    }
+
+    public Collider2D GetRaftCollider()
+    {
+        return raftCollider;
     }
 }

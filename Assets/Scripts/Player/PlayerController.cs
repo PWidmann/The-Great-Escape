@@ -20,11 +20,15 @@ public class PlayerController : MonoBehaviour
     public bool raftCanMove = true;
     public BoxCollider2D collider;
 
+    public static PlayerController instance = null;
+    bool raftIsPulled = false;
     
 
     //User Interface
 
     public float playerHealth = 100;
+
+    public bool RaftIsPulled { get => raftIsPulled; set => raftIsPulled = value; }
 
     void Start()
     {
@@ -36,6 +40,9 @@ public class PlayerController : MonoBehaviour
             playerControls = GetPlayerController();
             DestroyPlayerObjectIfNotActive();
         }
+
+        if (instance == null)
+            instance = this;
     }
 
     void Update()
@@ -203,7 +210,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Player unable to fall off the raft.
-        if (isOnRaft)
+        if (isOnRaft || RaftIsPulled)
         {
             if (transform.position.x >= raft.transform.position.x + collider.bounds.size.x / 
                 raft.transform.localScale.x)
@@ -262,8 +269,11 @@ public class PlayerController : MonoBehaviour
 
         if (playerControls == "Keyboard")
         {
-            if (distance < 1f && Input.GetKeyDown(KeyCode.E) && !RaftController.instance.raftIsInUse && !isSteeringRaft)
+            if (distance < 1f && Input.GetKeyDown(KeyCode.E) && !RaftController.instance.raftIsInUse && !isSteeringRaft
+                && !HookThrower.BoatHooked)
             {
+                SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
+                SoundManager.instance.soundFxSource.Play();
                 isSteeringRaft = true;
                 RaftController.instance.raftIsInUse = true;
                 RaftController.instance.raftUser = playerNumber.ToString();
@@ -271,6 +281,8 @@ public class PlayerController : MonoBehaviour
             }
             else if (isSteeringRaft && Input.GetKeyDown(KeyCode.E))
             {
+                SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
+                SoundManager.instance.soundFxSource.Play();
                 isSteeringRaft = false;
                 RaftController.instance.raftIsInUse = false;
                 RaftController.instance.raftUser = null;
@@ -279,8 +291,11 @@ public class PlayerController : MonoBehaviour
         }
         else // Gamepad
         {
-            if (distance < 1f && Input.GetButtonDown(playerControls + "ButtonA") && !RaftController.instance.raftIsInUse && !isSteeringRaft)
+            if (distance < 1f && Input.GetButtonDown(playerControls + "ButtonA") && !RaftController.instance.raftIsInUse && 
+                !isSteeringRaft && !HookThrower.BoatHooked)
             {
+                SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
+                SoundManager.instance.soundFxSource.Play();
                 isSteeringRaft = true;
                 RaftController.instance.raftIsInUse = true;
                 RaftController.instance.raftUser = playerNumber.ToString();
@@ -288,6 +303,8 @@ public class PlayerController : MonoBehaviour
             }
             else if (isSteeringRaft && Input.GetButtonDown(playerControls + "ButtonA"))
             {
+                SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
+                SoundManager.instance.soundFxSource.Play();
                 isSteeringRaft = false;
                 RaftController.instance.raftIsInUse = false;
                 RaftController.instance.raftUser = null;
