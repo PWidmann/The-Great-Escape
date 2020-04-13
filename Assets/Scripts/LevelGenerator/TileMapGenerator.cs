@@ -12,6 +12,7 @@ public class TileMapGenerator : MonoBehaviour
 
     [Header("Map Tiles")]
     public Tile[] tileArray = new Tile[10];
+    public AnimatedTile[] animatedTileArray = new AnimatedTile[10];
     public Tilemap groundTilemap;
     public Tilemap waterTilemap;
     public float mapWidth;
@@ -70,11 +71,12 @@ public class TileMapGenerator : MonoBehaviour
                 {
                     case 0:
                         // Set grass tile
-                        groundTilemap.SetTile(new Vector3Int(x, y, 0), tileArray[0]);
+                        int rnd = Random.Range(0, 3);
+                        groundTilemap.SetTile(new Vector3Int(x, y, 0), tileArray[rnd]);
                         break;
                     case 1:
                         // Set water tile
-                        waterTilemap.SetTile(new Vector3Int(x, y, 0), tileArray[1]);
+                        waterTilemap.SetTile(new Vector3Int(x, y, 0), animatedTileArray[0]);
                         break;
                     default:
                         break;
@@ -111,7 +113,8 @@ public class TileMapGenerator : MonoBehaviour
         if (player4)
             player4.position = new Vector3(-10, 8);
 
-        raft.transform.position = new Vector2(riverStart.x + 5, riverStart.y + 7);
+        // Place raft
+        raft.transform.position = new Vector2(riverStart.x + 6, riverStart.y + 7);
 
         int riverHeightChange = 1;
 

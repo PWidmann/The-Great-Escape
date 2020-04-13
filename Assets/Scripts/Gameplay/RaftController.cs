@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class RaftController : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class RaftController : MonoBehaviour
     public bool raftIsInUse = false;
     public string raftUser;
     public Transform rudder;
+    public Sprite[] rudderSpriteArray = new Sprite[2];
+    public SpriteRenderer rudderSprite;
     public Rigidbody2D rb;
     public Vector3 change = Vector3.zero;
     public int moveSpeed = 15;
@@ -78,6 +81,7 @@ public class RaftController : MonoBehaviour
         } 
 
         SteeringInteraction();
+        RudderMovement(change);
     }
 
     void SteeringInteraction()
@@ -142,6 +146,26 @@ public class RaftController : MonoBehaviour
             PlayerController.instance.RaftIsPulled = false;
             PlayerController.instance.isOnRaft = true;
         }
+    }
+
+    void RudderMovement(Vector3 change)
+    {
+        // Change rudder sprite depending on movement
+        if (change.y == 0f)
+        {
+            rudderSprite.sprite = rudderSpriteArray[0];
+        }
+
+        if (change.y > 0f)
+        {
+            rudderSprite.sprite = rudderSpriteArray[2];
+        }
+
+        if (change.y < 0f)
+        {
+            rudderSprite.sprite = rudderSpriteArray[1];
+        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

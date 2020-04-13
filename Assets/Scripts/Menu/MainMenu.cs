@@ -6,7 +6,9 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    int selectedButton = 1;
+    int mainSelectedButton = 1;
+    int optionSelected = 1;
+
     public static MainMenu instance = null;
 
     [Header("Start Button")]
@@ -21,12 +23,31 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Button quitButton;
     [SerializeField] Text quitButtonText;
 
+    [Header("Options Menu")]
+    [SerializeField] Image masterVolumeSliderImage;
+    [SerializeField] Image musicVolumeSliderImage;
+    [SerializeField] Image soundFxVolumeSliderImage;
+    [SerializeField] Button saveButton;
+    [SerializeField] Text saveButtonText;
+    [SerializeField] Text masterVolumeText;
+    [SerializeField] Text musicVolumeText;
+    [SerializeField] Text soundFxVolumeText;
+
+    [Header("Sound Values")]
+    [SerializeField] Slider masterVolumeSlider;
+    [SerializeField] Slider musicVolumeSlider;
+    [SerializeField] Slider soundFxVolumeSlider;
+
+
     // Gamepad
     bool oneTimeStickMovement = false;
     static bool controllerMovementStopped = false;
 
-    public int SelectedButton { get => selectedButton; set => selectedButton = value; }
+    public int MainMenuSelectedButton { get => mainSelectedButton; set => mainSelectedButton = value; }
+    public int OptionMenuSelectedButton { get => optionSelected; set => optionSelected = value; }
     public static bool ControllerMovementStopped { get => controllerMovementStopped; set => controllerMovementStopped = value; }
+
+    bool optionsMenu = false;
 
     private void Awake()
     {
@@ -46,7 +67,8 @@ public class MainMenu : MonoBehaviour
         KeyboardInput();
         ControllerInput();
 
-        ChangeButtonAppearance(SelectedButton);
+        ChangeButtonAppearance(MainMenuSelectedButton, OptionMenuSelectedButton);
+        ChangeSlider();
     }
 
     /// <summary>
@@ -62,6 +84,9 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     public void ButtonOptions()
     {
+        optionsMenu = true;
+        optionSelected = 1;
+
         UIManagement.instance.startButton.gameObject.SetActive(false);
         UIManagement.instance.optionButton.gameObject.SetActive(false);
         UIManagement.instance.quitButton.gameObject.SetActive(false);
@@ -96,48 +121,81 @@ public class MainMenu : MonoBehaviour
         UIManagement.instance.optionButton.gameObject.SetActive(true);
         UIManagement.instance.quitButton.gameObject.SetActive(true);
 
+        optionsMenu = false;
     }
     void KeyboardInput()
     {
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) && !controllerMovementStopped)
         {
             SoundManager.instance.PlayMenuPointerSoundFx();
-            SelectedButton -= 1;
-
-            if (SelectedButton == 0)
+            if (optionsMenu)
             {
-                SelectedButton = 3;
+                OptionMenuSelectedButton -= 1;
+                if (OptionMenuSelectedButton == 0)
+                {
+                    OptionMenuSelectedButton = 4;
+                }
+            }
+            else
+            {
+                MainMenuSelectedButton -= 1;
+
+                if (MainMenuSelectedButton == 0)
+                {
+                    MainMenuSelectedButton = 3;
+                }
             }
         }
 
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) && !controllerMovementStopped)
         {
             SoundManager.instance.PlayMenuPointerSoundFx();
-            SelectedButton += 1;
-
-            if (SelectedButton == 4)
+            if (optionsMenu)
             {
-                SelectedButton = 1;
+                OptionMenuSelectedButton += 1;
+                if (OptionMenuSelectedButton == 5)
+                {
+                    OptionMenuSelectedButton = 1;
+                }
+            }
+            else
+            {
+                MainMenuSelectedButton += 1;
+
+                if (MainMenuSelectedButton == 4)
+                {
+                    MainMenuSelectedButton = 1;
+                }
             }
         }
 
         // Confirm selected button
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            switch (SelectedButton)
+            if (optionsMenu)
             {
-                case 1:
-                    SoundManager.instance.PlayMenuClickSoundFx();
-                    ButtonStart();
-                    break;
-                case 2:
-                    SoundManager.instance.PlayMenuClickSoundFx();
-                    ButtonOptions();
-                    break;
-                case 3:
-                    SoundManager.instance.PlayMenuClickSoundFx();
-                    ButtonQuit();
-                    break;
+                if (optionSelected == 4)
+                {
+                    ButtonSaveSettings();
+                }
+            }
+            else
+            {
+                switch (MainMenuSelectedButton)
+                {
+                    case 1:
+                        SoundManager.instance.PlayMenuClickSoundFx();
+                        ButtonStart();
+                        break;
+                    case 2:
+                        SoundManager.instance.PlayMenuClickSoundFx();
+                        ButtonOptions();
+                        break;
+                    case 3:
+                        SoundManager.instance.PlayMenuClickSoundFx();
+                        ButtonQuit();
+                        break;
+                }
             }
         }
     }
@@ -147,11 +205,24 @@ public class MainMenu : MonoBehaviour
         // Up
         if (Input.GetAxisRaw("J1Vertical") < 0 && !oneTimeStickMovement && !controllerMovementStopped)
         {
-            SelectedButton += 1;
+            
             SoundManager.instance.PlayMenuPointerSoundFx();
-            if (SelectedButton == 4)
+
+            if (optionsMenu)
             {
-                SelectedButton = 1;
+                OptionMenuSelectedButton += 1;
+                if (OptionMenuSelectedButton == 5)
+                {
+                    OptionMenuSelectedButton = 1;
+                }
+            }
+            else
+            {
+                MainMenuSelectedButton += 1;
+                if (MainMenuSelectedButton == 4)
+                {
+                    MainMenuSelectedButton = 1;
+                }
             }
 
             oneTimeStickMovement = true;
@@ -161,32 +232,53 @@ public class MainMenu : MonoBehaviour
         if (Input.GetAxisRaw("J1Vertical") > 0 && !oneTimeStickMovement && !controllerMovementStopped)
         {
             SoundManager.instance.PlayMenuPointerSoundFx();
-            SelectedButton -= 1;
-            if (SelectedButton == 0)
-            {
-                SelectedButton = 3;
-            }
 
+            if (optionsMenu)
+            {
+                OptionMenuSelectedButton -= 1;
+                if (OptionMenuSelectedButton == 0)
+                {
+                    OptionMenuSelectedButton = 4;
+                }
+            }
+            else
+            {
+                MainMenuSelectedButton -= 1;
+                if (MainMenuSelectedButton == 0)
+                {
+                    MainMenuSelectedButton = 3;
+                }
+            }
             oneTimeStickMovement = true;
         }
 
         // A Button
         if (Input.GetButtonDown("J1ButtonA"))
         {
-            switch (SelectedButton)
+            if (optionsMenu)
             {
-                case 1:
-                    SoundManager.instance.PlayMenuClickSoundFx();
-                    ButtonStart();
-                    break;
-                case 2:
-                    SoundManager.instance.PlayMenuClickSoundFx();
-                    ButtonOptions();
-                    break;
-                case 3:
-                    SoundManager.instance.PlayMenuClickSoundFx();
-                    ButtonQuit();
-                    break;
+                if (optionSelected == 4)
+                {
+                    ButtonSaveSettings();
+                }
+            }
+            else
+            {
+                switch (MainMenuSelectedButton)
+                {
+                    case 1:
+                        SoundManager.instance.PlayMenuClickSoundFx();
+                        ButtonStart();
+                        break;
+                    case 2:
+                        SoundManager.instance.PlayMenuClickSoundFx();
+                        ButtonOptions();
+                        break;
+                    case 3:
+                        SoundManager.instance.PlayMenuClickSoundFx();
+                        ButtonQuit();
+                        break;
+                }
             }
         }
 
@@ -197,32 +289,91 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    void ChangeButtonAppearance(int _selectedButton)
+    void ChangeButtonAppearance(int _selectedButton, int _optionSelected)
     {
-        switch (_selectedButton)
+        if (optionsMenu)
         {
-            case 1:
-                ColorTurnSelected(startButton, startButtonText);
+            switch (_optionSelected)
+            {
+                case 1:
+                    SliderColorTurnSelected(masterVolumeSliderImage, masterVolumeText);
 
-                ColorTurnUnselected(optionsButton, optionsButtonText);
-                ColorTurnUnselected(quitButton, quitButtonText);
-                break;
-            case 2:
-                ColorTurnSelected(optionsButton, optionsButtonText);
+                    SliderColorTurnUnselected(musicVolumeSliderImage, musicVolumeText);
+                    SliderColorTurnUnselected(soundFxVolumeSliderImage, soundFxVolumeText);
+                    ButtonColorTurnUnselected(saveButton, saveButtonText);
+                    break;
+                case 2:
+                    SliderColorTurnSelected(musicVolumeSliderImage, musicVolumeText);
 
-                ColorTurnUnselected(startButton, startButtonText);
-                ColorTurnUnselected(quitButton, quitButtonText);
-                break;
-            case 3:
-                ColorTurnSelected(quitButton, quitButtonText);
+                    SliderColorTurnUnselected(masterVolumeSliderImage, masterVolumeText);
+                    SliderColorTurnUnselected(soundFxVolumeSliderImage, soundFxVolumeText);
+                    ButtonColorTurnUnselected(saveButton, saveButtonText);
+                    break;
+                case 3:
+                    SliderColorTurnSelected(soundFxVolumeSliderImage, soundFxVolumeText);
 
-                ColorTurnUnselected(startButton, startButtonText);
-                ColorTurnUnselected(optionsButton, optionsButtonText);
-                break;
+                    SliderColorTurnUnselected(masterVolumeSliderImage, masterVolumeText);
+                    SliderColorTurnUnselected(musicVolumeSliderImage, musicVolumeText);
+                    ButtonColorTurnUnselected(saveButton, saveButtonText);
+                    break;
+                case 4:
+                    ButtonColorTurnSelected(saveButton, saveButtonText);
+
+                    SliderColorTurnUnselected(masterVolumeSliderImage, masterVolumeText);
+                    SliderColorTurnUnselected(musicVolumeSliderImage, musicVolumeText);
+                    SliderColorTurnUnselected(soundFxVolumeSliderImage, soundFxVolumeText);
+                    break;
+            }
+        }
+        else
+        {
+            switch (_selectedButton)
+            {
+                case 1:
+                    ButtonColorTurnSelected(startButton, startButtonText);
+
+                    ButtonColorTurnUnselected(optionsButton, optionsButtonText);
+                    ButtonColorTurnUnselected(quitButton, quitButtonText);
+                    break;
+                case 2:
+                    ButtonColorTurnSelected(optionsButton, optionsButtonText);
+
+                    ButtonColorTurnUnselected(startButton, startButtonText);
+                    ButtonColorTurnUnselected(quitButton, quitButtonText);
+                    break;
+                case 3:
+                    ButtonColorTurnSelected(quitButton, quitButtonText);
+
+                    ButtonColorTurnUnselected(startButton, startButtonText);
+                    ButtonColorTurnUnselected(optionsButton, optionsButtonText);
+                    break;
+            }
         }
     }
 
-    public void ColorTurnSelected(Button btn, Text txt)
+    void ChangeSlider()
+    {
+        if (optionsMenu)
+        {
+            switch (optionSelected)
+            {
+                case 1:
+                    masterVolumeSlider.value += Input.GetAxisRaw("J1Horizontal");
+                    masterVolumeSlider.value += Input.GetAxisRaw("Horizontal");
+                    break;
+                case 2:
+                    musicVolumeSlider.value += Input.GetAxisRaw("J1Horizontal");
+                    musicVolumeSlider.value += Input.GetAxisRaw("Horizontal");
+                    break;
+                case 3:
+                    soundFxVolumeSlider.value += Input.GetAxisRaw("J1Horizontal");
+                    soundFxVolumeSlider.value += Input.GetAxisRaw("Horizontal");
+                    break;
+            }
+        }
+    }
+
+    public void ButtonColorTurnSelected(Button btn, Text txt)
     {
         //Button Color
         ColorBlock colors = btn.colors;
@@ -233,7 +384,7 @@ public class MainMenu : MonoBehaviour
         txt.color = Color.white;
     }
 
-    public void ColorTurnUnselected(Button btn, Text txt)
+    public void ButtonColorTurnUnselected(Button btn, Text txt)
     {
         //Button Color
         ColorBlock colors = btn.colors;
@@ -244,13 +395,30 @@ public class MainMenu : MonoBehaviour
         txt.color = Color.black;
     }
 
+    public void SliderColorTurnSelected(Image slider, Text txt)
+    {
+        //Slider Color
+        slider.color = Color.white;
+
+        txt.color = Color.white;
+    }
+
+    public void SliderColorTurnUnselected(Image slider, Text txt)
+    {
+        //Slider Color
+        slider.color = new Color32(114, 114, 114, 255);
+
+        txt.color = new Color32(114, 114, 114, 255);
+    }
+
+
     /// <summary>
     /// On pointer event function. Highlights the button over which the mouse hovers or points.
     /// </summary>
     /// <param name="selectedButton">the button that's selected int</param>
     public void SelectButtonDisplay(int selectedButton)
     {
-        SelectedButton = selectedButton;
+        MainMenuSelectedButton = selectedButton;
     }
 }
 
