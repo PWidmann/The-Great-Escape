@@ -2099,7 +2099,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileArray:
   - {fileID: 11400000, guid: f6e3da49cdbffd94b9c52a54d8372945, type: 2}
-  - {fileID: 11400000, guid: 923359e0cbf531441b2220c1c12e9354, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  animatedTileArray:
+  - {fileID: 11400000, guid: df9d579bebaedae4f915b602700eaee3, type: 2}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

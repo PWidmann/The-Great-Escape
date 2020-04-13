@@ -12,6 +12,7 @@ public class TileMapGenerator : MonoBehaviour
 
     [Header("Map Tiles")]
     public Tile[] tileArray = new Tile[10];
+    public AnimatedTile[] animatedTileArray = new AnimatedTile[10];
     public Tilemap groundTilemap;
     public Tilemap waterTilemap;
     public float mapWidth;
@@ -74,7 +75,7 @@ public class TileMapGenerator : MonoBehaviour
                         break;
                     case 1:
                         // Set water tile
-                        waterTilemap.SetTile(new Vector3Int(x, y, 0), tileArray[1]);
+                        waterTilemap.SetTile(new Vector3Int(x, y, 0), animatedTileArray[0]);
                         break;
                     default:
                         break;
