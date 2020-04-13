@@ -83,6 +83,8 @@ public class PlayerController : MonoBehaviour
                     SoundManager.instance.soundFxSource.Play();
                 }
 
+                
+
                 RaftController.instance.change = change;
 
                 //Move the character with the raft
@@ -296,6 +298,8 @@ public class PlayerController : MonoBehaviour
         }
         
     }
+
+    
 
     //For movement handling on raft
     void OnTriggerEnter2D(Collider2D other)
