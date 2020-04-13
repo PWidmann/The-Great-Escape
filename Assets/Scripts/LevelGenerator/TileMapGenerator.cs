@@ -71,7 +71,8 @@ public class TileMapGenerator : MonoBehaviour
                 {
                     case 0:
                         // Set grass tile
-                        groundTilemap.SetTile(new Vector3Int(x, y, 0), tileArray[0]);
+                        int rnd = Random.Range(0, 3);
+                        groundTilemap.SetTile(new Vector3Int(x, y, 0), tileArray[rnd]);
                         break;
                     case 1:
                         // Set water tile
