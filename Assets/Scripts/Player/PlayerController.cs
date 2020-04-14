@@ -22,7 +22,10 @@ public class PlayerController : MonoBehaviour
 
     public static PlayerController instance = null;
     bool raftIsPulled = false;
-    
+
+    //Animation
+    private Animator animator;
+    private bool isMoving = false;
 
     //User Interface
 
@@ -38,6 +41,7 @@ public class PlayerController : MonoBehaviour
             myRigidbody = GetComponent<Rigidbody2D>();
 
             playerControls = GetPlayerController();
+            animator = GetComponent<Animator>();
             DestroyPlayerObjectIfNotActive();
         }
 
@@ -80,10 +84,25 @@ public class PlayerController : MonoBehaviour
     {
         InputAxisHandling();
 
+        if (change != Vector3.zero && !isSteeringRaft)
+        {
+            isMoving = true;
+            animator.SetFloat("moveX", change.x);
+            animator.SetFloat("moveY", change.y);
+            animator.SetBool("isMoving", true);
+        }
+        else
+        {
+            isMoving = false;
+            animator.SetBool("isMoving", false);
+        }
+
         if (isOnRaft)
         {
             if (isSteeringRaft)
             {
+                animator.SetFloat("moveX", 0.1f);
+
                 if ((change.x > 0 || change.y > 0) && !SoundManager.instance.soundFxSource.isPlaying)
                 {
                     SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[4];
