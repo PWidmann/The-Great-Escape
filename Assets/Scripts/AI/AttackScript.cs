@@ -212,4 +212,15 @@ public class AttackScript : MonoBehaviour
         hasTargetLocked = false;
         weaponDisabled = false;
     }
+
+    public void KeepAIDisabled()
+    {
+        gameObject.SetActive(false);
+        weaponDisabled = true;
+        PlayerTracker.IsColliding = false;
+        foreach (GameObject player in players)
+        {
+            player.GetComponent<PlayerTracker>().WeaponMoving = false;
+        }
+    }
 }

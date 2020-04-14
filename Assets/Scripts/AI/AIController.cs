@@ -7,8 +7,10 @@ public class AIController : MonoBehaviour
 {
     public UnityEvent AttackTrigger;
     public UnityEvent RunTrigger;
+    public UnityEvent DebugTestingTrigger; // Turns off AI for other tests in our game.
 
     [HideInInspector] public bool isChecked;
+    [SerializeField] bool isDebugging;
 
     public static AIController instance;
 
@@ -21,7 +23,9 @@ public class AIController : MonoBehaviour
     {
         if (HookThrower.BoatHooked)
             AttackTrigger.Invoke();
-        else if (!HookThrower.BoatHooked && RaftController.AllPlayersOnRaft)
+        else if (!HookThrower.BoatHooked && RaftController.AllPlayersOnRaft && !isDebugging)
             RunTrigger.Invoke();
+        else if (isDebugging)
+            DebugTestingTrigger.Invoke();
     }
 }
