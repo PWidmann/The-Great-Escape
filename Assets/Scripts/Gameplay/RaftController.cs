@@ -39,6 +39,8 @@ public class RaftController : MonoBehaviour
     float soundFxReplayTimer = 1.5f;
     float nextRudderInteractSoundfx = 0f;
 
+    [SerializeField] AIController aIController;
+
     static bool hookMoving = false;
     static bool iscollidingWithWall = false; // Preventing the raft to collide multiple times when pulled to shore.
     static bool allPlayersOnRaft = false;
@@ -206,12 +208,11 @@ public class RaftController : MonoBehaviour
         {
             raftAudio.clip = SoundManager.instance.soundFx[8];
             raftAudio.Play();
-            IsHitByStone = true;
 
         }
         else if (collision.gameObject.tag.Equals("Pickup"))
             Debug.Log("IgnoreColling pick up for now."); 
-        else if (collision.gameObject.name.Equals(AttackScript.GetActivePlayers().name))
+        else if (aIController.isChecked && collision.gameObject.name.Equals(AttackScript.GetActivePlayers().name))
         {
             playerCounter++;
             if (playerCounter == AttackScript.players.Count)

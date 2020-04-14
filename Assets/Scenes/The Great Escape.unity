@@ -542,7 +542,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &211486111
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,7 +663,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &221100775
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,7 +784,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &291808055
 GameObject:
   m_ObjectHideFlags: 0
@@ -908,7 +905,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &317905200
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,7 +1026,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &418068500
 GameObject:
   m_ObjectHideFlags: 0
@@ -1345,7 +1340,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &446217819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1467,7 +1461,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &457994202
 GameObject:
   m_ObjectHideFlags: 0
@@ -1589,7 +1582,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &513284229
 GameObject:
   m_ObjectHideFlags: 0
@@ -2122,7 +2114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &620875608
 GameObject:
   m_ObjectHideFlags: 0
@@ -2450,7 +2441,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &672246462
 GameObject:
   m_ObjectHideFlags: 0
@@ -2602,7 +2592,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &870928337
 GameObject:
   m_ObjectHideFlags: 0
@@ -2874,6 +2863,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1008975797}
+  - component: {fileID: 1008975798}
   m_Layer: 9
   m_Name: HoleObjects
   m_TagString: Untagged
@@ -2922,6 +2912,48 @@ Transform:
   m_Father: {fileID: 2070067097}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1008975798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008975796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa1bbe5e43340cc41934600b59fd074c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holes:
+  - {fileID: 1916889790}
+  - {fileID: 1212205288}
+  - {fileID: 2076617772}
+  - {fileID: 211486111}
+  - {fileID: 566369866}
+  - {fileID: 221100775}
+  - {fileID: 446217819}
+  - {fileID: 1109251624}
+  - {fileID: 457994202}
+  - {fileID: 627781450}
+  - {fileID: 1514353266}
+  - {fileID: 2144822791}
+  - {fileID: 1461185199}
+  - {fileID: 317905200}
+  - {fileID: 1107848117}
+  - {fileID: 1690261756}
+  - {fileID: 1846378002}
+  - {fileID: 1707515634}
+  - {fileID: 436340150}
+  - {fileID: 2003777069}
+  - {fileID: 2060054386}
+  - {fileID: 291808055}
+  - {fileID: 761911670}
+  - {fileID: 1293929838}
+  - {fileID: 143981665}
+  - {fileID: 1868051095}
+  - {fileID: 1662901174}
+  attackScriptHookThrowerReference: {fileID: 1449051077}
+  attackScriptStoneThrowerReference: {fileID: 1449051075}
 --- !u!1 &1028916058
 GameObject:
   m_ObjectHideFlags: 0
@@ -3148,7 +3180,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &1109251624
 GameObject:
   m_ObjectHideFlags: 0
@@ -3270,7 +3301,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1001 &1124395101
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3697,7 +3727,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &1219943817
 GameObject:
   m_ObjectHideFlags: 0
@@ -3896,7 +3925,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &1389314835
 GameObject:
   m_ObjectHideFlags: 0
@@ -4470,6 +4498,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
         type: 3}
+      propertyPath: holes.Array.size
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
       propertyPath: aiController
       value: 
       objectReference: {fileID: 1124395102}
@@ -4498,6 +4531,141 @@ PrefabInstance:
       propertyPath: raftControllerReference
       value: 
       objectReference: {fileID: 2070067100}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[0]
+      value: 
+      objectReference: {fileID: 1916889790}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[1]
+      value: 
+      objectReference: {fileID: 1212205288}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[2]
+      value: 
+      objectReference: {fileID: 2076617772}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[3]
+      value: 
+      objectReference: {fileID: 211486111}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[4]
+      value: 
+      objectReference: {fileID: 566369866}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[5]
+      value: 
+      objectReference: {fileID: 221100775}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[6]
+      value: 
+      objectReference: {fileID: 446217819}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[7]
+      value: 
+      objectReference: {fileID: 1109251624}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[8]
+      value: 
+      objectReference: {fileID: 457994202}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[9]
+      value: 
+      objectReference: {fileID: 627781450}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[10]
+      value: 
+      objectReference: {fileID: 1514353266}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[11]
+      value: 
+      objectReference: {fileID: 2144822791}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[12]
+      value: 
+      objectReference: {fileID: 1461185199}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[13]
+      value: 
+      objectReference: {fileID: 317905200}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[14]
+      value: 
+      objectReference: {fileID: 1107848117}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[15]
+      value: 
+      objectReference: {fileID: 1690261756}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[16]
+      value: 
+      objectReference: {fileID: 1846378002}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[17]
+      value: 
+      objectReference: {fileID: 1707515634}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[18]
+      value: 
+      objectReference: {fileID: 436340150}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[19]
+      value: 
+      objectReference: {fileID: 2003777069}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[20]
+      value: 
+      objectReference: {fileID: 2060054386}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[21]
+      value: 
+      objectReference: {fileID: 291808055}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[22]
+      value: 
+      objectReference: {fileID: 761911670}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[23]
+      value: 
+      objectReference: {fileID: 1293929838}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[24]
+      value: 
+      objectReference: {fileID: 143981665}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[25]
+      value: 
+      objectReference: {fileID: 1868051095}
+    - target: {fileID: 875218373475308882, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: holes.Array.data[26]
+      value: 
+      objectReference: {fileID: 1662901174}
     - target: {fileID: 875218374138412044, guid: d1938bc31a041424595173b905400a6f,
         type: 3}
       propertyPath: "targetflo\xDFObject"
@@ -5031,7 +5199,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &1464611051
 GameObject:
   m_ObjectHideFlags: 0
@@ -5391,7 +5558,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &1627520136
 GameObject:
   m_ObjectHideFlags: 0
@@ -5590,7 +5756,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &1690261756
 GameObject:
   m_ObjectHideFlags: 0
@@ -5712,7 +5877,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &1707515634
 GameObject:
   m_ObjectHideFlags: 0
@@ -5834,7 +5998,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &1765170562
 GameObject:
   m_ObjectHideFlags: 0
@@ -6007,7 +6170,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &1868051095
 GameObject:
   m_ObjectHideFlags: 0
@@ -6129,7 +6291,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &1916889790
 GameObject:
   m_ObjectHideFlags: 0
@@ -6251,7 +6412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &1969949623
 GameObject:
   m_ObjectHideFlags: 0
@@ -6450,7 +6610,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &2038882284
 GameObject:
   m_ObjectHideFlags: 0
@@ -6765,7 +6924,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!1 &2070067095
 GameObject:
   m_ObjectHideFlags: 0
@@ -6940,6 +7098,7 @@ MonoBehaviour:
   player3transform: {fileID: 119013013}
   player4transform: {fileID: 2038882285}
   hookThrowerTransform: {fileID: 2128353052}
+  aIController: {fileID: 1124395102}
 --- !u!82 &2070067101
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7158,7 +7317,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}
 --- !u!4 &2128353052 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 875218373475308718, guid: d1938bc31a041424595173b905400a6f,
@@ -7286,4 +7444,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef40515f062c98d4aa3534108e0514e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raftControllerReference: {fileID: 2070067100}

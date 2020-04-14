@@ -30,9 +30,8 @@ public class AttackScript : MonoBehaviour
 
     float coolDownTimeInSeconds = 5f;
     float nextThrowAfterCooldown = 10f;
-    float randomNumberInRaftBoundsX;
-    float randomNumberInRaftBoundsY;
     int randomPlayerNumber;
+    int randomHoleNumber;
 
     PlayerHandler playerHandler;
     Vector2 target;
@@ -41,7 +40,9 @@ public class AttackScript : MonoBehaviour
     bool hasNoWeaponInHand = false;
     Collider2D stoneCollider;
     bool instantiatedStoneHasColliderComponent = false;
-    LayerMask layer;
+
+    public Vector2 Target { get => target; set => target = value; }
+    public int RandomHoleNumber { get => randomHoleNumber; set => randomHoleNumber = value; }
 
     private void Start()
     {
@@ -74,15 +75,8 @@ public class AttackScript : MonoBehaviour
                 }
                 nextThrowAfterCooldown = Time.time + coolDownTimeInSeconds;
 
-                // Offset of throw in x dirction
-                randomNumberInRaftBoundsX = Random.Range(-RaftController.instance.GetRaftColliderBoundSize().x,
-                    RaftController.instance.GetRaftColliderBoundSize().x);
-
-                // Offset in y direction
-                randomNumberInRaftBoundsY = Random.Range(-RaftController.instance.GetRaftColliderBoundSize().y,
-                    RaftController.instance.GetRaftColliderBoundSize().y);
-
-
+                // Picks the a random Hole-GameObject as target.
+                RandomHoleNumber = Random.Range(0, HoleManager.Instance.holes.Count);
             }
         }
         else if (gameObject.GetComponent<SpearThrower>() is SpearThrower)
@@ -109,23 +103,12 @@ public class AttackScript : MonoBehaviour
 
     void ThrowWeapon(GameObject weapon, Vector3 start, Vector3 target, float hitAccuracy, float throwSpeed)
     {
-        if (!hasNoWeaponInHand)
+        if (!hasNoWeaponInHand && gameObject.activeSelf)
         {
             audio.clip = SoundManager.instance.soundFx[5];
             audio.Play();
         }
-
-        /*if ((weapon.tag.Equals("Stone") && Vector2.Distance(weapon.transform.position, target) >= 0.5f) || 
-            RaftController.instance.IsHitByStone)
-        {
-            stone.layer = LayerMask.NameToLayer("IgnoreCollision");
-        }
-        else
-        (weapon.tag.Equals("Stone") && Vector2.Distance(weapon.transform.position, target) < 0.5f)
-        {
-            stone.layer = LayerMask.NameToLayer("Default");
-            //DissableWeapon(weapon);
-        }*/
+        hasTargetLocked = true;
         weapon.GetComponent<Rigidbody2D>().AddForce((target - start) * hitAccuracy * throwSpeed);
         hasNoWeaponInHand = true;
         foreach (GameObject player in players)
@@ -133,9 +116,9 @@ public class AttackScript : MonoBehaviour
             player.GetComponent<PlayerTracker>().WeaponMoving = true;
         }
         Debug.Log("Weapon: " + weapon);
-        if (weapon.tag.Equals("Spear") && weapon.transform.position.y >= target.y && !PlayerTracker.IsColliding)
+        if (weapon.tag.Equals("Spear") && weapon.transform.position.y > target.y && !PlayerTracker.IsColliding)
             DissableWeapon(weapon);
-        else if (weapon.tag.Equals("Stone") && weapon.transform.position.y >= target.y)
+        else if (weapon.tag.Equals("Stone") && weapon.transform.position.y > target.y)
             DissableWeapon(weapon);
     }
 
@@ -160,19 +143,18 @@ public class AttackScript : MonoBehaviour
             {
                 if (weapon.tag.Equals("Stone"))
                 {
-                    target = new Vector2(RaftController.instance.GetRaftPos().x + randomNumberInRaftBoundsX,
-                        RaftController.instance.GetRaftPos().y + randomNumberInRaftBoundsY);
-                    hasTargetLocked = true;
+                    Target = HoleManager.Instance.holes[RandomHoleNumber].transform.position;
+                    //hasTargetLocked = true;
                 }
                 else
                 {
-                    target = players[randomPlayerNumber].GetComponent<PlayerTracker>().GetPlayerPos();
-                    hasTargetLocked = true;
+                    Target = players[randomPlayerNumber].GetComponent<PlayerTracker>().GetPlayerPos();
+                    //hasTargetLocked = true;
                 }
             }
         }
-        if (weapon != null && hasTargetLocked)
-            ThrowWeapon(weapon, weapon.transform.position, target,
+        if (weapon != null)
+            ThrowWeapon(weapon, weapon.transform.position, Target,
                 aiController.hitAccuracy, 1);
     }
 
@@ -204,12 +186,7 @@ public class AttackScript : MonoBehaviour
     public void DissableWeapon(GameObject weapon)
     {
         weapon.SetActive(false);
-        if (weapon.tag.Equals("Stone"))
-            RaftController.instance.IsHitByStone = false;
         PlayerTracker.IsColliding = false;
-        weaponInstantiated = false;
-        hasTargetLocked = false;
-        hasNoWeaponInHand = false;
         foreach (GameObject player in players)
         {
             player.GetComponent<PlayerTracker>().WeaponMoving = false;
@@ -219,5 +196,7 @@ public class AttackScript : MonoBehaviour
     public void EnableWeapon(GameObject weapon)
     {
         weapon.SetActive(true);
+        hasNoWeaponInHand = false;
+        hasTargetLocked = false;
     }
 }

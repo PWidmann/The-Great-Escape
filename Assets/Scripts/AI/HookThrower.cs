@@ -35,14 +35,13 @@ public class HookThrower : MonoBehaviour
     static bool boatHooked = false;
     static bool hookInstantiated = false;
 
-    [Range(1f, 10f)] public float hookThrowSpeed = 5f;
+    [Range(1f, 10f)] public float hookThrowSpeed = 8f;
 
     bool isInstantiating = false; // used to control the sequence of update instructions.
     bool hasTargetLocked = false; // used to make the hook not follow the raft when hook thrown.
     Vector2 target;
     bool hasNoHookInHand = false;
-    float randomNumberWithinRaftBoundsX;
-    float randomNumberWithinRaftBoundsY;
+    int randomHoleNumber;
 
     public static bool BoatHooked
     {
@@ -70,13 +69,8 @@ public class HookThrower : MonoBehaviour
         {
             Invoke("InstantiateHook", Random.Range(3f, 6f));
 
-            // Offset of throw in x dirction
-            randomNumberWithinRaftBoundsX = Random.Range(-RaftController.instance.GetRaftColliderBoundSize().x,
-                RaftController.instance.GetRaftColliderBoundSize().x);
-
-            // Offset in y direction
-            randomNumberWithinRaftBoundsY = Random.Range(-RaftController.instance.GetRaftColliderBoundSize().y,
-                RaftController.instance.GetRaftColliderBoundSize().y);
+            // Determines randomHoleNumber.
+            randomHoleNumber = Random.Range(0, HoleManager.Instance.holes.Count);
 
             isInstantiating = true;
         }
@@ -120,9 +114,7 @@ public class HookThrower : MonoBehaviour
     {
         if (!hasTargetLocked)
         {
-            target = target = new Vector2(RaftController.instance.GetRaftPos().x + randomNumberWithinRaftBoundsX,
-                        RaftController.instance.GetRaftPos().y + randomNumberWithinRaftBoundsY);
-            //hasTargetLocked = true;
+            target = HoleManager.Instance.holes[randomHoleNumber].transform.position;
         }
 
         if (!hasNoHookInHand)
@@ -130,10 +122,11 @@ public class HookThrower : MonoBehaviour
             hookThrowerSfx.clip = SoundManager.instance.soundFx[5];
             hookThrowerSfx.Play();
         }
+        hasTargetLocked = true;
         hook.transform.position = Vector2.MoveTowards(hook.transform.position,
             target * hitAccuracy, Time.deltaTime * throwSpeed);
         hasNoHookInHand = true;
-        hasTargetLocked = true;
+  
 
     }
 
