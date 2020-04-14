@@ -50,6 +50,7 @@ public class RaftController : MonoBehaviour
     public static bool IscollidingWithWall { get => iscollidingWithWall; set => iscollidingWithWall = value; }
     public static bool AllPlayersOnRaft { get => allPlayersOnRaft; set => allPlayersOnRaft = value; }
     public bool IsHitByStone { get => isHitByStone; set => isHitByStone = value; }
+    public AudioSource RaftAudio { get => raftAudio; set => raftAudio = value; }
 
     void Awake()
     {
@@ -65,7 +66,7 @@ public class RaftController : MonoBehaviour
         rudderInteractText.SetActive(false);
         lastPos = rb.position;
 
-        raftAudio = GetComponent<AudioSource>();
+        RaftAudio = GetComponent<AudioSource>();
         raftCollider = GetComponent<Collider2D>();
     }
     
@@ -199,15 +200,14 @@ public class RaftController : MonoBehaviour
 
         if (collision.gameObject.tag.Equals("Hook"))
         {
-            raftAudio.clip = SoundManager.instance.soundFx[8];
-            raftAudio.Play();
+            RaftAudio.clip = SoundManager.instance.soundFx[8];
+            RaftAudio.Play();
             HookThrower.BoatHooked = true;
             Debug.Log("Hooked!");
         }
         else if (collision.gameObject.tag.Equals("Stone"))
         {
-            raftAudio.clip = SoundManager.instance.soundFx[8];
-            raftAudio.Play();
+
 
         }
         else if (collision.gameObject.tag.Equals("Pickup"))
