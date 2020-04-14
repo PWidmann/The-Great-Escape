@@ -13,7 +13,7 @@ public class AIController : MonoBehaviour
     public static AIController instance;
 
     [Range(0.0f, 1f)] public float hitAccuracy;
-    [Range(1f, 5f)] public float throwSpeed;
+    [Range(1f, 1000f)] public float throwSpeed;
 
 
     // Update is called once per frame

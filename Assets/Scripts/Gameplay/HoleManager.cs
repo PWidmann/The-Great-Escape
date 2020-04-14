@@ -8,8 +8,10 @@ public class HoleManager : MonoBehaviour
     public List<GameObject> holes;
     public AttackScript attackScriptHookThrowerReference;
     public AttackScript attackScriptStoneThrowerReference;
+    int currentHoleListCount;
 
     public static HoleManager Instance { get => instance; }
+    public int CurrentHoleListCount { get => currentHoleListCount; set => currentHoleListCount = value; }
 
     private void Awake()
     {
@@ -17,5 +19,10 @@ public class HoleManager : MonoBehaviour
             instance = this;
         else if (instance != this)
             Destroy(this);
+    }
+
+    private void Start()
+    {
+        currentHoleListCount = holes.Count;
     }
 }

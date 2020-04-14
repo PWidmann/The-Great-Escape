@@ -15,7 +15,7 @@ public class RaftController : MonoBehaviour
     public SpriteRenderer rudderSprite;
     public Rigidbody2D rb;
     public Vector3 change = Vector3.zero;
-    public int moveSpeed = 15;
+    public float moveSpeed = 15f;
 
     public GameObject landTileMap;
 

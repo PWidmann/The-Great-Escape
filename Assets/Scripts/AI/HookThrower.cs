@@ -64,6 +64,13 @@ public class HookThrower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Prevent out of range exception by making sure that the indexes are always updated.
+        if (HoleManager.Instance.CurrentHoleListCount != HoleManager.Instance.holes.Count)
+        {
+            randomHoleNumber = Random.Range(0, HoleManager.Instance.holes.Count);
+            HoleManager.Instance.CurrentHoleListCount = HoleManager.Instance.holes.Count;
+        }
+
         // First instanitation of hook object.
         if (!hookInstantiated && !isInstantiating && RaftController.AllPlayersOnRaft) 
         {
@@ -75,7 +82,7 @@ public class HookThrower : MonoBehaviour
             isInstantiating = true;
         }
         else if (hookInstantiated && !boatHooked)
-            ThrowHook(aiController.hitAccuracy, hookThrowSpeed);
+            ThrowHook(aiController.hitAccuracy, aiController.throwSpeed);
 
         // When hook is instantiated and the hook doesn't hit the target then it gets destroyed.
         if (hookInstantiated)

@@ -3451,7 +3451,7 @@ PrefabInstance:
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
       propertyPath: throwSpeed
-      value: 3
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
@@ -4666,6 +4666,11 @@ PrefabInstance:
       propertyPath: holes.Array.data[26]
       value: 
       objectReference: {fileID: 1662901174}
+    - target: {fileID: 875218373475308883, guid: d1938bc31a041424595173b905400a6f,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 875218374138412044, guid: d1938bc31a041424595173b905400a6f,
         type: 3}
       propertyPath: "targetflo\xDFObject"

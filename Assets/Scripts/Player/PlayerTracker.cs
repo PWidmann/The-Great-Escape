@@ -27,7 +27,7 @@ public class PlayerTracker : MonoBehaviour
         if (collision.gameObject.tag.Equals("Weapon"))
         {
             isColliding = true;
-            AttackScript.instance.DissableWeapon(collision.gameObject);
+            AttackScript.instance.DisableWeapon(collision.gameObject);
             Debug.Log("Collsion!");
         }
     }

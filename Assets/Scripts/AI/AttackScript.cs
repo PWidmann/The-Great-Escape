@@ -40,9 +40,11 @@ public class AttackScript : MonoBehaviour
     bool hasNoWeaponInHand = false;
     Collider2D stoneCollider;
     bool instantiatedStoneHasColliderComponent = false;
+    bool weaponDisabled = false;
 
     public Vector2 Target { get => target; set => target = value; }
     public int RandomHoleNumber { get => randomHoleNumber; set => randomHoleNumber = value; }
+    public bool WeaponDisabled { get => weaponDisabled; set => weaponDisabled = value; }
 
     private void Start()
     {
@@ -109,7 +111,9 @@ public class AttackScript : MonoBehaviour
             audio.Play();
         }
         hasTargetLocked = true;
-        weapon.GetComponent<Rigidbody2D>().AddForce((target - start) * hitAccuracy * throwSpeed);
+        Vector2 direction = target - start;
+        direction.Normalize();
+        weapon.GetComponent<Rigidbody2D>().AddForce(direction * hitAccuracy * throwSpeed);
         hasNoWeaponInHand = true;
         foreach (GameObject player in players)
         {
@@ -117,15 +121,22 @@ public class AttackScript : MonoBehaviour
         }
         Debug.Log("Weapon: " + weapon);
         if (weapon.tag.Equals("Spear") && weapon.transform.position.y > target.y && !PlayerTracker.IsColliding)
-            DissableWeapon(weapon);
+            DisableWeapon(weapon);
         else if (weapon.tag.Equals("Stone") && weapon.transform.position.y > target.y)
-            DissableWeapon(weapon);
+            DisableWeapon(weapon);
     }
 
     void Update()
     {
         if (!aiController.isChecked)
             CheckForActivePlayers();
+
+        // Prevent out of range exception by making sure that the indexes are always updated.
+        if (HoleManager.Instance.CurrentHoleListCount != HoleManager.Instance.holes.Count)
+        {
+            randomHoleNumber = Random.Range(0, HoleManager.Instance.holes.Count);
+            HoleManager.Instance.CurrentHoleListCount = HoleManager.Instance.holes.Count;
+        }
     }
 
     private void FixedUpdate()
@@ -155,7 +166,7 @@ public class AttackScript : MonoBehaviour
         }
         if (weapon != null)
             ThrowWeapon(weapon, weapon.transform.position, Target,
-                aiController.hitAccuracy, 1);
+                aiController.hitAccuracy, aiController.throwSpeed);
     }
 
     void CheckForActivePlayers()
@@ -183,9 +194,10 @@ public class AttackScript : MonoBehaviour
         return null;
     }
 
-    public void DissableWeapon(GameObject weapon)
+    public void DisableWeapon(GameObject weapon)
     {
         weapon.SetActive(false);
+        weaponDisabled = true;
         PlayerTracker.IsColliding = false;
         foreach (GameObject player in players)
         {
@@ -198,5 +210,6 @@ public class AttackScript : MonoBehaviour
         weapon.SetActive(true);
         hasNoWeaponInHand = false;
         hasTargetLocked = false;
+        weaponDisabled = false;
     }
 }
