@@ -8,7 +8,6 @@ using UnityEngine;
 public class Pathfinder : MonoBehaviour
 {
     [SerializeField] Transform raftTransform;
-    [SerializeField] int movementSpeed = 1;
 
     /// <summary>
     /// Called in an event, finds a path on walkable tiles to the raft 
@@ -17,8 +16,9 @@ public class Pathfinder : MonoBehaviour
     {
         //gameObject.SetActive(true);
         transform.position = Vector2.MoveTowards(transform.position, GetWalktargetLocation(), Time.deltaTime *
-                movementSpeed);
+            AIController.instance.movementSpeed);
     }
+
     private Vector3 GetWalktargetLocation()
     {
         Vector3 raftTargetLocation = raftTransform.position; // Current position of raft.

@@ -29,7 +29,7 @@ public class AttackScript : MonoBehaviour
     bool weaponInstantiated;
 
     float coolDownTimeInSeconds = 5f;
-    float nextThrowAfterCooldown = 10f;
+    float nextThrowAfterCooldown;
     int randomPlayerNumber;
     int randomHoleNumber;
 
@@ -156,6 +156,8 @@ public class AttackScript : MonoBehaviour
                 {
                     Target = HoleManager.Instance.holes[RandomHoleNumber].transform.position;
                     //hasTargetLocked = true;
+                    if (gameObject.name.Equals("Steinwerfer"))
+                        Debug.Log("RandNumbSame as Before? " + randomHoleNumber);
                 }
                 else
                 {

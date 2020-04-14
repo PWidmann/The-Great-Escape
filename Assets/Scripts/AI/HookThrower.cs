@@ -42,6 +42,7 @@ public class HookThrower : MonoBehaviour
     Vector2 target;
     bool hasNoHookInHand = false;
     int randomHoleNumber;
+    bool startAttack = false;
 
     public static bool BoatHooked
     {
@@ -64,36 +65,39 @@ public class HookThrower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Prevent out of range exception by making sure that the indexes are always updated.
-        if (HoleManager.Instance.CurrentHoleListCount != HoleManager.Instance.holes.Count)
+        if (!AIController.instance.isWaitingForAi)
         {
-            randomHoleNumber = Random.Range(0, HoleManager.Instance.holes.Count);
-            HoleManager.Instance.CurrentHoleListCount = HoleManager.Instance.holes.Count;
-        }
-
-        // First instanitation of hook object.
-        if (!hookInstantiated && !isInstantiating && RaftController.AllPlayersOnRaft) 
-        {
-            Invoke("InstantiateHook", Random.Range(3f, 6f));
-
-            // Determines randomHoleNumber.
-            randomHoleNumber = Random.Range(0, HoleManager.Instance.holes.Count);
-
-            isInstantiating = true;
-        }
-        else if (hookInstantiated && !boatHooked)
-            ThrowHook(aiController.hitAccuracy, aiController.throwSpeed);
-
-        // When hook is instantiated and the hook doesn't hit the target then it gets destroyed.
-        if (hookInstantiated)
-        {
-            if (hook.transform.position.Equals(target) && !boatHooked)
+            // Prevent out of range exception by making sure that the indexes are always updated.
+            if (HoleManager.Instance.CurrentHoleListCount != HoleManager.Instance.holes.Count)
             {
-                DestroyHook(hook);
-                hookInstantiated = false;
-                isInstantiating = false;
-                RaftController.HookMoving = false;
-                hasTargetLocked = false;
+                randomHoleNumber = Random.Range(0, HoleManager.Instance.holes.Count);
+                HoleManager.Instance.CurrentHoleListCount = HoleManager.Instance.holes.Count;
+            }
+
+            // First instanitation of hook object.
+            if (!hookInstantiated && !isInstantiating && RaftController.AllPlayersOnRaft)
+            {
+                Invoke("InstantiateHook", Random.Range(3f, 6f));
+
+                // Determines randomHoleNumber.
+                randomHoleNumber = Random.Range(0, HoleManager.Instance.holes.Count);
+
+                isInstantiating = true;
+            }
+            else if (hookInstantiated && !boatHooked)
+                ThrowHook(aiController.hitAccuracy, aiController.throwSpeed);
+
+            // When hook is instantiated and the hook doesn't hit the target then it gets destroyed.
+            if (hookInstantiated)
+            {
+                if (hook.transform.position.Equals(target) && !boatHooked)
+                {
+                    DestroyHook(hook);
+                    hookInstantiated = false;
+                    isInstantiating = false;
+                    RaftController.HookMoving = false;
+                    hasTargetLocked = false;
+                }
             }
         }
 
