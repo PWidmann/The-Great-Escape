@@ -473,7 +473,7 @@ GameObject:
   - component: {fileID: 143981670}
   m_Layer: 9
   m_Name: Hole25
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -594,7 +594,7 @@ GameObject:
   - component: {fileID: 211486116}
   m_Layer: 9
   m_Name: Hole4
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -715,7 +715,7 @@ GameObject:
   - component: {fileID: 221100780}
   m_Layer: 9
   m_Name: Hole6
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -917,7 +917,7 @@ GameObject:
   - component: {fileID: 291808060}
   m_Layer: 9
   m_Name: Hole22
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1038,7 +1038,7 @@ GameObject:
   - component: {fileID: 317905205}
   m_Layer: 9
   m_Name: Hole14
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1390,7 +1390,7 @@ GameObject:
   - component: {fileID: 436340155}
   m_Layer: 9
   m_Name: Hole19
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1511,7 +1511,7 @@ GameObject:
   - component: {fileID: 446217824}
   m_Layer: 9
   m_Name: Hole7
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1632,7 +1632,7 @@ GameObject:
   - component: {fileID: 457994207}
   m_Layer: 9
   m_Name: Hole9
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2164,7 +2164,7 @@ GameObject:
   - component: {fileID: 566369871}
   m_Layer: 9
   m_Name: Hole5
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2491,7 +2491,7 @@ GameObject:
   - component: {fileID: 627781455}
   m_Layer: 9
   m_Name: Hole10
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2807,7 +2807,7 @@ GameObject:
   - component: {fileID: 761911675}
   m_Layer: 9
   m_Name: Hole23
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3431,6 +3431,7 @@ RectTransform:
   - {fileID: 111666963}
   - {fileID: 1417153854}
   - {fileID: 2092646711}
+  - {fileID: 2135557881}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3453,7 +3454,7 @@ GameObject:
   - component: {fileID: 1107848122}
   m_Layer: 9
   m_Name: Hole15
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3574,7 +3575,7 @@ GameObject:
   - component: {fileID: 1109251629}
   m_Layer: 9
   m_Name: Hole8
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3946,7 +3947,7 @@ PrefabInstance:
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
       propertyPath: isDebugging
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
@@ -4006,7 +4007,7 @@ PrefabInstance:
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
       propertyPath: isWaitingForAi
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 846531031370514744, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
@@ -4150,7 +4151,7 @@ GameObject:
   - component: {fileID: 1212205293}
   m_Layer: 9
   m_Name: Hole2
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4348,7 +4349,7 @@ GameObject:
   - component: {fileID: 1293929843}
   m_Layer: 9
   m_Name: Hole24
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5688,7 +5689,7 @@ GameObject:
   - component: {fileID: 1461185204}
   m_Layer: 9
   m_Name: Hole13
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6085,7 +6086,7 @@ GameObject:
   - component: {fileID: 1514353271}
   m_Layer: 9
   m_Name: Hole11
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6448,7 +6449,7 @@ GameObject:
   - component: {fileID: 1662901179}
   m_Layer: 9
   m_Name: Hole27
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6569,7 +6570,7 @@ GameObject:
   - component: {fileID: 1690261761}
   m_Layer: 9
   m_Name: Hole16
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6690,7 +6691,7 @@ GameObject:
   - component: {fileID: 1707515639}
   m_Layer: 9
   m_Name: Hole18
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6829,12 +6830,14 @@ MonoBehaviour:
   leafCountText: {fileID: 1397049204}
   stickCountText: {fileID: 1627520137}
   medKitInfoText: {fileID: 2092646712}
+  repairInfoText: {fileID: 2135557882}
   player1health: {fileID: 517198683}
   player2health: {fileID: 1969949623}
   player3health: {fileID: 1219943817}
   player4health: {fileID: 111666960}
   leafCount: 2
-  stickCount: 0
+  stickCount: 2
+  uiCamForTextFollowPlayer: {fileID: 519420031}
 --- !u!4 &1765170564
 Transform:
   m_ObjectHideFlags: 0
@@ -6863,7 +6866,7 @@ GameObject:
   - component: {fileID: 1846378007}
   m_Layer: 9
   m_Name: Hole17
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6984,7 +6987,7 @@ GameObject:
   - component: {fileID: 1868051100}
   m_Layer: 9
   m_Name: Hole26
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7105,7 +7108,7 @@ GameObject:
   - component: {fileID: 1916889795}
   m_Layer: 9
   m_Name: Hole1
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7303,7 +7306,7 @@ GameObject:
   - component: {fileID: 2003777074}
   m_Layer: 9
   m_Name: Hole20
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7655,7 +7658,7 @@ GameObject:
   - component: {fileID: 2060054391}
   m_Layer: 9
   m_Name: Hole21
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8053,7 +8056,7 @@ GameObject:
   - component: {fileID: 2076617777}
   m_Layer: 9
   m_Name: Hole3
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8243,6 +8246,83 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1449051073}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2135557880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2135557881}
+  - component: {fileID: 2135557883}
+  - component: {fileID: 2135557882}
+  m_Layer: 5
+  m_Name: RepairInfoText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2135557881
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135557880}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1028916062}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -49, y: 87.5}
+  m_SizeDelta: {x: 401, y: 87.5}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2135557882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135557880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 17dc83e3eaa70b94e96f633e0054d7d6, type: 3}
+    m_FontSize: 32
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Press E/Button A to repair hole.
+--- !u!222 &2135557883
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135557880}
+  m_CullTransparentMesh: 0
 --- !u!1 &2144822791
 GameObject:
   m_ObjectHideFlags: 0
@@ -8257,7 +8337,7 @@ GameObject:
   - component: {fileID: 2144822796}
   m_Layer: 9
   m_Name: Hole12
-  m_TagString: Untagged
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -17,6 +17,7 @@ TagManager:
   - Stone
   - Medkit
   - Shield
+  - Hole
   layers:
   - Default
   - TransparentFX
