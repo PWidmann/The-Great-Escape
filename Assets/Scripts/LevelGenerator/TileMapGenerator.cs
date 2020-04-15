@@ -28,6 +28,9 @@ public class TileMapGenerator : MonoBehaviour
     public GameObject[] pickUps = new GameObject[4];
     public Transform instanceGrouping;
 
+    [Header("Plants")]
+    public GameObject[] plants = new GameObject[4];
+
     int riverWidth = 15;
 
     [Header("Raft")]
@@ -84,7 +87,7 @@ public class TileMapGenerator : MonoBehaviour
             }
         }
         GeneratePickups();
-
+        GeneratePlants();
     }
 
     public void GenerateMapArray()
@@ -144,7 +147,7 @@ public class TileMapGenerator : MonoBehaviour
         {
             for (int y = 0; y < mapHeight; y++)
             {
-                if (mapArray[x, y] == 1)
+                if (mapArray[x, y] == 1) // If on water
                 {
                     int rnd = Random.Range(0, 100);
                     int pickupItem = Random.Range(0, 3);
@@ -161,6 +164,37 @@ public class TileMapGenerator : MonoBehaviour
                                 break;
                         }
                         
+                    }
+                }
+            }
+        }
+    }
+
+    void GeneratePlants()
+    {
+        for (int x = 0; x < mapWidth; x++)
+        {
+            for (int y = 0; y < mapHeight; y++)
+            {
+                if (mapArray[x, y] == 0) // If on land
+                {
+                    int rnd = Random.Range(0, 100);
+                    int pickupItem = Random.Range(0, 2);
+
+
+                    //Calc plant number
+                    if (rnd > 92) 
+                    {
+                        switch (pickupItem)
+                        {
+                            case 0:
+                                Instantiate(plants[0], new Vector3(x, y, -3f), plants[0].transform.rotation).transform.SetParent(instanceGrouping);
+                                break;
+                            case 1:
+                                Instantiate(plants[1], new Vector3(x, y, -3f), plants[1].transform.rotation).transform.SetParent(instanceGrouping);
+                                break;
+                        }
+
                     }
                 }
             }
