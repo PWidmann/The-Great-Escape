@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public GameObject raft;
 
     public bool isSteeringRaft = false;
+    public bool hasShield = false;
     public bool isOnRaft = false;
 
     public bool raftCanMove = true;
@@ -32,7 +33,7 @@ public class PlayerController : MonoBehaviour
     //Animation
     private Animator animator;
     private bool isMoving = false;
-
+    bool canMove = true;
     //User Interface
 
     public float playerHealth = 100;
@@ -60,12 +61,14 @@ public class PlayerController : MonoBehaviour
     {
         if (overLapBox.OverLappedCollider != null)
             OnOverLappingCollidersEnter2D();
-        else if (overLapBox.OverLappedCollider == null && overLapBox.PreviousOverlappedColliders != null)
+        else if (overLapBox.OverLappedCollider == null && !hasExited)
             OnOverLappingCollidersExit2D();
 
         Move();
         RaftHandling();
-
+        SwordAttack();
+        ShieldUsage();
+        DropShieldCheck();
         UpdatePlayerHealth();
     }
 
@@ -212,8 +215,13 @@ public class PlayerController : MonoBehaviour
             }
 
             changeToNormalize.Normalize();
-            change.x = changeToNormalize.x;
-            change.y = changeToNormalize.y;
+
+            if (canMove)
+            {
+                change.x = changeToNormalize.x;
+                change.y = changeToNormalize.y;
+            }
+            
         }
         else
         {
@@ -238,8 +246,12 @@ public class PlayerController : MonoBehaviour
             }
 
             changeToNormalize.Normalize();
-            change.x = changeToNormalize.x;
-            change.y = changeToNormalize.y;
+            
+            if (canMove)
+            {
+                change.x = changeToNormalize.x;
+                change.y = changeToNormalize.y;
+            }
         }
 
         // Player unable to fall off the raft.
@@ -369,32 +381,106 @@ public class PlayerController : MonoBehaviour
 
     void OnOverLappingCollidersEnter2D()
     {
+        //Interactibles have to be on layer 15
+
+        //Medkit
         hasExited = false;
+
         if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Medkit"))
         {
             playerInterface.medKitInfoText.gameObject.SetActive(true);
 
-            for (int i = 1; i < 4; i++)
-            {
-                if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + i + "ButtonA"))
+            if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
                     && playerInterface.leafCount < 2)
-                    playerInterface.medKitInfoText.text = "Not enough leafes.";
-                else if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + i + "ButtonA"))
-                    && playerHealth == 100 && playerInterface.leafCount >= 2)
-                    playerInterface.medKitInfoText.text = "You already have max health.";
-                else if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + i + "ButtonA"))
-                    && playerHealth < 100 && playerInterface.leafCount >= 2)
-                {
-                    playerInterface.medKitInfoText.text = "You healed yourself.";
-                    playerHealth += 80;
-                    if (playerHealth > 100)
-                        playerHealth = 100;
-                    playerInterface.leafCount -= 2;
-                    if (playerInterface.leafCount < 0)
-                        playerInterface.leafCount = 0;
+                playerInterface.medKitInfoText.text = "Not enough leafes.";
+            else if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
+                && playerHealth == 100 && playerInterface.leafCount >= 2)
+                playerInterface.medKitInfoText.text = "You already have max health.";
+            else if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
+                && playerHealth < 100 && playerInterface.leafCount >= 2)
+            {
+                playerInterface.medKitInfoText.text = "You healed yourself.";
+                playerHealth += 80;
+                if (playerHealth > 100)
+                    playerHealth = 100;
+                playerInterface.leafCount -= 2;
+                if (playerInterface.leafCount < 0)
+                    playerInterface.leafCount = 0;
 
+            }
+        }
+
+        // Shield
+        if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Shield"))
+        { 
+            if((Input.GetKeyDown(KeyCode.E)) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
+            {
+                if (!RaftController.instance.shieldIsInUse)
+                {
+                    RaftController.instance.shieldObject.SetActive(false);
+                    hasShield = true;
+                    RaftController.instance.shieldIsInUse = true;
                 }
             }
+        }
+    }
+
+    void SwordAttack()
+    {
+
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("J" + playerNumber + "ButtonRB"))
+        {
+            DropShield();
+            animator.SetTrigger("isAttacking");
+        }
+    }
+
+    public void SetCanMoveTrue()
+    {
+        canMove = true;
+    }
+
+    void ShieldUsage()
+    {
+        if ((Input.GetKeyDown(KeyCode.Q)) || Input.GetButtonDown("J" + playerNumber + "ButtonY"))
+        {
+            if (hasShield)
+            {
+                animator.SetBool("isBlocking", true);
+                canMove = false;
+                change = Vector3.zero;
+            }
+        }
+
+        if ((Input.GetKeyUp(KeyCode.Q)) || Input.GetButtonUp("J" + playerNumber + "ButtonY"))
+        {
+            animator.SetBool("isBlocking", false);
+            canMove = true;
+        }
+    }
+
+    void DropShieldCheck()
+    {
+        if (hasShield)
+        {
+            if (Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("J" + playerNumber + "ButtonB"))
+            {
+                hasShield = false;
+                RaftController.instance.shieldIsInUse = false;
+                RaftController.instance.shieldObject.transform.position = transform.position;
+                RaftController.instance.shieldObject.SetActive(true);
+            }
+        }
+    }
+
+    void DropShield()
+    {
+        if (hasShield)
+        {
+            hasShield = false;
+            RaftController.instance.shieldIsInUse = false;
+            RaftController.instance.shieldObject.transform.position = transform.position;
+            RaftController.instance.shieldObject.SetActive(true);
         }
     }
 
@@ -406,6 +492,7 @@ public class PlayerController : MonoBehaviour
             overLapBox.PreviousOverlappedColliders = null;
             ResetMedkitInfoText();
         }
+        hasExited = true;
     }
 
     void ResetMedkitInfoText()

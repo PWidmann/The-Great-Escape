@@ -305,6 +305,7 @@ MonoBehaviour:
   changeToNormalize: {x: 0, y: 0}
   raft: {fileID: 2070067095}
   isSteeringRaft: 0
+  hasShield: 0
   isOnRaft: 0
   raftCanMove: 1
   collider: {fileID: 2070067098}
@@ -1200,6 +1201,7 @@ MonoBehaviour:
   changeToNormalize: {x: 0, y: 0}
   raft: {fileID: 2070067095}
   isSteeringRaft: 0
+  hasShield: 0
   isOnRaft: 0
   raftCanMove: 1
   collider: {fileID: 2070067098}
@@ -5921,6 +5923,7 @@ MonoBehaviour:
   changeToNormalize: {x: 0, y: 0}
   raft: {fileID: 2070067095}
   isSteeringRaft: 0
+  hasShield: 0
   isOnRaft: 0
   raftCanMove: 1
   collider: {fileID: 2070067098}
@@ -6333,9 +6336,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1641546387}
   - component: {fileID: 1641546388}
-  m_Layer: 0
+  - component: {fileID: 1641546389}
+  m_Layer: 15
   m_Name: Shield
-  m_TagString: Untagged
+  m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6404,6 +6408,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1641546389
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641546386}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1662901174
 GameObject:
   m_ObjectHideFlags: 0
@@ -7457,6 +7487,7 @@ MonoBehaviour:
   changeToNormalize: {x: 0, y: 0}
   raft: {fileID: 2070067095}
   isSteeringRaft: 0
+  hasShield: 0
   isOnRaft: 0
   raftCanMove: 1
   collider: {fileID: 2070067098}
@@ -7888,6 +7919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raftIsInUse: 0
+  shieldIsInUse: 0
   raftUser: 
   rudder: {fileID: 1137688283}
   rudderSpriteArray:
@@ -7899,6 +7931,7 @@ MonoBehaviour:
   change: {x: 0, y: 0, z: 0}
   moveSpeed: 15
   landTileMap: {fileID: 983563352}
+  shieldObject: {fileID: 1641546386}
   isColliding: 0
   trackVelocity: {x: 0, y: 0}
   lastPos: {x: 0, y: 0}
