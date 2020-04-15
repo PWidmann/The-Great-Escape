@@ -392,11 +392,7 @@ public class PlayerController : MonoBehaviour
             playerInterface.medKitInfoText.gameObject.SetActive(true);
 
             if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
-<<<<<<< HEAD
-                    && playerInterface.leafCount < 2)
-=======
                 && playerInterface.leafCount < 2)
->>>>>>> 656ac869091e0c072f427332218fdb471956af03
                 playerInterface.medKitInfoText.text = "Not enough leafes.";
             else if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
                 && playerHealth == 100 && playerInterface.leafCount >= 2)
@@ -411,7 +407,6 @@ public class PlayerController : MonoBehaviour
                 playerInterface.leafCount -= 2;
                 if (playerInterface.leafCount < 0)
                     playerInterface.leafCount = 0;
-<<<<<<< HEAD
 
             }
         }
@@ -427,7 +422,6 @@ public class PlayerController : MonoBehaviour
                     hasShield = true;
                     RaftController.instance.shieldIsInUse = true;
                 }
-=======
             }
         }
         else if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Hole"))
@@ -449,7 +443,6 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("StickCount: " + playerInterface.stickCount);
                 if (playerInterface.stickCount < 0)
                     playerInterface.stickCount = 0;
->>>>>>> 656ac869091e0c072f427332218fdb471956af03
             }
         }
     }
@@ -515,6 +508,8 @@ public class PlayerController : MonoBehaviour
 
     void OnOverLappingCollidersExit2D()
     {
+        hasExited = true;
+
         if (overLapBox.PreviousOverlappedColliders != null && 
             overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Medkit"))
         {
@@ -522,9 +517,7 @@ public class PlayerController : MonoBehaviour
             hasExited = true;
             ResetMedkitInfoText();
         }
-<<<<<<< HEAD
-        hasExited = true;
-=======
+        
         else if (overLapBox.PreviousOverlappedColliders != null &&
             overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hole"))
         {
@@ -532,7 +525,6 @@ public class PlayerController : MonoBehaviour
             hasExited = true;
             ResetRepairInfoText();
         }
->>>>>>> 656ac869091e0c072f427332218fdb471956af03
     }
 
     void ResetMedkitInfoText()
