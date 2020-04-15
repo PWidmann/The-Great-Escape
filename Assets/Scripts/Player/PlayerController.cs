@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+
+    //Fields for OverlapBox
+    [SerializeField] PlayerInterface playerInterface;
+    PlayerOverlapBox overLapBox;
+
     Rigidbody2D myRigidbody;
     int moveSpeed = 16;
     int playerNumber;
@@ -22,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     public static PlayerController instance = null;
     bool raftIsPulled = false;
+    bool hasExited;
 
     //Animation
     private Animator animator;
@@ -47,10 +53,16 @@ public class PlayerController : MonoBehaviour
 
         if (instance == null)
             instance = this;
+        overLapBox = gameObject.GetComponent<PlayerOverlapBox>();
     }
 
     void Update()
     {
+        if (overLapBox.OverLappedCollider != null)
+            OnOverLappingCollidersEnter2D();
+        else if (overLapBox.OverLappedCollider == null && overLapBox.PreviousOverlappedColliders != null)
+            OnOverLappingCollidersExit2D();
+
         Move();
         RaftHandling();
 
@@ -353,5 +365,52 @@ public class PlayerController : MonoBehaviour
         {
             isOnRaft = false;
         }
+    }
+
+    void OnOverLappingCollidersEnter2D()
+    {
+        hasExited = false;
+        if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Medkit"))
+        {
+            playerInterface.medKitInfoText.gameObject.SetActive(true);
+
+            for (int i = 1; i < 4; i++)
+            {
+                if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + i + "ButtonA"))
+                    && playerInterface.leafCount < 2)
+                    playerInterface.medKitInfoText.text = "Not enough leafes.";
+                else if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + i + "ButtonA"))
+                    && playerHealth == 100 && playerInterface.leafCount >= 2)
+                    playerInterface.medKitInfoText.text = "You already have max health.";
+                else if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + i + "ButtonA"))
+                    && playerHealth < 100 && playerInterface.leafCount >= 2)
+                {
+                    playerInterface.medKitInfoText.text = "You healed yourself.";
+                    playerHealth += 80;
+                    if (playerHealth > 100)
+                        playerHealth = 100;
+                    playerInterface.leafCount -= 2;
+                    if (playerInterface.leafCount < 0)
+                        playerInterface.leafCount = 0;
+
+                }
+            }
+        }
+    }
+
+    void OnOverLappingCollidersExit2D()
+    {
+        if (overLapBox.PreviousOverlappedColliders != null && 
+            overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Medkit"))
+        {
+            overLapBox.PreviousOverlappedColliders = null;
+            ResetMedkitInfoText();
+        }
+    }
+
+    void ResetMedkitInfoText()
+    {
+        playerInterface.medKitInfoText.text = "Press E/Button A to heal";
+        playerInterface.medKitInfoText.gameObject.SetActive(false);
     }
 }

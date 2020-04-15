@@ -15,6 +15,7 @@ TagManager:
   - Wall
   - Spear
   - Stone
+  - Medkit
   layers:
   - Default
   - TransparentFX
@@ -31,7 +32,7 @@ TagManager:
   - Enemy
   - Weapon
   - 
-  - 
+  - Interactables
   - 
   - 
   - 

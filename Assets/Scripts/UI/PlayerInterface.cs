@@ -11,6 +11,7 @@ public class PlayerInterface : MonoBehaviour
     // Inventory References
     public Text leafCountText;
     public Text stickCountText;
+    public Text medKitInfoText;
 
     public GameObject player1health;
     public GameObject player2health;
@@ -32,6 +33,8 @@ public class PlayerInterface : MonoBehaviour
         player2health.SetActive(false);
         player3health.SetActive(false);
         player4health.SetActive(false);
+        medKitInfoText.text = "Press E/Button A to heal";
+        medKitInfoText.gameObject.SetActive(false);
 
         ShowPlayerHealth();
     }
