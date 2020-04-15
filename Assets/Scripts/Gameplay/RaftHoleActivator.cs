@@ -2,13 +2,29 @@
 
 public class RaftHoleActivator : MonoBehaviour
 {
-
     SpriteRenderer holeSprite;
+    static bool spriteEnabled = false;
+
+    public static bool SpriteEnabled { get => spriteEnabled; }
 
     // Start is called before the first frame update
     void Start()
     {
         holeSprite = GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        // test
+        if (holeSprite.enabled)
+            spriteEnabled = true;
+        else
+            spriteEnabled = false;
+
+        if (!spriteEnabled)
+            gameObject.layer = 9;
+        else
+            gameObject.layer = 15;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -28,11 +44,18 @@ public class RaftHoleActivator : MonoBehaviour
                 RaftController.instance.RaftAudio.clip = SoundManager.instance.soundFx[8];
                 RaftController.instance.RaftAudio.Play();
                 holeSprite.enabled = true;
+                spriteEnabled = true;
                 if (!HoleManager.Instance.attackScriptHookThrowerReference.WeaponDisabled &&
                         !HoleManager.Instance.attackScriptStoneThrowerReference.WeaponDisabled)
                     HoleManager.Instance.holes.Remove(gameObject);
                 RaftController.instance.moveSpeed -= 0.5f;
             }
         }
+    }
+
+    public static void DisableSpriteRenderer(GameObject hole, bool setActive = false)
+    {
+        hole.GetComponent<SpriteRenderer>().enabled = setActive;
+        spriteEnabled = false;
     }
 }

@@ -12,6 +12,7 @@ public class PlayerInterface : MonoBehaviour
     public Text leafCountText;
     public Text stickCountText;
     public Text medKitInfoText;
+    public Text repairInfoText;
 
     public GameObject player1health;
     public GameObject player2health;
@@ -21,6 +22,8 @@ public class PlayerInterface : MonoBehaviour
     // Player Inventory
     public int leafCount = 0;
     public int stickCount = 0;
+
+    [SerializeField] Camera uiCamForTextFollowPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +36,7 @@ public class PlayerInterface : MonoBehaviour
         player2health.SetActive(false);
         player3health.SetActive(false);
         player4health.SetActive(false);
+        repairInfoText.gameObject.SetActive(false);
         medKitInfoText.text = "Press E/Button A to heal";
         medKitInfoText.gameObject.SetActive(false);
 
@@ -56,5 +60,15 @@ public class PlayerInterface : MonoBehaviour
             player3health.SetActive(true);
         if (PlayerHandler.instance.player4active)
             player4health.SetActive(true);
+    }
+
+    public void MakeRepairInfoTextAbovePlayer(GameObject player, bool isCalled = false)
+    {
+        if (!isCalled)
+        {
+            Vector3 screenPos = uiCamForTextFollowPlayer.WorldToScreenPoint(player.transform.position);
+            repairInfoText.rectTransform.position = new Vector2(screenPos.x, screenPos.y + 1);
+            isCalled = true;
+        }
     }
 }

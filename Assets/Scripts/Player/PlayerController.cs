@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
     {
         if (overLapBox.OverLappedCollider != null)
             OnOverLappingCollidersEnter2D();
-        else if (overLapBox.OverLappedCollider == null && overLapBox.PreviousOverlappedColliders != null)
+        else if (overLapBox.OverLappedCollider == null && !hasExited)
             OnOverLappingCollidersExit2D();
 
         Move();
@@ -372,28 +372,46 @@ public class PlayerController : MonoBehaviour
         hasExited = false;
         if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Medkit"))
         {
+            hasExited = false;
             playerInterface.medKitInfoText.gameObject.SetActive(true);
 
-            for (int i = 1; i < 4; i++)
+            if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
+                && playerInterface.leafCount < 2)
+                playerInterface.medKitInfoText.text = "Not enough leafes.";
+            else if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
+                && playerHealth == 100 && playerInterface.leafCount >= 2)
+                playerInterface.medKitInfoText.text = "You already have max health.";
+            else if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
+                && playerHealth < 100 && playerInterface.leafCount >= 2)
             {
-                if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + i + "ButtonA"))
-                    && playerInterface.leafCount < 2)
-                    playerInterface.medKitInfoText.text = "Not enough leafes.";
-                else if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + i + "ButtonA"))
-                    && playerHealth == 100 && playerInterface.leafCount >= 2)
-                    playerInterface.medKitInfoText.text = "You already have max health.";
-                else if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + i + "ButtonA"))
-                    && playerHealth < 100 && playerInterface.leafCount >= 2)
-                {
-                    playerInterface.medKitInfoText.text = "You healed yourself.";
-                    playerHealth += 80;
-                    if (playerHealth > 100)
-                        playerHealth = 100;
-                    playerInterface.leafCount -= 2;
-                    if (playerInterface.leafCount < 0)
-                        playerInterface.leafCount = 0;
+                playerInterface.medKitInfoText.text = "You healed yourself.";
+                playerHealth += 80;
+                if (playerHealth > 100)
+                    playerHealth = 100;
+                playerInterface.leafCount -= 2;
+                if (playerInterface.leafCount < 0)
+                    playerInterface.leafCount = 0;
+            }
+        }
+        else if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Hole"))
+        {
+            hasExited = false;
+            playerInterface.repairInfoText.gameObject.SetActive(true);
+            playerInterface.MakeRepairInfoTextAbovePlayer(gameObject);
 
-                }
+            if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
+                && playerInterface.stickCount < 1)
+                playerInterface.repairInfoText.text = "Not enough sticks.";
+            else if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
+                && playerInterface.stickCount >= 1)
+            {
+                playerInterface.medKitInfoText.text = "You repaired the hole.";
+                HoleManager.Instance.holes.Add(overLapBox.OverLappedCollider.gameObject);
+                RaftHoleActivator.DisableSpriteRenderer(overLapBox.OverLappedCollider.gameObject);
+                playerInterface.stickCount--;
+                Debug.Log("StickCount: " + playerInterface.stickCount);
+                if (playerInterface.stickCount < 0)
+                    playerInterface.stickCount = 0;
             }
         }
     }
@@ -403,8 +421,16 @@ public class PlayerController : MonoBehaviour
         if (overLapBox.PreviousOverlappedColliders != null && 
             overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Medkit"))
         {
-            overLapBox.PreviousOverlappedColliders = null;
+            //overLapBox.PreviousOverlappedColliders = null;
+            hasExited = true;
             ResetMedkitInfoText();
+        }
+        else if (overLapBox.PreviousOverlappedColliders != null &&
+            overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hole"))
+        {
+            //overLapBox.PreviousOverlappedColliders = null;
+            hasExited = true;
+            ResetRepairInfoText();
         }
     }
 
@@ -412,5 +438,11 @@ public class PlayerController : MonoBehaviour
     {
         playerInterface.medKitInfoText.text = "Press E/Button A to heal";
         playerInterface.medKitInfoText.gameObject.SetActive(false);
+    }
+
+    void ResetRepairInfoText()
+    {
+        playerInterface.repairInfoText.text = "Press E/Button A to repair hole.";
+        playerInterface.repairInfoText.gameObject.SetActive(false);
     }
 }

@@ -38,7 +38,8 @@ public class PlayerOverlapBox : MonoBehaviour
         if (overLappedCollider != null)
         {
             PreviousOverlappedColliders = overLappedCollider;
-            Debug.Log("Overlapped with: " + overLappedCollider.name);
+            Debug.Log("Overlapped with: " + overLappedCollider.name + " " + "Previous: " + 
+                previousOverlappedColliders.name);
         }
     }
 }
