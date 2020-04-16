@@ -152,7 +152,7 @@ public class TileMapGenerator : MonoBehaviour
                     int rnd = Random.Range(0, 100);
                     int pickupItem = Random.Range(0, 3);
 
-                    if (rnd > 98)
+                    if (rnd > 94)
                     {
                         switch (pickupItem)
                         {
@@ -179,11 +179,11 @@ public class TileMapGenerator : MonoBehaviour
                 if (mapArray[x, y] == 0) // If on land
                 {
                     int rnd = Random.Range(0, 100);
-                    int pickupItem = Random.Range(0, 2);
+                    int pickupItem = Random.Range(0, 4);
 
 
                     //Calc plant number
-                    if (rnd > 92) 
+                    if (rnd > 70) 
                     {
                         switch (pickupItem)
                         {
@@ -192,6 +192,12 @@ public class TileMapGenerator : MonoBehaviour
                                 break;
                             case 1:
                                 Instantiate(plants[1], new Vector3(x, y, -3f), plants[1].transform.rotation).transform.SetParent(instanceGrouping);
+                                break;
+                            case 2:
+                                Instantiate(plants[2], new Vector3(x, y, -3f), plants[1].transform.rotation).transform.SetParent(instanceGrouping);
+                                break;
+                            case 3:
+                                Instantiate(plants[3], new Vector3(x, y, -3f), plants[1].transform.rotation).transform.SetParent(instanceGrouping);
                                 break;
                         }
 
