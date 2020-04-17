@@ -507,15 +507,17 @@ public class PlayerController : MonoBehaviour
     void OnOverLappingCollidersExit2D()
     {
         if (overLapBox.PreviousOverlappedColliders != null && 
-            overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Medkit"))
+           (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Medkit") || 
+            overLapBox.OverLappedCollider == null))
         {
             //overLapBox.PreviousOverlappedColliders = null;
             hasExited = true;
             ResetMedkitInfoText();
         }
         
-        else if (overLapBox.PreviousOverlappedColliders != null &&
-            overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hole"))
+        if (overLapBox.PreviousOverlappedColliders != null &&
+           (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hole") ||
+            overLapBox.OverLappedCollider == null))
         {
             //overLapBox.PreviousOverlappedColliders = null;
             hasExited = true;
