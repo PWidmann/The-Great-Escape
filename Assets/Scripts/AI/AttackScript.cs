@@ -39,7 +39,6 @@ public class AttackScript : MonoBehaviour
     AudioSource audio;
     bool hasNoWeaponInHand = false;
     Collider2D stoneCollider;
-    bool instantiatedStoneHasColliderComponent = false;
     bool weaponDisabled = false;
 
     public Vector2 Target { get => target; set => target = value; }
@@ -111,7 +110,7 @@ public class AttackScript : MonoBehaviour
             audio.Play();
         }
         hasTargetLocked = true;
-        Vector2 direction = target - start;
+        Vector2 direction = (target - start).normalized;
         if (weapon.tag.Equals("Stone") && Vector2.Distance(weapon.transform.position, target) < 1f)
             weapon.layer = 10;
         else
