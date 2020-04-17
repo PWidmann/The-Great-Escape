@@ -384,8 +384,6 @@ public class PlayerController : MonoBehaviour
         //Interactibles have to be on layer 15
 
         //Medkit
-        hasExited = false;
-
         if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Medkit"))
         {
             hasExited = false;
@@ -508,8 +506,6 @@ public class PlayerController : MonoBehaviour
 
     void OnOverLappingCollidersExit2D()
     {
-        hasExited = true;
-
         if (overLapBox.PreviousOverlappedColliders != null && 
             overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Medkit"))
         {
