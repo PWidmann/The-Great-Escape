@@ -32,7 +32,7 @@ TagManager:
   - RaftColliderForLand
   - Enemy
   - Weapon
-  - 
+  - IgnoreRaftCollision
   - Interactables
   - 
   - 

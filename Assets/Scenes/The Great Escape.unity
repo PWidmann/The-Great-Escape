@@ -3714,6 +3714,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
+      propertyPath: DestroyStoneTrigger.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
+        type: 3}
       propertyPath: AttackTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1449051076}
@@ -3965,7 +3970,7 @@ PrefabInstance:
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
       propertyPath: delayTimer
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
@@ -4005,7 +4010,67 @@ PrefabInstance:
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
       propertyPath: isWaitingForAi
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
+        type: 3}
+      propertyPath: WaitForAiTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
+        type: 3}
+      propertyPath: WaitForAiTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
+        type: 3}
+      propertyPath: DestroyStoneTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
+        type: 3}
+      propertyPath: DestroyStoneTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
+        type: 3}
+      propertyPath: DestroyStoneTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1449051077}
+    - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
+        type: 3}
+      propertyPath: DestroyStoneTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
+        type: 3}
+      propertyPath: DestroyStoneTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
+        type: 3}
+      propertyPath: DestroyStoneTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1449051075}
+    - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
+        type: 3}
+      propertyPath: DestroyStoneTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: DestroyStone
+      objectReference: {fileID: 0}
+    - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
+        type: 3}
+      propertyPath: DestroyStoneTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
+        type: 3}
+      propertyPath: DestroyStoneTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DestroyStone
+      objectReference: {fileID: 0}
+    - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
+        type: 3}
+      propertyPath: DestroyStoneTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 846531031370514744, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}

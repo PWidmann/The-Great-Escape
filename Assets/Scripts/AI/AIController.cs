@@ -9,6 +9,7 @@ public class AIController : MonoBehaviour
     public UnityEvent RunTrigger;
     public UnityEvent DebugTestingTrigger; // Turns off AI for other tests in our game.
     public UnityEvent WaitForAiTrigger; // Event that makes the AI wait before they attack.
+    public UnityEvent DestroyStoneTrigger; // Self-explainatory.
 
     [HideInInspector] public bool isChecked;
     [SerializeField] bool isDebugging;
@@ -41,6 +42,8 @@ public class AIController : MonoBehaviour
             DebugTestingTrigger.Invoke();
         else if (isWaitingForAi && RaftController.AllPlayersOnRaft)
             WaitForAiTrigger.Invoke();
+        if (RaftHoleActivator.IsHit && RaftHoleActivator.HitCounter >= 2)
+            DestroyStoneTrigger.Invoke();
     }
 
     public void StartAttackWithDelay()

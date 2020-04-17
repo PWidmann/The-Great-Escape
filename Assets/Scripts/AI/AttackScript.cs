@@ -112,17 +112,20 @@ public class AttackScript : MonoBehaviour
         }
         hasTargetLocked = true;
         Vector2 direction = target - start;
+        if (weapon.tag.Equals("Stone") && Vector2.Distance(weapon.transform.position, target) < 1f)
+            weapon.layer = 10;
+        else
+            weapon.layer = 14;
         direction.Normalize();
         weapon.GetComponent<Rigidbody2D>().AddForce(direction * hitAccuracy * throwSpeed);
+
         hasNoWeaponInHand = true;
         foreach (GameObject player in players)
         {
             player.GetComponent<PlayerTracker>().WeaponMoving = true;
         }
         Debug.Log("Weapon: " + weapon);
-        if (weapon.tag.Equals("Spear") && weapon.transform.position.y > target.y && !PlayerTracker.IsColliding)
-            DisableWeapon(weapon);
-        else if (weapon.tag.Equals("Stone") && weapon.transform.position.y > target.y)
+        if (weapon.transform.position.y > target.y && !PlayerTracker.IsColliding)
             DisableWeapon(weapon);
     }
 
@@ -199,6 +202,11 @@ public class AttackScript : MonoBehaviour
     public void DisableWeapon(GameObject weapon)
     {
         weapon.SetActive(false);
+        if (weapon.tag.Equals("Stone"))
+        {
+            RaftHoleActivator.IsHit = false;
+            RaftHoleActivator.HitCounter = 0;
+        }
         weaponDisabled = true;
         PlayerTracker.IsColliding = false;
         foreach (GameObject player in players)
@@ -224,5 +232,14 @@ public class AttackScript : MonoBehaviour
         {
             player.GetComponent<PlayerTracker>().WeaponMoving = false;
         }
+    }
+
+    // EventTrigger
+    public void DestroyStone()
+    {
+        stone.SetActive(false);
+        RaftHoleActivator.IsHit = false;
+        RaftHoleActivator.HitCounter = 0;
+        Debug.Log("Destroyed");
     }
 }
