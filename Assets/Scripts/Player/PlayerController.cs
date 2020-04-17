@@ -134,7 +134,13 @@ public class PlayerController : MonoBehaviour
             else
             {
                 //Move the character with the raft
-                myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.deltaTime + RaftController.instance.change * RaftController.instance.moveSpeed * Time.deltaTime);
+                if (!HookThrower.BoatHooked)
+                    myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.deltaTime + RaftController.instance.change * RaftController.instance.moveSpeed * Time.deltaTime);
+                else
+                {
+                    animator.SetBool("isMoving", false);
+                    Invoke("GivePlayerControlsBack", 1f);
+                }
             }
         }
         else
@@ -142,6 +148,11 @@ public class PlayerController : MonoBehaviour
             myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.deltaTime);
         }
         
+    }
+
+    void GivePlayerControlsBack()
+    {
+        myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.deltaTime + RaftController.instance.change * RaftController.instance.moveSpeed * Time.deltaTime);
     }
 
     string GetPlayerController()
