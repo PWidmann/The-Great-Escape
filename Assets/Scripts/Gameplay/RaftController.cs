@@ -9,6 +9,7 @@ public class RaftController : MonoBehaviour
     public static RaftController instance = null;
 
     public bool raftIsInUse = false;
+    public bool shieldIsInUse = false;
     public string raftUser;
     public Transform rudder;
     public Sprite[] rudderSpriteArray = new Sprite[2];
@@ -18,6 +19,8 @@ public class RaftController : MonoBehaviour
     public float moveSpeed = 15f;
 
     public GameObject landTileMap;
+
+    public GameObject shieldObject;
 
     public bool isColliding = false;
 

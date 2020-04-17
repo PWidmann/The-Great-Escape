@@ -16,6 +16,7 @@ TagManager:
   - Spear
   - Stone
   - Medkit
+  - Shield
   - Hole
   layers:
   - Default

@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public GameObject raft;
 
     public bool isSteeringRaft = false;
+    public bool hasShield = false;
     public bool isOnRaft = false;
 
     public bool raftCanMove = true;
@@ -32,7 +33,7 @@ public class PlayerController : MonoBehaviour
     //Animation
     private Animator animator;
     private bool isMoving = false;
-
+    bool canMove = true;
     //User Interface
 
     public float playerHealth = 100;
@@ -65,7 +66,9 @@ public class PlayerController : MonoBehaviour
 
         Move();
         RaftHandling();
-
+        SwordAttack();
+        ShieldUsage();
+        DropShieldCheck();
         UpdatePlayerHealth();
     }
 
@@ -212,8 +215,13 @@ public class PlayerController : MonoBehaviour
             }
 
             changeToNormalize.Normalize();
-            change.x = changeToNormalize.x;
-            change.y = changeToNormalize.y;
+
+            if (canMove)
+            {
+                change.x = changeToNormalize.x;
+                change.y = changeToNormalize.y;
+            }
+            
         }
         else
         {
@@ -238,8 +246,12 @@ public class PlayerController : MonoBehaviour
             }
 
             changeToNormalize.Normalize();
-            change.x = changeToNormalize.x;
-            change.y = changeToNormalize.y;
+            
+            if (canMove)
+            {
+                change.x = changeToNormalize.x;
+                change.y = changeToNormalize.y;
+            }
         }
 
         // Player unable to fall off the raft.
@@ -369,7 +381,11 @@ public class PlayerController : MonoBehaviour
 
     void OnOverLappingCollidersEnter2D()
     {
+        //Interactibles have to be on layer 15
+
+        //Medkit
         hasExited = false;
+
         if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Medkit"))
         {
             hasExited = false;
@@ -391,6 +407,21 @@ public class PlayerController : MonoBehaviour
                 playerInterface.leafCount -= 2;
                 if (playerInterface.leafCount < 0)
                     playerInterface.leafCount = 0;
+
+            }
+        }
+
+        // Shield
+        if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Shield"))
+        { 
+            if((Input.GetKeyDown(KeyCode.E)) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
+            {
+                if (!RaftController.instance.shieldIsInUse)
+                {
+                    RaftController.instance.shieldObject.SetActive(false);
+                    hasShield = true;
+                    RaftController.instance.shieldIsInUse = true;
+                }
             }
         }
         else if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Hole"))
@@ -416,8 +447,69 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void SwordAttack()
+    {
+
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("J" + playerNumber + "ButtonRB"))
+        {
+            DropShield();
+            animator.SetTrigger("isAttacking");
+        }
+    }
+
+    public void SetCanMoveTrue()
+    {
+        canMove = true;
+    }
+
+    void ShieldUsage()
+    {
+        if ((Input.GetKeyDown(KeyCode.Q)) || Input.GetButtonDown("J" + playerNumber + "ButtonY"))
+        {
+            if (hasShield)
+            {
+                animator.SetBool("isBlocking", true);
+                canMove = false;
+                change = Vector3.zero;
+            }
+        }
+
+        if ((Input.GetKeyUp(KeyCode.Q)) || Input.GetButtonUp("J" + playerNumber + "ButtonY"))
+        {
+            animator.SetBool("isBlocking", false);
+            canMove = true;
+        }
+    }
+
+    void DropShieldCheck()
+    {
+        if (hasShield)
+        {
+            if (Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("J" + playerNumber + "ButtonB"))
+            {
+                hasShield = false;
+                RaftController.instance.shieldIsInUse = false;
+                RaftController.instance.shieldObject.transform.position = transform.position;
+                RaftController.instance.shieldObject.SetActive(true);
+            }
+        }
+    }
+
+    void DropShield()
+    {
+        if (hasShield)
+        {
+            hasShield = false;
+            RaftController.instance.shieldIsInUse = false;
+            RaftController.instance.shieldObject.transform.position = transform.position;
+            RaftController.instance.shieldObject.SetActive(true);
+        }
+    }
+
     void OnOverLappingCollidersExit2D()
     {
+        hasExited = true;
+
         if (overLapBox.PreviousOverlappedColliders != null && 
             overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Medkit"))
         {
@@ -425,6 +517,7 @@ public class PlayerController : MonoBehaviour
             hasExited = true;
             ResetMedkitInfoText();
         }
+        
         else if (overLapBox.PreviousOverlappedColliders != null &&
             overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hole"))
         {
