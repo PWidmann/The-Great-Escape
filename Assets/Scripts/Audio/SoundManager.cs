@@ -17,7 +17,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource soundFxSource;
     [SerializeField] AudioMixer audioMixer;
 
-    public List<AudioClip> backGroundMusic;
+    //public List<AudioClip> backGroundMusic;
     public List<AudioClip> soundFx;
 
     float minVolume = -80.0f; // The lowest possible volume in the audio mixer in decibel.
@@ -31,13 +31,30 @@ public class SoundManager : MonoBehaviour
         }
         else if (instance != this)
             Destroy(this);
+
+        if (PlayerPrefs.HasKey("toggleRM"))
+        {
+            int savedToggle = PlayerPrefs.GetInt("toggleRM");
+
+            switch (savedToggle)
+            {
+                case 0:
+                    UIManagement.instance.randomMusicPlayToggle.isOn = false;
+                    break;
+                case 1:
+                    UIManagement.instance.randomMusicPlayToggle.isOn = true;
+                    break;
+
+            }
+
+        }
     }
 
     void Start()
     {
         // Play background music
-        backGroundMusicSource.clip = backGroundMusic[0];
-        backGroundMusicSource.Play();
+        //backGroundMusicSource.clip = backGroundMusic[0];
+        //backGroundMusicSource.Play();
 
         // Get saved volume settings
         if (PlayerPrefs.HasKey("masterVolume"))
@@ -117,6 +134,11 @@ public class SoundManager : MonoBehaviour
             volumePercentage = 0;
 
         UIManagement.instance.sfxVolSliderTextCount.text = volumePercentage.ToString() + "%";
+    }
+
+    public void SaveRandomPlayToggle()
+    {
+        PlayerPrefs.SetInt("toggleRM", UIManagement.instance.randomMusicPlayToggle.isOn ? 1 : 0);
     }
 
     /// <summary>

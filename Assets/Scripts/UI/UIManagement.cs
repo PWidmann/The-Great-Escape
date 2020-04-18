@@ -25,6 +25,8 @@ public class UIManagement : MonoBehaviour
     public Button quitButton;
     public Button saveSettingsButton;
 
+    public Toggle randomMusicPlayToggle;
+
     void Awake()
     {
         if (instance == null)

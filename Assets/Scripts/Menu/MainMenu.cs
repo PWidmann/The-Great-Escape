@@ -95,6 +95,7 @@ public class MainMenu : MonoBehaviour
         UIManagement.instance.masterVolumeSlider.gameObject.SetActive(true);
         UIManagement.instance.soundFxSlider.gameObject.SetActive(true);
         UIManagement.instance.musicVolumeSlider.gameObject.SetActive(true);
+        UIManagement.instance.randomMusicPlayToggle.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -116,6 +117,7 @@ public class MainMenu : MonoBehaviour
         UIManagement.instance.masterVolumeSlider.gameObject.SetActive(false);
         UIManagement.instance.soundFxSlider.gameObject.SetActive(false);
         UIManagement.instance.musicVolumeSlider.gameObject.SetActive(false);
+        UIManagement.instance.randomMusicPlayToggle.gameObject.SetActive(false);
 
         UIManagement.instance.startButton.gameObject.SetActive(true);
         UIManagement.instance.optionButton.gameObject.SetActive(true);
