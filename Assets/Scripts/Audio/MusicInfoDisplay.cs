@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MusicInfoDisplay : MonoBehaviour
 {
     [SerializeField] GameObject audioPanel;
+    [SerializeField] Toggle randomMusicPlayToogle; // the same as in UIManager, just to make sure to have the reference to the toggle between all scenes. 
 
     public List<Music> musicPlaylist;
 
@@ -19,21 +21,30 @@ public class MusicInfoDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("ActiveScene: " + SceneManager.GetActiveScene().name);
         if (!SoundManager.instance.backGroundMusicSource.isPlaying)
+            UpdateMusicPanel();
+        if (SceneManager.GetActiveScene().name.Equals("Pre Game"))
+            UpdateMusicPanel();
+        if (SceneManager.GetActiveScene().name.Equals("The Great Escape"))
             UpdateMusicPanel();
     }
 
     void UpdateMusicPanel()
     {
-        Debug.Log("Toggle Enabled? " + UIManagement.instance.randomMusicPlayToggle.isOn);
-        if (counter == musicPlaylist.Count && !UIManagement.instance.randomMusicPlayToggle.isOn)
+        Debug.Log("Toggle Enabled? " + randomMusicPlayToogle.isOn);
+        Debug.Log("Counter: " + counter);
+        if (counter == musicPlaylist.Count && !randomMusicPlayToogle.isOn)
             counter = 0;
 
-        if (UIManagement.instance.randomMusicPlayToggle.isOn)
+        if (randomMusicPlayToogle.isOn)
             counter = Random.Range(0, musicPlaylist.Count);
 
-        SoundManager.instance.backGroundMusicSource.clip = musicPlaylist[counter].audioFile;
-        SoundManager.instance.backGroundMusicSource.Play();
+        if (!SoundManager.instance.backGroundMusicSource.isPlaying)
+        {
+            SoundManager.instance.backGroundMusicSource.clip = musicPlaylist[counter].audioFile;
+            SoundManager.instance.backGroundMusicSource.Play();
+        }
 
         authorName.text = musicPlaylist[counter].authorName;
         titleName.text = musicPlaylist[counter].titleName;
