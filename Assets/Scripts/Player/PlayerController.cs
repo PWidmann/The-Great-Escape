@@ -426,7 +426,7 @@ public class PlayerController : MonoBehaviour
     void SwordAttack()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space) || CheckInput(this, "ButtonRB"))
+        if (Input.GetKeyDown(KeyCode.Space) || CheckInput(this, "ButtonX"))
         {
             DropShield();
             animator.SetTrigger("isAttacking");
@@ -440,7 +440,7 @@ public class PlayerController : MonoBehaviour
 
     void ShieldUsage()
     {
-        if ((Input.GetKeyDown(KeyCode.Q)) || CheckInput(this, "ButtonY"))
+        if ((Input.GetKeyDown(KeyCode.Q)) || CheckShieldInput("ButtonY"))
         {
             if (hasShield)
             {
@@ -450,7 +450,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if ((Input.GetKeyUp(KeyCode.Q)) || CheckInput(this, "ButtonY"))
+        if ((Input.GetKeyUp(KeyCode.Q)) || CheckShieldInput("ButtonY"))
         {
             animator.SetBool("isBlocking", false);
             canMove = true;
@@ -485,7 +485,17 @@ public class PlayerController : MonoBehaviour
     public bool CheckInput(PlayerController playerController, string button)
     {
         if (!playerController.PlayerControls.Equals("Keyboard"))
-            return Input.GetButtonDown(playerController.PlayerControls + button);
+            return Input.GetButtonDown(playerControls + button);
         return false;
+    }
+
+    bool CheckShieldInput(string button)
+    {
+        if (!this.Equals("Keyboard") && canMove)
+            return Input.GetButtonDown(playerControls + button);
+        else if (!this.Equals("Keyboard") && !canMove)
+            return Input.GetButtonUp(playerControls + button);
+        return false;
+
     }
 }

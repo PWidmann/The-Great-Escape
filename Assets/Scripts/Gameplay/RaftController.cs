@@ -151,15 +151,8 @@ public class RaftController : MonoBehaviour
     {
         if (!IscollidingWithWall)
         {
-            //PlayerController.instance.RaftIsPulled = true;
-            //PlayerController.instance.isOnRaft = false;
             rb.MovePosition(transform.position + Vector3.down *
                 Time.deltaTime * 1);
-        }
-        else if (!HookThrower.BoatHooked)
-        {
-            //PlayerController.instance.RaftIsPulled = false;
-            //PlayerController.instance.isOnRaft = true;
         }
     }
 
