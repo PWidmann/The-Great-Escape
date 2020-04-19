@@ -7,8 +7,14 @@ public class PlayerInterface : MonoBehaviour
 {
     public static PlayerInterface instance = null;
 
+    // Tutorial
+    [Header("Tutorial")]
+    public bool startWithTutorial = true;
+    public GameObject tutorialPanel;
+    public bool tutorialActive = false;
 
     // Inventory References
+    [Header("Gameplay")]
     public Text leafCountText;
     public Text stickCountText;
     public Text medKitInfoText;
@@ -27,13 +33,16 @@ public class PlayerInterface : MonoBehaviour
 
     [SerializeField] Camera uiCamForTextFollowObjects;
 
-    // Start is called before the first frame update
     void Start()
     {
         if (instance == null)
         {
             instance = this;
         }
+
+        if (startWithTutorial)
+            tutorialActive = true;
+
         player1health.SetActive(false);
         player2health.SetActive(false);
         player3health.SetActive(false);
@@ -45,11 +54,12 @@ public class PlayerInterface : MonoBehaviour
         ShowPlayerHealth();
     }
 
-    // Update is called once per frame
     void Update()
     {
         leafCountText.text = "Leafs: " + leafCount;
         stickCountText.text = "Sticks: " + stickCount;
+
+        Tutorial();
     }
 
     void ShowPlayerHealth()
@@ -94,5 +104,19 @@ public class PlayerInterface : MonoBehaviour
     {
         repairInfoText.text = "Press E/Button A to repair hole.";
         repairInfoText.gameObject.SetActive(false);
+    }
+
+    void Tutorial()
+    {
+        if (tutorialActive)
+            tutorialPanel.SetActive(true);
+        else
+            tutorialPanel.SetActive(false);
+
+        if (tutorialActive)
+        {
+            if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J1ButtonA") || Input.GetButtonDown("J2ButtonA") || Input.GetButtonDown("J3ButtonA") || Input.GetButtonDown("J4ButtonA"))
+                tutorialActive = false;
+        }
     }
 }

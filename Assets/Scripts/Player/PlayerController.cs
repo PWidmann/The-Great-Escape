@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     PlayerOverlapBox overLapBox;
 
     Rigidbody2D myRigidbody;
-    int moveSpeed = 16;
+    int moveSpeed = 4;
     int playerNumber;
     string playerControls;
     public Vector3 change;
@@ -70,12 +70,18 @@ public class PlayerController : MonoBehaviour
         else if (OverLapBox.OverLappedCollider == null && !hasExited)
             OnOverLappingCollidersExit2D();
 
-        Move();
+        
         RaftHandling();
         SwordAttack();
         ShieldUsage();
         DropShieldCheck();
         UpdatePlayerHealth();
+    }
+
+    private void FixedUpdate()
+    {
+        if(!PlayerInterface.instance.tutorialActive)
+            Move();
     }
 
     void UpdatePlayerHealth()
@@ -135,13 +141,13 @@ public class PlayerController : MonoBehaviour
                 RaftController.instance.change = change;
 
                 //Move the character with the raft
-                myRigidbody.MovePosition(transform.position + RaftController.instance.change * RaftController.instance.moveSpeed * Time.deltaTime);
+                myRigidbody.MovePosition(transform.position + RaftController.instance.change * RaftController.instance.moveSpeed * Time.fixedDeltaTime);
             }
             else
             {
                 //Move the character with the raft
                 if (!HookThrower.BoatHooked)
-                    myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.deltaTime + RaftController.instance.change * RaftController.instance.moveSpeed * Time.deltaTime);
+                    myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.deltaTime + RaftController.instance.change * RaftController.instance.moveSpeed * Time.fixedDeltaTime);
                 else
                 {
                     animator.SetBool("isMoving", false);
@@ -151,7 +157,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.deltaTime);
+            myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.fixedDeltaTime);
         }
         
     }
@@ -348,6 +354,16 @@ public class PlayerController : MonoBehaviour
             RaftController.instance.raftUser = null;
             Debug.Log("Player " + PlayerNumber + " stopped steering raft");
         }
+
+        if (distance >= 1f)
+        {
+            SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
+            SoundManager.instance.soundFxSource.Play();
+            isSteeringRaft = false;
+            RaftController.instance.raftIsInUse = false;
+            RaftController.instance.raftUser = null;
+            Debug.Log("Player " + PlayerNumber + " stopped steering raft");
+        }
         
     }
 
@@ -425,7 +441,7 @@ public class PlayerController : MonoBehaviour
 
     void SwordAttack()
     {
-
+        // BUG - funktioniert nicht, Tastatur löst Schwertangriffe von allen Controller Spielern aus
         if (Input.GetKeyDown(KeyCode.Space) || CheckInput(this, "ButtonX"))
         {
             DropShield();
@@ -491,11 +507,21 @@ public class PlayerController : MonoBehaviour
 
     bool CheckShieldInput(string button)
     {
-        if (!this.Equals("Keyboard") && canMove)
-            return Input.GetButtonDown(playerControls + button);
-        else if (!this.Equals("Keyboard") && !canMove)
-            return Input.GetButtonUp(playerControls + button);
-        return false;
-
+        // Muss so nach Keyboard abgefragt werden, "!playerController.PlayerControls.Equals("Keyboard")" funktioniert nicht. Gibt fehler mit mehreren gamepads und tastatur.
+        if (playerControls == "Keyboard")
+        {
+            return false;
+        }
+        else
+        {
+            if (canMove)
+            {
+                return Input.GetButtonDown(playerControls + button);
+            }
+            else
+            {
+                return Input.GetButtonUp(playerControls + button);
+            }
+        }
     }
 }
