@@ -13,6 +13,8 @@ public class PlayerInterface : MonoBehaviour
     public Text stickCountText;
     public Text medKitInfoText;
     public Text repairInfoText;
+    public Text takeShieldText;
+    public Text activationShieldText;
 
     public GameObject player1health;
     public GameObject player2health;
@@ -23,7 +25,7 @@ public class PlayerInterface : MonoBehaviour
     public int leafCount = 0;
     public int stickCount = 0;
 
-    [SerializeField] Camera uiCamForTextFollowPlayer;
+    [SerializeField] Camera uiCamForTextFollowObjects;
 
     // Start is called before the first frame update
     void Start()
@@ -62,13 +64,35 @@ public class PlayerInterface : MonoBehaviour
             player4health.SetActive(true);
     }
 
-    public void MakeRepairInfoTextAbovePlayer(GameObject player, bool isCalled = false)
+    public void ShowTextAbovePlayer(GameObject player, Text interactableText, bool isCalled = false)
     {
         if (!isCalled)
         {
-            Vector3 screenPos = uiCamForTextFollowPlayer.WorldToScreenPoint(player.transform.position);
-            repairInfoText.rectTransform.position = new Vector2(screenPos.x, screenPos.y + 1);
+            Vector3 screenPos = uiCamForTextFollowObjects.WorldToScreenPoint(player.transform.position);
+            interactableText.rectTransform.position = new Vector2(screenPos.x, screenPos.y + 1);
             isCalled = true;
         }
+    }
+
+    public void ShowTextNextToObject(GameObject gameObject, Text interactableText, bool isCalled = false)
+    {
+        if (!isCalled)
+        {
+            Vector3 screenPos = uiCamForTextFollowObjects.WorldToScreenPoint(gameObject.transform.position);
+            interactableText.rectTransform.position = new Vector2(screenPos.x, screenPos.y + 1);
+            isCalled = true;
+        }
+    }
+
+    public void ResetMedkitInfoText()
+    {
+        medKitInfoText.text = "Press E/Button A to heal";
+        medKitInfoText.gameObject.SetActive(false);
+    }
+
+    public void ResetRepairInfoText()
+    {
+        repairInfoText.text = "Press E/Button A to repair hole.";
+        repairInfoText.gameObject.SetActive(false);
     }
 }

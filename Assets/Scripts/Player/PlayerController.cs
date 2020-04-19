@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
 
     //Fields for OverlapBox
     [SerializeField] PlayerInterface playerInterface;
+    [SerializeField] Medkit medkit;
+    [SerializeField] HoleManager hole;
+    [SerializeField] Shield shield;
     PlayerOverlapBox overLapBox;
 
     Rigidbody2D myRigidbody;
@@ -39,6 +42,9 @@ public class PlayerController : MonoBehaviour
     public float playerHealth = 100;
 
     public bool RaftIsPulled { get => raftIsPulled; set => raftIsPulled = value; }
+    public int PlayerNumber { get => playerNumber; }
+    public string PlayerControls { get => playerControls; set => playerControls = value; }
+    public PlayerOverlapBox OverLapBox { get => overLapBox; set => overLapBox = value; }
 
     void Start()
     {
@@ -47,21 +53,21 @@ public class PlayerController : MonoBehaviour
         {
             myRigidbody = GetComponent<Rigidbody2D>();
 
-            playerControls = GetPlayerController();
+            PlayerControls = GetPlayerController();
             animator = GetComponent<Animator>();
             DestroyPlayerObjectIfNotActive();
         }
 
         if (instance == null)
             instance = this;
-        overLapBox = gameObject.GetComponent<PlayerOverlapBox>();
+        OverLapBox = gameObject.GetComponent<PlayerOverlapBox>();
     }
 
     void Update()
     {
-        if (overLapBox.OverLappedCollider != null)
+        if (OverLapBox.OverLappedCollider != null)
             OnOverLappingCollidersEnter2D();
-        else if (overLapBox.OverLappedCollider == null && !hasExited)
+        else if (OverLapBox.OverLappedCollider == null && !hasExited)
             OnOverLappingCollidersExit2D();
 
         Move();
@@ -76,7 +82,7 @@ public class PlayerController : MonoBehaviour
     {
         if (PlayerHandler.instance.playSceneActive)
         {
-            switch (playerNumber)
+            switch (PlayerNumber)
             {
                 case 1:
                     PlayerInterface.instance.player1health.GetComponent<Text>().text = "Player 1 HP: " + playerHealth.ToString();
@@ -199,7 +205,7 @@ public class PlayerController : MonoBehaviour
 
     void InputAxisHandling()
     {
-        if (playerControls == "Keyboard")
+        if (PlayerControls == "Keyboard")
         {
             // Keyboard X Axis
             if (Input.GetAxisRaw("Horizontal") != 0)
@@ -237,9 +243,9 @@ public class PlayerController : MonoBehaviour
         else
         {
             // Gamepad X Axis
-            if (Input.GetAxisRaw(playerControls + "Horizontal") != 0)
+            if (Input.GetAxisRaw(PlayerControls + "Horizontal") != 0)
             {
-                changeToNormalize.x = Input.GetAxisRaw(playerControls + "Horizontal");
+                changeToNormalize.x = Input.GetAxisRaw(PlayerControls + "Horizontal");
             }
             else
             {
@@ -247,9 +253,9 @@ public class PlayerController : MonoBehaviour
             }
 
             // Gamepad Y Axis
-            if (Input.GetAxisRaw(playerControls + "Vertical") != 0)
+            if (Input.GetAxisRaw(PlayerControls + "Vertical") != 0)
             {
-                changeToNormalize.y = Input.GetAxisRaw(playerControls + "Vertical");
+                changeToNormalize.y = Input.GetAxisRaw(PlayerControls + "Vertical");
             }
             else
             {
@@ -285,7 +291,7 @@ public class PlayerController : MonoBehaviour
 
     void DestroyPlayerObjectIfNotActive()
     {
-        switch (playerNumber)
+        switch (PlayerNumber)
         {
             case 1:
                 if (!PlayerHandler.instance.player1active)
@@ -323,49 +329,24 @@ public class PlayerController : MonoBehaviour
         // Enter steering mode
         float distance = Vector2.Distance(transform.position, RaftController.instance.rudder.transform.position);
 
-        if (playerControls == "Keyboard")
+        if (distance < 1f && (Input.GetKeyDown(KeyCode.E) || CheckInput(this, "ButtonA"))
+            && !RaftController.instance.raftIsInUse && !isSteeringRaft && !HookThrower.BoatHooked)
         {
-            if (distance < 1f && Input.GetKeyDown(KeyCode.E) && !RaftController.instance.raftIsInUse && !isSteeringRaft
-                && !HookThrower.BoatHooked)
-            {
-                SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
-                SoundManager.instance.soundFxSource.Play();
-                isSteeringRaft = true;
-                RaftController.instance.raftIsInUse = true;
-                RaftController.instance.raftUser = playerNumber.ToString();
-                Debug.Log(RaftController.instance.raftUser + " is steering raft!");
-            }
-            else if (isSteeringRaft && Input.GetKeyDown(KeyCode.E))
-            {
-                SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
-                SoundManager.instance.soundFxSource.Play();
-                isSteeringRaft = false;
-                RaftController.instance.raftIsInUse = false;
-                RaftController.instance.raftUser = null;
-                Debug.Log("Player " + playerNumber + " stopped steering raft");
-            }
+            SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
+            SoundManager.instance.soundFxSource.Play();
+            isSteeringRaft = true;
+            RaftController.instance.raftIsInUse = true;
+            RaftController.instance.raftUser = PlayerNumber.ToString();
+            Debug.Log(RaftController.instance.raftUser + " is steering raft!");
         }
-        else // Gamepad
+        else if (isSteeringRaft && (Input.GetKeyDown(KeyCode.E) || CheckInput(this, "ButtonA")))
         {
-            if (distance < 1f && Input.GetButtonDown(playerControls + "ButtonA") && !RaftController.instance.raftIsInUse && 
-                !isSteeringRaft && !HookThrower.BoatHooked)
-            {
-                SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
-                SoundManager.instance.soundFxSource.Play();
-                isSteeringRaft = true;
-                RaftController.instance.raftIsInUse = true;
-                RaftController.instance.raftUser = playerNumber.ToString();
-                Debug.Log(RaftController.instance.raftUser + " is steering raft!");
-            }
-            else if (isSteeringRaft && Input.GetButtonDown(playerControls + "ButtonA"))
-            {
-                SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
-                SoundManager.instance.soundFxSource.Play();
-                isSteeringRaft = false;
-                RaftController.instance.raftIsInUse = false;
-                RaftController.instance.raftUser = null;
-                Debug.Log("Player " + playerNumber + " stopped steering raft");
-            }
+            SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
+            SoundManager.instance.soundFxSource.Play();
+            isSteeringRaft = false;
+            RaftController.instance.raftIsInUse = false;
+            RaftController.instance.raftUser = null;
+            Debug.Log("Player " + PlayerNumber + " stopped steering raft");
         }
         
     }
@@ -395,71 +376,57 @@ public class PlayerController : MonoBehaviour
         //Interactibles have to be on layer 15
 
         //Medkit
-        if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Medkit"))
+        if (OverLapBox.OverLappedCollider.gameObject.tag.Equals("Medkit"))
         {
             hasExited = false;
             playerInterface.medKitInfoText.gameObject.SetActive(true);
-
-            if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
-                && playerInterface.leafCount < 2)
-                playerInterface.medKitInfoText.text = "Not enough leafes.";
-            else if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
-                && playerHealth == 100 && playerInterface.leafCount >= 2)
-                playerInterface.medKitInfoText.text = "You already have max health.";
-            else if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
-                && playerHealth < 100 && playerInterface.leafCount >= 2)
-            {
-                playerInterface.medKitInfoText.text = "You healed yourself.";
-                playerHealth += 80;
-                if (playerHealth > 100)
-                    playerHealth = 100;
-                playerInterface.leafCount -= 2;
-                if (playerInterface.leafCount < 0)
-                    playerInterface.leafCount = 0;
-
-            }
+            medkit.Interact(this);
         }
 
-        // Shield
-        if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Shield"))
-        { 
-            if((Input.GetKeyDown(KeyCode.E)) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
-            {
-                if (!RaftController.instance.shieldIsInUse)
-                {
-                    RaftController.instance.shieldObject.SetActive(false);
-                    hasShield = true;
-                    RaftController.instance.shieldIsInUse = true;
-                }
-            }
-        }
-        else if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Hole"))
+        // Holes
+        else if (OverLapBox.OverLappedCollider.gameObject.tag.Equals("Hole"))
         {
             hasExited = false;
             playerInterface.repairInfoText.gameObject.SetActive(true);
-            playerInterface.MakeRepairInfoTextAbovePlayer(gameObject);
+            playerInterface.ShowTextAbovePlayer(gameObject, playerInterface.repairInfoText);
+            hole.Interact(this);
+        }
 
-            if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
-                && playerInterface.stickCount < 1)
-                playerInterface.repairInfoText.text = "Not enough sticks.";
-            else if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J" + playerNumber + "ButtonA"))
-                && playerInterface.stickCount >= 1)
-            {
-                playerInterface.medKitInfoText.text = "You repaired the hole.";
-                HoleManager.Instance.holes.Add(overLapBox.OverLappedCollider.gameObject);
-                RaftHoleActivator.DisableSpriteRenderer(overLapBox.OverLappedCollider.gameObject);
-                playerInterface.stickCount--;
-                Debug.Log("StickCount: " + playerInterface.stickCount);
-                if (playerInterface.stickCount < 0)
-                    playerInterface.stickCount = 0;
-            }
+        // Shield
+        if (OverLapBox.OverLappedCollider.gameObject.tag.Equals("Shield"))
+        {
+            // playerInterface.takeShieldText.gameObject.SetActive(true);
+            shield.Interact(this);
         }
     }
+
+
+    void OnOverLappingCollidersExit2D()
+    {
+        if (OverLapBox.PreviousOverlappedColliders != null &&
+           (OverLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Medkit") ||
+            OverLapBox.OverLappedCollider == null))
+        {
+            //overLapBox.PreviousOverlappedColliders = null;
+            hasExited = true;
+            playerInterface.ResetMedkitInfoText();
+        }
+
+        if (OverLapBox.PreviousOverlappedColliders != null &&
+           (OverLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hole") ||
+            OverLapBox.OverLappedCollider == null))
+        {
+            //overLapBox.PreviousOverlappedColliders = null;
+            hasExited = true;
+            playerInterface.ResetRepairInfoText();
+        }
+    }
+
 
     void SwordAttack()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("J" + playerNumber + "ButtonRB"))
+        if (Input.GetKeyDown(KeyCode.Space) || CheckInput(this, "ButtonRB"))
         {
             DropShield();
             animator.SetTrigger("isAttacking");
@@ -473,7 +440,7 @@ public class PlayerController : MonoBehaviour
 
     void ShieldUsage()
     {
-        if ((Input.GetKeyDown(KeyCode.Q)) || Input.GetButtonDown("J" + playerNumber + "ButtonY"))
+        if ((Input.GetKeyDown(KeyCode.Q)) || CheckInput(this, "ButtonY"))
         {
             if (hasShield)
             {
@@ -483,7 +450,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if ((Input.GetKeyUp(KeyCode.Q)) || Input.GetButtonUp("J" + playerNumber + "ButtonY"))
+        if ((Input.GetKeyUp(KeyCode.Q)) || CheckInput(this, "ButtonY"))
         {
             animator.SetBool("isBlocking", false);
             canMove = true;
@@ -494,7 +461,7 @@ public class PlayerController : MonoBehaviour
     {
         if (hasShield)
         {
-            if (Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("J" + playerNumber + "ButtonB"))
+            if (Input.GetKeyDown(KeyCode.F) || CheckInput(this, "ButtonB"))
             {
                 hasShield = false;
                 RaftController.instance.shieldIsInUse = false;
@@ -515,36 +482,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnOverLappingCollidersExit2D()
+    public bool CheckInput(PlayerController playerController, string button)
     {
-        if (overLapBox.PreviousOverlappedColliders != null && 
-           (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Medkit") || 
-            overLapBox.OverLappedCollider == null))
-        {
-            //overLapBox.PreviousOverlappedColliders = null;
-            hasExited = true;
-            ResetMedkitInfoText();
-        }
-        
-        if (overLapBox.PreviousOverlappedColliders != null &&
-           (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hole") ||
-            overLapBox.OverLappedCollider == null))
-        {
-            //overLapBox.PreviousOverlappedColliders = null;
-            hasExited = true;
-            ResetRepairInfoText();
-        }
-    }
-
-    void ResetMedkitInfoText()
-    {
-        playerInterface.medKitInfoText.text = "Press E/Button A to heal";
-        playerInterface.medKitInfoText.gameObject.SetActive(false);
-    }
-
-    void ResetRepairInfoText()
-    {
-        playerInterface.repairInfoText.text = "Press E/Button A to repair hole.";
-        playerInterface.repairInfoText.gameObject.SetActive(false);
+        if (!playerController.PlayerControls.Equals("Keyboard"))
+            return Input.GetButtonDown(playerController.PlayerControls + button);
+        return false;
     }
 }
