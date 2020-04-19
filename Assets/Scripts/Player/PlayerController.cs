@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     PlayerOverlapBox overLapBox;
 
     Rigidbody2D myRigidbody;
-    int moveSpeed = 16;
+    int moveSpeed = 4;
     int playerNumber;
     string playerControls;
     public Vector3 change;
@@ -70,12 +70,26 @@ public class PlayerController : MonoBehaviour
         else if (OverLapBox.OverLappedCollider == null && !hasExited)
             OnOverLappingCollidersExit2D();
 
-        Move();
-        RaftHandling();
-        SwordAttack();
-        ShieldUsage();
-        DropShieldCheck();
-        UpdatePlayerHealth();
+        if (!PlayerInterface.instance.tutorialActive)
+        {
+            if (overLapBox.OverLappedCollider != null)
+                OnOverLappingCollidersEnter2D();
+            else if (overLapBox.OverLappedCollider == null && !hasExited)
+                OnOverLappingCollidersExit2D();
+
+
+            RaftHandling();
+            SwordAttack();
+            ShieldUsage();
+            DropShieldCheck();
+            UpdatePlayerHealth();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (!PlayerInterface.instance.tutorialActive)
+            Move();
     }
 
     void UpdatePlayerHealth()
@@ -135,13 +149,13 @@ public class PlayerController : MonoBehaviour
                 RaftController.instance.change = change;
 
                 //Move the character with the raft
-                myRigidbody.MovePosition(transform.position + RaftController.instance.change * RaftController.instance.moveSpeed * Time.deltaTime);
+                myRigidbody.MovePosition(transform.position + RaftController.instance.change * RaftController.instance.moveSpeed * Time.fixedDeltaTime);
             }
             else
             {
                 //Move the character with the raft
                 if (!HookThrower.BoatHooked)
-                    myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.deltaTime + RaftController.instance.change * RaftController.instance.moveSpeed * Time.deltaTime);
+                    myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.deltaTime + RaftController.instance.change * RaftController.instance.moveSpeed * Time.fixedDeltaTime);
                 else
                 {
                     animator.SetBool("isMoving", false);
@@ -338,6 +352,17 @@ public class PlayerController : MonoBehaviour
             RaftController.instance.raftIsInUse = true;
             RaftController.instance.raftUser = PlayerNumber.ToString();
             Debug.Log(RaftController.instance.raftUser + " is steering raft!");
+
+            // When player hits land while steering, player loses control of the raft
+            if (isSteeringRaft && distance >= 1f)
+            {
+                SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
+                SoundManager.instance.soundFxSource.Play();
+                isSteeringRaft = false;
+                RaftController.instance.raftIsInUse = false;
+                RaftController.instance.raftUser = null;
+                Debug.Log("Player " + playerNumber + " stopped steering raft");
+            }
         }
         else if (isSteeringRaft && (Input.GetKeyDown(KeyCode.E) || CheckInput(this, "ButtonA")))
         {
