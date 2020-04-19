@@ -16,7 +16,7 @@ public class RaftController : MonoBehaviour
     public SpriteRenderer rudderSprite;
     public Rigidbody2D rb;
     public Vector3 change = Vector3.zero;
-    public float moveSpeed = 5f;
+    public float moveSpeed = 15f;
 
     public GameObject landTileMap;
 
@@ -84,7 +84,7 @@ public class RaftController : MonoBehaviour
         trackVelocity = (rb.position - lastPos) * 50;
         lastPos = rb.position;
 
-            
+            rb.MovePosition(transform.position + change * moveSpeed * Time.deltaTime);
         if (HookThrower.BoatHooked)
         {
             PlayerController.instance.isSteeringRaft = false;
@@ -95,11 +95,6 @@ public class RaftController : MonoBehaviour
 
         SteeringInteraction();
         RudderMovement(change);
-    }
-
-    private void FixedUpdate()
-    {
-        rb.MovePosition(transform.position + change * moveSpeed * Time.fixedDeltaTime);
     }
 
     void SteeringInteraction()

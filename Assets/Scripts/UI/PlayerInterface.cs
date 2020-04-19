@@ -7,12 +7,7 @@ public class PlayerInterface : MonoBehaviour
 {
     public static PlayerInterface instance = null;
 
-    [Header("Tutorial")]
-    public bool startWithTutorial = true;
-    public GameObject tutorialPanel;
-    public bool tutorialActive = false;
 
-    [Header("Player Interface")]
     // Inventory References
     public Text leafCountText;
     public Text stickCountText;
@@ -48,11 +43,6 @@ public class PlayerInterface : MonoBehaviour
         medKitInfoText.gameObject.SetActive(false);
 
         ShowPlayerHealth();
-
-        if (startWithTutorial)
-        {
-            tutorialActive = true;
-        }
     }
 
     // Update is called once per frame
@@ -60,7 +50,6 @@ public class PlayerInterface : MonoBehaviour
     {
         leafCountText.text = "Leafs: " + leafCount;
         stickCountText.text = "Sticks: " + stickCount;
-        Tutorial();
     }
 
     void ShowPlayerHealth()
@@ -105,18 +94,5 @@ public class PlayerInterface : MonoBehaviour
     {
         repairInfoText.text = "Press E/Button A to repair hole.";
         repairInfoText.gameObject.SetActive(false);
-    }
-
-    void Tutorial()
-    {
-        if (tutorialActive)
-            tutorialPanel.SetActive(true);
-        else
-            tutorialPanel.SetActive(false);
-
-        if (tutorialActive && Input.GetKeyDown(KeyCode.E) || tutorialActive && Input.GetButtonDown("J1ButtonA") || tutorialActive && Input.GetButtonDown("J2ButtonA") || tutorialActive && Input.GetButtonDown("J3ButtonA") || tutorialActive && Input.GetButtonDown("J4ButtonA"))
-        {
-            tutorialActive = false;
-        }
     }
 }
