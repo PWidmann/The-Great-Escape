@@ -26,8 +26,6 @@ public class HookThrower : MonoBehaviour
     [SerializeField] GameObject hookPrefab;
     [SerializeField] Transform raftObject;
 
-    [SerializeField] Text InfoHookText;
-
     [SerializeField] AIController aiController;
     GameObject hook;
     AudioSource hookThrowerSfx;
@@ -91,7 +89,7 @@ public class HookThrower : MonoBehaviour
             {
                 if (hook.transform.position.Equals(target) && !boatHooked)
                 {
-                    DestroyHook(hook);
+                    DestroyHook();
                     hookInstantiated = false;
                     isInstantiating = false;
                     RaftController.HookMoving = false;
@@ -104,11 +102,7 @@ public class HookThrower : MonoBehaviour
         // that the hook thrower pulls the raft to the shore.
         if (boatHooked)
         {
-            InfoHookText.gameObject.SetActive(true);
-
-            if (Input.GetKeyDown(KeyCode.Space))
-                DestroyHook(hook);
-            else
+           
                 MakeHookAsChildGameObject();
         }
     }
@@ -145,10 +139,10 @@ public class HookThrower : MonoBehaviour
         hook.transform.parent = raftObject.transform;
     }
 
-    void DestroyHook(GameObject hookPrefab)
+    public void DestroyHook()
     {
-        InfoHookText.gameObject.SetActive(false);
-        Destroy(hookPrefab);
+        PlayerInterface.instance.destroyHookInfoText.gameObject.SetActive(false);
+        Destroy(hook);
         boatHooked = false;
         hookInstantiated = false;
         RaftController.HookMoving = false;

@@ -15,6 +15,8 @@ public class AIController : MonoBehaviour
     [SerializeField] bool isDebugging;
     public bool isWaitingForAi = true;
 
+    public HookThrower hookThrower;
+
     public float delayTimer; // delay for starting attack.
     public int movementSpeed = 7;
 

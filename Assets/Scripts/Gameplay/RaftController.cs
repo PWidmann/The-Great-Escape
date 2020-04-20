@@ -194,6 +194,8 @@ public class RaftController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         int playerCounter = 0;
+        if (!aIController.isChecked)
+            return;
 
         if (collision.gameObject.tag.Equals("Hook"))
         {
@@ -208,8 +210,8 @@ public class RaftController : MonoBehaviour
 
         }
         else if (collision.gameObject.tag.Equals("Pickup"))
-            Debug.Log("IgnoreColling pick up for now."); 
-        else if (aIController.isChecked && collision.gameObject.name.Equals(AttackScript.GetActivePlayers().name))
+            Debug.Log("IgnoreColliding pick up for now."); 
+        if (aIController.isChecked && collision.gameObject.name.Equals(AttackScript.GetActivePlayers().name))
         {
             playerCounter++;
             if (playerCounter == AttackScript.players.Count)

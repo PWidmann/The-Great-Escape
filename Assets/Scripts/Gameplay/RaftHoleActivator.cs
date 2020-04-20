@@ -62,9 +62,6 @@ public class RaftHoleActivator : MonoBehaviour
                 holeSprite.enabled = true;
                 spriteEnabled = true;
                 isHit = true;
-                if (!HoleManager.Instance.attackScriptHookThrowerReference.WeaponDisabled &&
-                        !HoleManager.Instance.attackScriptStoneThrowerReference.WeaponDisabled)
-                    HoleManager.Instance.holes.Remove(gameObject);
                 RaftController.instance.moveSpeed -= 0.5f;
                 if (RaftController.instance.moveSpeed < 0)
                     RaftController.instance.moveSpeed = 1;

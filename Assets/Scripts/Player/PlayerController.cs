@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Medkit medkit;
     [SerializeField] HoleManager hole;
     [SerializeField] Shield shield;
+    [SerializeField] Hook hook;
     PlayerOverlapBox overLapBox;
 
     Rigidbody2D myRigidbody;
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
     public int PlayerNumber { get => playerNumber; }
     public string PlayerControls { get => playerControls; set => playerControls = value; }
     public PlayerOverlapBox OverLapBox { get => overLapBox; set => overLapBox = value; }
+    public Animator Animator { get => animator; set => animator = value; }
 
     void Start()
     {
@@ -54,7 +56,7 @@ public class PlayerController : MonoBehaviour
             myRigidbody = GetComponent<Rigidbody2D>();
 
             PlayerControls = GetPlayerController();
-            animator = GetComponent<Animator>();
+            Animator = GetComponent<Animator>();
             DestroyPlayerObjectIfNotActive();
         }
 
@@ -114,21 +116,21 @@ public class PlayerController : MonoBehaviour
         if (change != Vector3.zero && !isSteeringRaft)
         {
             isMoving = true;
-            animator.SetFloat("moveX", change.x);
-            animator.SetFloat("moveY", change.y);
-            animator.SetBool("isMoving", true);
+            Animator.SetFloat("moveX", change.x);
+            Animator.SetFloat("moveY", change.y);
+            Animator.SetBool("isMoving", true);
         }
         else
         {
             isMoving = false;
-            animator.SetBool("isMoving", false);
+            Animator.SetBool("isMoving", false);
         }
 
         if (isOnRaft)
         {
             if (isSteeringRaft)
             {
-                animator.SetFloat("moveX", 0.1f);
+                Animator.SetFloat("moveX", 0.1f);
 
                 if ((change.x > 0 || change.y > 0) && !SoundManager.instance.soundFxSource.isPlaying)
                 {
@@ -150,7 +152,7 @@ public class PlayerController : MonoBehaviour
                     myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.fixedDeltaTime + RaftController.instance.change * RaftController.instance.moveSpeed * Time.fixedDeltaTime);
                 else
                 {
-                    animator.SetBool("isMoving", false);
+                    Animator.SetBool("isMoving", false);
                     Invoke("GivePlayerControlsBack", 1f);
                 }
             }
@@ -164,7 +166,7 @@ public class PlayerController : MonoBehaviour
 
     void GivePlayerControlsBack()
     {
-        myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.deltaTime + RaftController.instance.change * RaftController.instance.moveSpeed * Time.deltaTime);
+        myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.fixedDeltaTime + RaftController.instance.change * RaftController.instance.moveSpeed * Time.deltaTime);
     }
 
     string GetPlayerController()
@@ -393,7 +395,7 @@ public class PlayerController : MonoBehaviour
         //Interactibles have to be on layer 15
 
         //Medkit
-        if (OverLapBox.OverLappedCollider.gameObject.tag.Equals("Medkit"))
+        if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Medkit"))
         {
             hasExited = false;
             playerInterface.medKitInfoText.gameObject.SetActive(true);
@@ -401,7 +403,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Holes
-        else if (OverLapBox.OverLappedCollider.gameObject.tag.Equals("Hole"))
+        else if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Hole"))
         {
             hasExited = false;
             playerInterface.repairInfoText.gameObject.SetActive(true);
@@ -410,32 +412,49 @@ public class PlayerController : MonoBehaviour
         }
 
         // Shield
-        if (OverLapBox.OverLappedCollider.gameObject.tag.Equals("Shield"))
+        if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Shield"))
         {
-            // playerInterface.takeShieldText.gameObject.SetActive(true);
             shield.Interact(this);
+        }
+
+        // Spear
+        if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Hook"))
+        {
+            hasExited = false;
+            playerInterface.destroyHookInfoText.gameObject.SetActive(true);
+            playerInterface.ShowTextAbovePlayer(gameObject, playerInterface.destroyHookInfoText);
+            hook.Interact(this);
+
         }
     }
 
 
     void OnOverLappingCollidersExit2D()
     {
-        if (OverLapBox.PreviousOverlappedColliders != null &&
-           (OverLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Medkit") ||
-            OverLapBox.OverLappedCollider == null))
+        if (overLapBox.PreviousOverlappedColliders != null &&
+           (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Medkit") ||
+            overLapBox.OverLappedCollider == null))
         {
             //overLapBox.PreviousOverlappedColliders = null;
             hasExited = true;
-            playerInterface.ResetMedkitInfoText();
+            playerInterface.ResetInfoTexts(playerInterface.medKitInfoText, "Interact to heal");
         }
 
-        if (OverLapBox.PreviousOverlappedColliders != null &&
-           (OverLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hole") ||
-            OverLapBox.OverLappedCollider == null))
+        if (overLapBox.PreviousOverlappedColliders != null &&
+           (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hole") ||
+            overLapBox.OverLappedCollider == null))
         {
             //overLapBox.PreviousOverlappedColliders = null;
             hasExited = true;
-            playerInterface.ResetRepairInfoText();
+            playerInterface.ResetInfoTexts(playerInterface.repairInfoText, "Interact to repair");
+        }
+
+        if (overLapBox.PreviousOverlappedColliders != null &&
+           (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hook") ||
+            overLapBox.OverLappedCollider == null))
+        {
+            hasExited = true;
+            playerInterface.ResetInfoTexts(playerInterface.destroyHookInfoText, "Attack!");
         }
     }
 
@@ -445,7 +464,7 @@ public class PlayerController : MonoBehaviour
         if (CheckInput(this, "ButtonX", KeyCode.Space))
         {
             DropShield();
-            animator.SetTrigger("isAttacking");
+            Animator.SetTrigger("isAttacking");
         }
     }
 
@@ -460,7 +479,7 @@ public class PlayerController : MonoBehaviour
         {
             if (hasShield)
             {
-                animator.SetBool("isBlocking", true);
+                Animator.SetBool("isBlocking", true);
                 canMove = false;
                 change = Vector3.zero;
             }
@@ -468,7 +487,7 @@ public class PlayerController : MonoBehaviour
 
         if (CheckShieldInput("ButtonY", KeyCode.Q))
         {
-            animator.SetBool("isBlocking", false);
+            Animator.SetBool("isBlocking", false);
             canMove = true;
         }
     }

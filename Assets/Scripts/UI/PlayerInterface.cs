@@ -19,8 +19,7 @@ public class PlayerInterface : MonoBehaviour
     public Text stickCountText;
     public Text medKitInfoText;
     public Text repairInfoText;
-    public Text takeShieldText;
-    public Text activationShieldText;
+    public Text destroyHookInfoText;
 
     public GameObject player1health;
     public GameObject player2health;
@@ -84,26 +83,10 @@ public class PlayerInterface : MonoBehaviour
         }
     }
 
-    public void ShowTextNextToObject(GameObject gameObject, Text interactableText, bool isCalled = false)
+    public void ResetInfoTexts(Text uiText, string message)
     {
-        if (!isCalled)
-        {
-            Vector3 screenPos = uiCamForTextFollowObjects.WorldToScreenPoint(gameObject.transform.position);
-            interactableText.rectTransform.position = new Vector2(screenPos.x, screenPos.y + 1);
-            isCalled = true;
-        }
-    }
-
-    public void ResetMedkitInfoText()
-    {
-        medKitInfoText.text = "Press E/Button A to heal";
-        medKitInfoText.gameObject.SetActive(false);
-    }
-
-    public void ResetRepairInfoText()
-    {
-        repairInfoText.text = "Press E/Button A to repair hole.";
-        repairInfoText.gameObject.SetActive(false);
+        uiText.text = message;
+        uiText.gameObject.SetActive(false);
     }
 
     void Tutorial()
