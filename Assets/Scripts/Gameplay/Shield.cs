@@ -6,7 +6,7 @@ public class Shield : MonoBehaviour, Iinteractable
 {
     public void Interact(PlayerController playerController)
     {
-        if ((Input.GetKeyDown(KeyCode.E)) || playerController.CheckInput(playerController, "ButtonA"))
+        if (playerController.CheckInput(playerController, "ButtonA", KeyCode.E))
         {
             if (!RaftController.instance.shieldIsInUse)
             {

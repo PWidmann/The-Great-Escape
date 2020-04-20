@@ -426,7 +426,7 @@ public class PlayerController : MonoBehaviour
     void SwordAttack()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space) || CheckInput(this, "ButtonX"))
+        if (CheckInput(this, "ButtonX", KeyCode.Space))
         {
             DropShield();
             animator.SetTrigger("isAttacking");
@@ -440,7 +440,7 @@ public class PlayerController : MonoBehaviour
 
     void ShieldUsage()
     {
-        if ((Input.GetKeyDown(KeyCode.Q)) || CheckShieldInput("ButtonY"))
+        if (CheckShieldInput("ButtonY", KeyCode.Q))
         {
             if (hasShield)
             {
@@ -450,7 +450,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if ((Input.GetKeyUp(KeyCode.Q)) || CheckShieldInput("ButtonY"))
+        if (CheckShieldInput("ButtonY", KeyCode.Q))
         {
             animator.SetBool("isBlocking", false);
             canMove = true;
@@ -461,7 +461,7 @@ public class PlayerController : MonoBehaviour
     {
         if (hasShield)
         {
-            if (Input.GetKeyDown(KeyCode.F) || CheckInput(this, "ButtonB"))
+            if (CheckInput(this, "ButtonB", KeyCode.F))
             {
                 hasShield = false;
                 RaftController.instance.shieldIsInUse = false;
@@ -482,20 +482,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool CheckInput(PlayerController playerController, string button)
+    public bool CheckInput(PlayerController playerController, string button, KeyCode key = 0)
     {
-        if (!playerController.PlayerControls.Equals("Keyboard"))
+        if (!playerControls.Equals("Keyboard"))
             return Input.GetButtonDown(playerControls + button);
-        return false;
+        else
+            return Input.GetKeyDown(key);
+
+
     }
 
-    bool CheckShieldInput(string button)
+    bool CheckShieldInput(string button, KeyCode key = 0)
     {
-        if (!this.Equals("Keyboard") && canMove)
+        if (!playerControls.Equals("Keyboard") && canMove)
             return Input.GetButtonDown(playerControls + button);
-        else if (!this.Equals("Keyboard") && !canMove)
+        else if (!playerControls.Equals("Keyboard") && !canMove)
             return Input.GetButtonUp(playerControls + button);
-        return false;
-
+        else if (playerControls.Equals("Keyboard") && canMove)
+            return Input.GetKeyDown(key);
+        else
+            return Input.GetKeyUp(key);
     }
 }
