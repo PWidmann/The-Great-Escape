@@ -151,16 +151,40 @@ public class TileMapGenerator : MonoBehaviour
                 {
                     int rnd = Random.Range(0, 100);
                     int pickupItem = Random.Range(0, 3);
+                    int degreeOption = Random.Range(1, 4);
+                    float rotationChange = 0f;
+                    switch (degreeOption)
+                    {
+                        case 1:
+                            rotationChange = 0f;
+                            break;
+                        case 2:
+                            rotationChange = 90f;
+                            break;
+                        case 3:
+                            rotationChange = 180f;
+                            break;
+                        case 4:
+                            rotationChange = 270f;
+                            break;
+                    }
+
+                    Transform leafObject = pickUps[0].transform;
+                    Transform stickObject = pickUps[1].transform;
+
+                    leafObject.Rotate(Vector3.forward * rotationChange);
+                    stickObject.Rotate(Vector3.forward * rotationChange);
+
 
                     if (rnd > 94)
                     {
                         switch (pickupItem)
                         {
                             case 0:
-                                Instantiate(pickUps[0], new Vector3(x, y, -3f), pickUps[0].transform.rotation).transform.SetParent(instanceGrouping);
+                                Instantiate(pickUps[0], new Vector3(x, y, -3f), leafObject.transform.rotation).transform.SetParent(instanceGrouping);
                                 break;
                             case 1:
-                                Instantiate(pickUps[1], new Vector3(x, y, -3f), pickUps[1].transform.rotation).transform.SetParent(instanceGrouping);
+                                Instantiate(pickUps[1], new Vector3(x, y, -3f), stickObject.transform.rotation).transform.SetParent(instanceGrouping);
                                 break;
                         }
                         
