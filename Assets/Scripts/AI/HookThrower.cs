@@ -35,8 +35,6 @@ public class HookThrower : MonoBehaviour
     static bool boatHooked = false;
     static bool hookInstantiated = false;
 
-    [Range(1f, 10f)] public float hookThrowSpeed = 8f;
-
     bool isInstantiating = false; // used to control the sequence of update instructions.
     bool hasTargetLocked = false; // used to make the hook not follow the raft when hook thrown.
     Vector2 target;
@@ -77,7 +75,8 @@ public class HookThrower : MonoBehaviour
             // First instanitation of hook object.
             if (!hookInstantiated && !isInstantiating && RaftController.AllPlayersOnRaft)
             {
-                Invoke("InstantiateHook", Random.Range(3f, 6f));
+                Invoke("InstantiateHook", Random.Range(AIController.instance.minHookThrowDelayTimer, 
+                    AIController.instance.maxHookThrowDelayTimer));
 
                 // Determines randomHoleNumber.
                 randomHoleNumber = Random.Range(0, HoleManager.Instance.holes.Count);

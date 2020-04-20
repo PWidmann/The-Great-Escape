@@ -28,7 +28,6 @@ public class AttackScript : MonoBehaviour
 
     bool weaponInstantiated;
 
-    float coolDownTimeInSeconds = 5f;
     float nextThrowAfterCooldown;
     int randomPlayerNumber;
     int randomHoleNumber;
@@ -74,7 +73,7 @@ public class AttackScript : MonoBehaviour
                     EnableWeapon(stone);
                     stone.transform.position = transform.position;
                 }
-                nextThrowAfterCooldown = Time.time + coolDownTimeInSeconds;
+                nextThrowAfterCooldown = Time.time + aiController.coolDownTimeInSeconds;
 
                 // Picks the a random Hole-GameObject as target.
                 RandomHoleNumber = Random.Range(0, HoleManager.Instance.holes.Count);
@@ -94,7 +93,7 @@ public class AttackScript : MonoBehaviour
                     EnableWeapon(spear);
                     spear.transform.position = transform.position;
                 }
-                nextThrowAfterCooldown = Time.time + coolDownTimeInSeconds;
+                nextThrowAfterCooldown = Time.time + aiController.coolDownTimeInSeconds;
 
                 // Picks random Player as target.
                 randomPlayerNumber = Random.Range(0, players.Count);

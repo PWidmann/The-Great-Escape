@@ -20,8 +20,16 @@ public class AIController : MonoBehaviour
 
     public static AIController instance;
 
+    [Header("General")]
     [Range(0.0f, 1f)] public float hitAccuracy;
     [Range(1f, 1000f)] public float throwSpeed;
+
+    [Header("HookThrower")]
+    public float minHookThrowDelayTimer = 3f;
+    public float maxHookThrowDelayTimer = 6f;
+
+    [Header("Spear-/Stonethrower")]
+    public float coolDownTimeInSeconds = 5f;
 
     private void Awake()
     {
