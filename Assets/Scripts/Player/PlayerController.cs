@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
             {
                 //Move the character with the raft
                 if (!HookThrower.BoatHooked)
-                    myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.deltaTime + RaftController.instance.change * RaftController.instance.moveSpeed * Time.fixedDeltaTime);
+                    myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.fixedDeltaTime + RaftController.instance.change * RaftController.instance.moveSpeed * Time.fixedDeltaTime);
                 else
                 {
                     animator.SetBool("isMoving", false);

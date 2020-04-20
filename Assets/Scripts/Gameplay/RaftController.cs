@@ -85,13 +85,7 @@ public class RaftController : MonoBehaviour
         lastPos = rb.position;
 
             
-        if (HookThrower.BoatHooked)
-        {
-            PlayerController.instance.isSteeringRaft = false;
-            raftIsInUse = false;
-            raftUser = null;
-            PullRaftToShore();
-        } 
+        
 
         SteeringInteraction();
         RudderMovement(change);
@@ -100,6 +94,15 @@ public class RaftController : MonoBehaviour
     private void FixedUpdate()
     {
         rb.MovePosition(transform.position + change * moveSpeed * Time.fixedDeltaTime);
+        
+        if (HookThrower.BoatHooked)
+        {
+            PlayerController.instance.isSteeringRaft = false;
+            raftIsInUse = false;
+            raftUser = null;
+            PullRaftToShore();
+        }
+
     }
 
     void SteeringInteraction()
@@ -150,7 +153,7 @@ public class RaftController : MonoBehaviour
         if (!IscollidingWithWall)
         {
             rb.MovePosition(transform.position + Vector3.down *
-                Time.deltaTime * 1);
+                Time.fixedDeltaTime * 1);
         }
     }
 

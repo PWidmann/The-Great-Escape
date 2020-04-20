@@ -34,7 +34,7 @@ public class PlayerOverlapBox : MonoBehaviour
     void MakeOverlapBox()
     {
         point = transform.position;
-        overLappedCollider = Physics2D.OverlapBox(point, boxSize * 2, angle, layerMask);
+        overLappedCollider = Physics2D.OverlapBox(point, new Vector2(boxSize.x * 2, (boxSize.y * 2) + 0.5f), angle, layerMask);
         if (overLappedCollider != null)
         {
             PreviousOverlappedColliders = overLappedCollider;
