@@ -116,7 +116,8 @@ public class PreGame : MonoBehaviour
             //Start game
             if (PlayerHandler.instance.playerCount > 0 && confirmPlayers == true)
             {
-                SoundManager.instance.PlayMenuPointerSoundFx();
+                if (!SoundManager.instance.soundFxSource.isPlaying)
+                    SoundManager.instance.PlayMenuPointerSoundFx();
                 ButtonStart();
             }
 
@@ -137,7 +138,8 @@ public class PreGame : MonoBehaviour
             //Start game
             if (PlayerHandler.instance.playerCount > 0 && confirmPlayers == true)
             {
-                SoundManager.instance.PlayMenuClickSoundFx();
+                if (!SoundManager.instance.soundFxSource.isPlaying)
+                    SoundManager.instance.PlayMenuClickSoundFx();
                 ButtonStart();
             }
 
