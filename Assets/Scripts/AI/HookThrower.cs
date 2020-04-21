@@ -66,6 +66,7 @@ public class HookThrower : MonoBehaviour
         {
             hook.SetActive(false);
             Destroy(gameObject);
+            return;
         }
 
         if (!AIController.instance.isWaitingForAi)

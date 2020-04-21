@@ -28,7 +28,6 @@ public class RaftController : MonoBehaviour
     public Vector2 lastPos;
 
     public GameObject rudderInteractText;
-
     public Transform player1transform;
     public Transform player2transform;
     public Transform player3transform;
@@ -44,6 +43,8 @@ public class RaftController : MonoBehaviour
 
     List<string> playerWithRaftCollisions = new List<string>();
     int playerCounter = 0;
+
+    string previousGOName;
 
     [SerializeField] AIController aIController;
 
@@ -205,19 +206,14 @@ public class RaftController : MonoBehaviour
         }
         if (collision.gameObject.tag.Equals("Player") && playerCounter <= AttackScript.players.Count)
         {
-            if (playerWithRaftCollisions.Count == 0)
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            player.HasEnteredRaft = true;
+            if (player.HasEnteredRaft && !player.IsColliding)
             {
-                playerWithRaftCollisions.Add(collision.gameObject.name);
                 playerCounter++;
+                player.IsColliding = true;
             }
-            for (int i = 0; i < playerWithRaftCollisions.Count; i++)
-            {
-                if (!playerWithRaftCollisions[i].Equals(collision.gameObject.name))
-                {
-                    playerWithRaftCollisions.Add(collision.gameObject.name);
-                    playerCounter++;
-                }
-            }
+            Debug.Log("RaftController playerCounter " + playerCounter);
             if (playerCounter == AttackScript.players.Count)
                 allPlayersOnRaft = true;
         }

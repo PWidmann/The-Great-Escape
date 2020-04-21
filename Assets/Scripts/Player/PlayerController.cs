@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
     public bool hasShield = false;
     public bool isOnRaft = false;
 
+    bool hasEnteredRaft = false;
+    bool isColliding = false;
+
     public bool raftCanMove = true;
     public BoxCollider2D collider;
 
@@ -58,6 +61,8 @@ public class PlayerController : MonoBehaviour
     public Animator Animator { get => animator; set => animator = value; }
     public bool GameOver { get => gameOver; set => gameOver = value; }
     public bool IsDead { get => isDead; set => isDead = value; }
+    public bool HasEnteredRaft { get => hasEnteredRaft; set => hasEnteredRaft = value; }
+    public bool IsColliding { get => isColliding; set => isColliding = value; }
 
     void Start()
     {
