@@ -38,6 +38,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Slider musicVolumeSlider;
     [SerializeField] Slider soundFxVolumeSlider;
 
+    bool pauseMenuActive = true;
 
     // Gamepad
     bool oneTimeStickMovement = false;
@@ -52,7 +53,10 @@ public class MainMenu : MonoBehaviour
     private void Awake()
     {
         if (instance = null)
+        {
             instance = this;
+            DontDestroyOnLoad(this);
+        }
     }
 
     // Start is called before the first frame update
@@ -64,24 +68,22 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        KeyboardInput();
-        ControllerInput();
+        if (pauseMenuActive)
+        {
+            KeyboardInput();
+            ControllerInput();
 
-        ChangeButtonAppearance(MainMenuSelectedButton, OptionMenuSelectedButton);
-        ChangeSlider();
+            ChangeButtonAppearance(MainMenuSelectedButton, OptionMenuSelectedButton);
+            ChangeSlider();
+        }
     }
 
-    /// <summary>
-    /// Loads pre game scene
-    /// </summary>
     public void ButtonStart()
     {
+        pauseMenuActive = false;
         SceneManager.LoadScene("Pre Game");
     }
 
-    /// <summary>
-    /// Opens options menu with sliders and buttons.
-    /// </summary>
     public void ButtonOptions()
     {
         optionsMenu = true;
@@ -98,17 +100,11 @@ public class MainMenu : MonoBehaviour
         UIManagement.instance.randomMusicPlayToggle.gameObject.SetActive(true);
     }
 
-    /// <summary>
-    /// Closes the game.
-    /// </summary>
     public void ButtonQuit()
     {
         Application.Quit();
     }
 
-    /// <summary>
-    /// Saves all changes made and goes back to the titlescreen.
-    /// </summary>
     public void ButtonSaveSettings()
     {
         PlayerPrefs.Save();
@@ -413,14 +409,15 @@ public class MainMenu : MonoBehaviour
         txt.color = new Color32(114, 114, 114, 255);
     }
 
-
-    /// <summary>
-    /// On pointer event function. Highlights the button over which the mouse hovers or points.
-    /// </summary>
-    /// <param name="selectedButton">the button that's selected int</param>
+    // On pointer event function. Highlights the button over which the mouse hovers or points.
     public void SelectButtonDisplay(int selectedButton)
     {
         MainMenuSelectedButton = selectedButton;
+    }
+
+    public void ResumeButton()
+    {
+        Time.timeScale = 1;
     }
 }
 
