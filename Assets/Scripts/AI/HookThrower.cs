@@ -61,6 +61,13 @@ public class HookThrower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Deactivate enemies when endscreen
+        if (PlayerInterface.instance.gameOver || PlayerInterface.instance.win)
+        {
+            hook.SetActive(false);
+            Destroy(gameObject);
+        }
+
         if (!AIController.instance.isWaitingForAi)
         {
             // Prevent out of range exception by making sure that the indexes are always updated.

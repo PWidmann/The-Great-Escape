@@ -31,6 +31,9 @@ public class TileMapGenerator : MonoBehaviour
     [Header("Plants")]
     public GameObject[] plants = new GameObject[4];
 
+    [Header("EndFlag")]
+    public GameObject endFlag;
+
     int riverWidth = 15;
 
     [Header("Raft")]
@@ -121,7 +124,12 @@ public class TileMapGenerator : MonoBehaviour
 
         int riverHeightChange = 1;
 
-        for (int x = 0; x < mapWidth - 20; x++)
+        //End Flag Placement
+        endFlag.transform.position = new Vector3(mapWidth - 5, (mapHeight / 2) + 2);
+
+
+        // River
+        for (int x = 0; x < mapWidth - 30; x++)
         {
             for (int y = 0; y < riverWidth; y++)
             {

@@ -46,9 +46,10 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private bool isMoving = false;
     bool canMove = true;
+    
     //User Interface
-
     public float playerHealth = 100;
+    public Image HealthBarImage;
 
     public bool RaftIsPulled { get => raftIsPulled; set => raftIsPulled = value; }
     public int PlayerNumber { get => playerNumber; }
@@ -92,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!PlayerInterface.instance.tutorialActive)
+        if(!PlayerInterface.instance.tutorialActive && !PlayerInterface.instance.win && !PlayerInterface.instance.gameOver)
             Move();
     }
 
@@ -103,7 +104,6 @@ public class PlayerController : MonoBehaviour
             switch (PlayerNumber)
             {
                 case 1:
-                    PlayerInterface.instance.player1health.GetComponent<Text>().text = "Player 1 HP: " + playerHealth.ToString();
                     if (!isFilled)
                     {
                         AttackScript.players.Add(gameObject);
@@ -111,7 +111,6 @@ public class PlayerController : MonoBehaviour
                     }
                     break;
                 case 2:
-                    PlayerInterface.instance.player2health.GetComponent<Text>().text = "Player 2 HP: " + playerHealth.ToString();
                     if (!isFilled)
                     {
                         AttackScript.players.Add(gameObject);
@@ -119,7 +118,6 @@ public class PlayerController : MonoBehaviour
                     }
                     break;
                 case 3:
-                    PlayerInterface.instance.player3health.GetComponent<Text>().text = "Player 3 HP: " + playerHealth.ToString();
                     if (!isFilled)
                     {
                         AttackScript.players.Add(gameObject);
@@ -127,7 +125,6 @@ public class PlayerController : MonoBehaviour
                     }
                     break;
                 case 4:
-                    PlayerInterface.instance.player4health.GetComponent<Text>().text = "Player 4 HP: " + playerHealth.ToString();
                     if (!isFilled)
                     {
                         AttackScript.players.Add(gameObject);
@@ -135,6 +132,9 @@ public class PlayerController : MonoBehaviour
                     }
                     break;
             }
+
+            if (HealthBarImage)
+                HealthBarImage.fillAmount = (playerHealth / 100);
         }
             
     }
@@ -594,18 +594,17 @@ public class PlayerController : MonoBehaviour
                 gameOver = true;
                 ShowEndScreen();
             }
-                // TODO: 
-                // Endscreen
                 // Lose Soundfx - Mach ich noch
         }
     }
 
     public void ShowEndScreen()
     {
-        // Endscreen -> Mach das besser im PlayerInterface. Ist nur im PlayerController, damit du die Methode siehst.
+        // Endscreen Funktion wird im separaten Endscreen script behandelt
         // Kann als event getriggered werden.
         SoundManager.instance.backGroundMusicSource.Stop();
         SoundManager.instance.soundFxSource.Stop();
         Debug.Log("GameOver!");
+        PlayerInterface.instance.gameOver = true;
     }
 }

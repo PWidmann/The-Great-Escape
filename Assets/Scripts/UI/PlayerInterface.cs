@@ -26,9 +26,28 @@ public class PlayerInterface : MonoBehaviour
     public GameObject player3health;
     public GameObject player4health;
 
+    
+
     // Player Inventory
     public int leafCount = 0;
     public int stickCount = 0;
+
+    // End Screen
+    public bool gameOver = false;
+    public bool win = false;
+    public GameObject endScreenPanel;
+    public GameObject player1Object;
+    public GameObject player2Object;
+    public GameObject player3Object;
+    public GameObject player4Object;
+    public GameObject RaftPosition;
+    public BoxCollider2D raftPlayerCollider;
+    public GameObject endFlag;
+    float p1distance = 10f;
+    float p2distance = 10f;
+    float p3distance = 10f;
+    float p4distance = 10f;
+    float raftDistanceToEnd = 100f;
 
     [SerializeField] Camera uiCamForTextFollowObjects;
 
@@ -49,6 +68,7 @@ public class PlayerInterface : MonoBehaviour
         repairInfoText.gameObject.SetActive(false);
         medKitInfoText.text = "Press E/Button A to heal";
         medKitInfoText.gameObject.SetActive(false);
+        endScreenPanel.SetActive(false);
 
         ShowPlayerHealth();
     }
@@ -59,6 +79,7 @@ public class PlayerInterface : MonoBehaviour
         stickCountText.text = "Sticks: " + stickCount;
 
         Tutorial();
+        GameOver();
     }
 
     void ShowPlayerHealth()
@@ -100,6 +121,45 @@ public class PlayerInterface : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J1ButtonA") || Input.GetButtonDown("J2ButtonA") || Input.GetButtonDown("J3ButtonA") || Input.GetButtonDown("J4ButtonA"))
                 tutorialActive = false;
+        }
+    }
+
+    void GameOver()
+    {
+        CheckPlayersForEndCheckPoint();
+        CheckRaftPositionAndSetCollision();
+
+        if (gameOver)
+        {
+            endScreenPanel.SetActive(true);
+        }
+    }
+
+    void CheckPlayersForEndCheckPoint()
+    {
+        if(player1Object)
+            p1distance = Vector2.Distance(player1Object.transform.position, endFlag.transform.position);
+        if (player2Object)
+            p1distance = Vector2.Distance(player1Object.transform.position, endFlag.transform.position);
+        if (player3Object)
+            p1distance = Vector2.Distance(player1Object.transform.position, endFlag.transform.position);
+        if (player4Object)
+            p1distance = Vector2.Distance(player1Object.transform.position, endFlag.transform.position);
+
+        if (p1distance < 1f || p2distance < 1f || p3distance < 1f || p4distance < 1f)
+        {
+            win = true;
+            endScreenPanel.SetActive(true);
+        }
+    }
+
+    void CheckRaftPositionAndSetCollision()
+    { 
+        raftDistanceToEnd = Vector2.Distance(RaftPosition.transform.position, endFlag.transform.position);
+
+        if (raftDistanceToEnd <= 21f)
+        {
+            raftPlayerCollider.enabled = false;
         }
     }
 }
