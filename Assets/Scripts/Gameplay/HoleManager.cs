@@ -6,6 +6,8 @@ public class HoleManager : MonoBehaviour, Iinteractable
 {
     [SerializeField] PlayerInterface playerInterface;
 
+    [SerializeField] AudioSource holeRepairAudio;
+
     static HoleManager instance = null;
     public List<GameObject> holes;
 
@@ -45,6 +47,7 @@ public class HoleManager : MonoBehaviour, Iinteractable
 
     void RepairHole(PlayerController playerController)
     {
+        SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[7]);
         playerInterface.medKitInfoText.text = "You repaired the hole.";
         holes.Add(playerController.OverLapBox.OverLappedCollider.gameObject);
         RaftHoleActivator.DisableSpriteRenderer(playerController.OverLapBox.OverLappedCollider.gameObject);
