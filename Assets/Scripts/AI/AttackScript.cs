@@ -47,7 +47,7 @@ public class AttackScript : MonoBehaviour
     public Vector2 Target { get => target; set => target = value; }
     public int RandomHoleNumber { get => randomHoleNumber; set => randomHoleNumber = value; }
     public bool WeaponDisabled { get => weaponDisabled; set => weaponDisabled = value; }
-
+    public int RandomPlayerNumber { get => randomPlayerNumber; set => randomPlayerNumber = value; }
 
     private void Start()
     {
@@ -100,6 +100,7 @@ public class AttackScript : MonoBehaviour
 
                 // Picks random Player as target.
                 randomPlayerNumber = Random.Range(0, players.Count);
+                Debug.Log("RandNumber SPEAR: " + randomPlayerNumber);
             }
         }
     }
@@ -128,16 +129,6 @@ public class AttackScript : MonoBehaviour
         Debug.Log("Weapon: " + weapon);
         if (weapon.transform.position.y > target.y && !PlayerTracker.IsColliding)
             DisableWeapon(weapon);
-    }
-
-    void Update()
-    {
-        // Prevent out of range exception by making sure that the indexes are always updated.
-        if (HoleManager.Instance.CurrentHoleListCount != HoleManager.Instance.holes.Count)
-        {
-            randomHoleNumber = Random.Range(0, HoleManager.Instance.holes.Count);
-            HoleManager.Instance.CurrentHoleListCount = HoleManager.Instance.holes.Count;
-        }
     }
 
     private void FixedUpdate()

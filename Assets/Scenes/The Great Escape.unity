@@ -649,6 +649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raftTransform: {fileID: 2070067097}
+  playerController: {fileID: 119013015}
 --- !u!61 &119013019
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1802,6 +1803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raftTransform: {fileID: 2070067097}
+  playerController: {fileID: 418068502}
 --- !u!61 &418068507
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5192,6 +5194,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
+      propertyPath: LoseTrigger.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
+        type: 3}
       propertyPath: AttackTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 875218373363171314}
@@ -5208,7 +5215,7 @@ PrefabInstance:
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
       propertyPath: AttackTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: Attack
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
@@ -5248,7 +5255,7 @@ PrefabInstance:
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
       propertyPath: RunTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: Attack
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
@@ -5308,7 +5315,7 @@ PrefabInstance:
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
       propertyPath: RunTrigger.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
-      value: Attack
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
@@ -5318,7 +5325,7 @@ PrefabInstance:
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
       propertyPath: throwSpeed
-      value: 17
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
@@ -5550,6 +5557,16 @@ PrefabInstance:
       propertyPath: hookThrower
       value: 
       objectReference: {fileID: 875218374311466640}
+    - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
+        type: 3}
+      propertyPath: LoseTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
+        type: 3}
+      propertyPath: LoseTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 846531031370514744, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7327,6 +7344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raftTransform: {fileID: 2070067097}
+  playerController: {fileID: 1464611055}
 --- !u!61 &1464611058
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9446,6 +9464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raftTransform: {fileID: 2070067097}
+  playerController: {fileID: 2038882287}
 --- !u!61 &2038882291
 BoxCollider2D:
   m_ObjectHideFlags: 0

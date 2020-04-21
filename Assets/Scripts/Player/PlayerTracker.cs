@@ -9,6 +9,8 @@ public class PlayerTracker : MonoBehaviour
 
     [SerializeField] Transform raftTransform;
 
+    [SerializeField] PlayerController playerController;
+
     public bool WeaponMoving { get => weaponMoving; set => weaponMoving = value; }
     public static bool IsColliding { get => isColliding; set => isColliding = value; }
 
@@ -24,9 +26,10 @@ public class PlayerTracker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag.Equals("Weapon"))
+        if (collision.gameObject.tag.Equals("Spear"))
         {
             isColliding = true;
+            playerController.DoDamage();
             AttackScript.instance.DisableWeapon(collision.gameObject);
             Debug.Log("Collsion!");
         }

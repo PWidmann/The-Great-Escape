@@ -10,6 +10,7 @@ public class AIController : MonoBehaviour
     public UnityEvent DebugTestingTrigger; // Turns off AI for other tests in our game.
     public UnityEvent WaitForAiTrigger; // Event that makes the AI wait before they attack.
     public UnityEvent DestroyStoneTrigger; // Self-explainatory.
+    public UnityEvent LoseTrigger;
 
     [HideInInspector] public bool isChecked;
     [SerializeField] bool isDebugging;
@@ -44,16 +45,21 @@ public class AIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (HookThrower.BoatHooked)
+        if (HookThrower.BoatHooked && !PlayerController.instance.GameOver)
             AttackTrigger.Invoke();
-        else if (!HookThrower.BoatHooked && RaftController.AllPlayersOnRaft && !isDebugging && !isWaitingForAi)
+        else if (!HookThrower.BoatHooked && RaftController.AllPlayersOnRaft && !isDebugging && !isWaitingForAi && 
+            !PlayerController.instance.GameOver)
             RunTrigger.Invoke();
         else if (isDebugging)
             DebugTestingTrigger.Invoke();
-        else if (isWaitingForAi && RaftController.AllPlayersOnRaft)
+        else if (isWaitingForAi && RaftController.AllPlayersOnRaft && !PlayerController.instance.GameOver)
             WaitForAiTrigger.Invoke();
+
         if (RaftHoleActivator.IsHit && RaftHoleActivator.HitCounter >= 2)
             DestroyStoneTrigger.Invoke();
+
+        if (PlayerController.instance.GameOver)
+            LoseTrigger.Invoke();
     }
 
     public void StartAttackWithDelay()

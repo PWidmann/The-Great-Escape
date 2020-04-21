@@ -39,6 +39,9 @@ public class PlayerController : MonoBehaviour
 
     bool isFilled;
 
+    bool gameOver = false;
+    bool isDead;
+
     //Animation
     private Animator animator;
     private bool isMoving = false;
@@ -52,6 +55,8 @@ public class PlayerController : MonoBehaviour
     public string PlayerControls { get => playerControls; set => playerControls = value; }
     public PlayerOverlapBox OverLapBox { get => overLapBox; set => overLapBox = value; }
     public Animator Animator { get => animator; set => animator = value; }
+    public bool GameOver { get => gameOver; set => gameOver = value; }
+    public bool IsDead { get => isDead; set => isDead = value; }
 
     void Start()
     {
@@ -562,5 +567,45 @@ public class PlayerController : MonoBehaviour
             return Input.GetKeyDown(key);
         else
             return Input.GetKeyUp(key);
+    }
+
+    public void DoDamage()
+    {
+        playerHealth -= 10;
+
+        if (playerHealth <= 0)
+        {
+            playerHealth = 0;
+            UpdatePlayerHealth();
+
+            gameObject.SetActive(false);
+
+            // Needed to check whom GameObject is still active.
+            for (int i = 0; i < AttackScript.players.Count; i++)
+            {
+                if (!AttackScript.players[i].activeSelf)
+                {
+                    AttackScript.players.Remove(AttackScript.players[i]);
+                    AttackScript.instance.RandomPlayerNumber = Random.Range(0, AttackScript.players.Count);
+                }
+            }
+            if (AttackScript.players.Count == 0)
+            {
+                gameOver = true;
+                ShowEndScreen();
+            }
+                // TODO: 
+                // Endscreen
+                // Lose Soundfx - Mach ich noch
+        }
+    }
+
+    public void ShowEndScreen()
+    {
+        // Endscreen -> Mach das besser im PlayerInterface. Ist nur im PlayerController, damit du die Methode siehst.
+        // Kann als event getriggered werden.
+        SoundManager.instance.backGroundMusicSource.Stop();
+        SoundManager.instance.soundFxSource.Stop();
+        Debug.Log("GameOver!");
     }
 }
