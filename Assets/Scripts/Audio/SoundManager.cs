@@ -8,7 +8,7 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance = null;
 
     public AudioSource backGroundMusicSource;
-    public AudioSource soundFxSource;
+    public AudioSource soundFxSource = null;
     [SerializeField] AudioMixer audioMixer;
 
     public List<AudioClip> soundFx;
@@ -139,9 +139,17 @@ public class SoundManager : MonoBehaviour
         soundFxSource.Play();
     }
 
+    // Methods where you need to play a sound effect. Sometimes have to overlap so you can use a different audiosource 
+    // aswell
+    public void PlaySoundFx(AudioClip audioClip)
+    {
+        soundFxSource.clip = audioClip;
+        soundFxSource.Play();
+    }
+
     public void PlaySoundFx(AudioClip audioClip, AudioSource audioSource)
     {
-        audioSource.clip = audioClip;
-        audioSource.Play();
+        soundFxSource.clip = audioClip;
+        soundFxSource.Play();
     }
 }
