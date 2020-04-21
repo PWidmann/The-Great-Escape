@@ -594,14 +594,14 @@ public class PlayerController : MonoBehaviour
                 gameOver = true;
                 ShowEndScreen();
             }
-                // TODO: 
-                // Endscreen
         }
     }
 
     public void ShowEndScreen()
     {
-        // Endscreen -> Mach das besser im PlayerInterface. Ist nur im PlayerController, damit du die Methode siehst.
+        // TODO
+        // Endscreen einfügen
+        // Mach das besser im PlayerInterface. Ist nur im PlayerController, damit du die Methode siehst.
         // Kann als event getriggered werden.
         SoundManager.instance.backGroundMusicSource.Stop();
         SoundManager.instance.soundFxSource.Stop();
@@ -609,5 +609,16 @@ public class PlayerController : MonoBehaviour
         // Lose Sound
         SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[15]);
         Debug.Log("GameOver!");
+    }
+
+    public void ShowWinScreen()
+    {
+        SoundManager.instance.backGroundMusicSource.Stop();
+        SoundManager.instance.soundFxSource.Stop();
+
+        // TODO 
+        // Siegesbedingung einfügen
+        // Siegsound abspielen lassen -> // SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[14]);
+        // Siegscreen einfügen
     }
 }
