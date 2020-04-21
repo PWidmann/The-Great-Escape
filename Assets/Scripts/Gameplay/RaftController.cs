@@ -135,8 +135,7 @@ public class RaftController : MonoBehaviour
                     !HookThrower.BoatHooked)
                 {
                     nextRudderInteractSoundfx = Time.time + soundFxReplayTimer;
-                    SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[11];
-                    SoundManager.instance.soundFxSource.Play();
+                    SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[11]);
                 }
                 rudderInteractText.SetActive(true);
             }
@@ -198,8 +197,7 @@ public class RaftController : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Hook"))
         {
-            RaftAudio.clip = SoundManager.instance.soundFx[8];
-            RaftAudio.Play();
+            SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[8], raftAudio);
             HookThrower.BoatHooked = true;
             Debug.Log("Hooked!");
         }

@@ -61,8 +61,7 @@ public class PlayerHandler : MonoBehaviour
         if ((Input.GetButtonDown("J1ButtonA") || Input.GetButtonDown("J1ButtonB")) && !buttonPressed[0])
         {
             buttonPressed[0] = true;
-            SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
-            SoundManager.instance.soundFxSource.Play();
+            SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[3]);
             string inputController = "J1";
             if (!IsControllerAssigned(inputController))
             {
@@ -73,8 +72,7 @@ public class PlayerHandler : MonoBehaviour
         if ((Input.GetButtonDown("J2ButtonA") || Input.GetButtonDown("J2ButtonB") && !buttonPressed[1]))
         {
             buttonPressed[1] = true;
-            SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
-            SoundManager.instance.soundFxSource.Play();
+            SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[3]);
             string inputController = "J2";
             if (!IsControllerAssigned(inputController))
             {
@@ -85,8 +83,7 @@ public class PlayerHandler : MonoBehaviour
         if ((Input.GetButtonDown("J3ButtonA") || Input.GetButtonDown("J3ButtonB")) && !buttonPressed[2])
         {
             buttonPressed[2] = true;
-            SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
-            SoundManager.instance.soundFxSource.Play();
+            SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[3]);
             string inputController = "J3";
             if (!IsControllerAssigned(inputController))
             {
@@ -97,8 +94,7 @@ public class PlayerHandler : MonoBehaviour
         if ((Input.GetButtonDown("J4ButtonA") || Input.GetButtonDown("J4ButtonB")) && !buttonPressed[3])
         {
             buttonPressed[3] = true;
-            SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
-            SoundManager.instance.soundFxSource.Play();
+            SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[3]);
             string inputController = "J4";
             if (!IsControllerAssigned(inputController))
             {
@@ -109,8 +105,7 @@ public class PlayerHandler : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space)) && !buttonPressed[4])
         {
             buttonPressed[4] = true;
-            SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
-            SoundManager.instance.soundFxSource.Play();
+            SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[3]);
             string inputController = "Keyboard";
             if (!IsControllerAssigned(inputController))
             {

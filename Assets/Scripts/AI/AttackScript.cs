@@ -108,10 +108,8 @@ public class AttackScript : MonoBehaviour
     void ThrowWeapon(GameObject weapon, Vector3 start, Vector3 target, float hitAccuracy, float throwSpeed)
     {
         if (!hasNoWeaponInHand && gameObject.activeSelf)
-        {
-            audio.clip = SoundManager.instance.soundFx[5];
-            audio.Play();
-        }
+            SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[5], audio);
+
         hasTargetLocked = true;
         Vector2 direction = (target - start).normalized;
         if (weapon.tag.Equals("Stone") && Vector2.Distance(weapon.transform.position, target) < 1f)
