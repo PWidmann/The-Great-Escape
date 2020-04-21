@@ -7,9 +7,12 @@ public class PlayerInterface : MonoBehaviour
 {
     public static PlayerInterface instance = null;
 
+    [Header("Debug Options")]
+    public bool startWithTutorial = true;
+    public bool skipGameToFinish = true;
+
     // Tutorial
     [Header("Tutorial")]
-    public bool startWithTutorial = true;
     public GameObject tutorialPanel;
     public bool tutorialActive = false;
 
@@ -76,6 +79,7 @@ public class PlayerInterface : MonoBehaviour
         endScreenPanel.SetActive(false);
 
         ShowPlayerHealth();
+        SkipGameToFinish();
     }
 
     void Update()
@@ -89,6 +93,7 @@ public class PlayerInterface : MonoBehaviour
 
     void ShowPlayerHealth()
     {
+        // Show only player health of active players
         if(PlayerHandler.instance.player1active)
             player1health.SetActive(true);
         if (PlayerHandler.instance.player2active)
@@ -165,6 +170,24 @@ public class PlayerInterface : MonoBehaviour
         if (raftDistanceToEnd <= 21f)
         {
             raftPlayerCollider.enabled = false;
+        }
+    }
+
+    void SkipGameToFinish()
+    {
+        if (skipGameToFinish)
+        {
+            Vector3 nearEndRaftPosition = new Vector3(TileMapGenerator.instance.mapWidth - 30, (TileMapGenerator.instance.mapHeight / 2) + 2);
+            Vector3 nearEndPlayerPosition = new Vector3(TileMapGenerator.instance.mapWidth - 30, (TileMapGenerator.instance.mapHeight / 2) + 1);
+
+            //Raft
+            TileMapGenerator.instance.raft.transform.position = nearEndRaftPosition;
+
+            //Players
+            TileMapGenerator.instance.player1.transform.position = nearEndPlayerPosition;
+            TileMapGenerator.instance.player2.transform.position = nearEndPlayerPosition;
+            TileMapGenerator.instance.player3.transform.position = nearEndPlayerPosition;
+            TileMapGenerator.instance.player4.transform.position = nearEndPlayerPosition;
         }
     }
 }

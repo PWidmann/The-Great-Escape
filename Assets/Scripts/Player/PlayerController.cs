@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    //Singleton
+    public static PlayerController instance = null;
 
     //Fields for OverlapBox
     [SerializeField] PlayerInterface playerInterface;
@@ -16,32 +18,35 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Hook hook;
     PlayerOverlapBox overLapBox;
 
+    //Misc
     [SerializeField] AttackScript attackScript;
+    bool playerListIsFilled;
 
+    //Player movement and collision
     Rigidbody2D myRigidbody;
     int moveSpeed = 4;
     int playerNumber;
     string playerControls;
     public Vector3 change;
     public Vector2 changeToNormalize;
-    public GameObject raft;
+    public BoxCollider2D collider;
+    bool hasExited;
 
-    public bool isSteeringRaft = false;
-    public bool hasShield = false;
+    //Raft
+    public GameObject raft;
     public bool isOnRaft = false;
 
     bool hasEnteredRaft = false;
     bool isColliding = false;
 
     public bool raftCanMove = true;
-    public BoxCollider2D collider;
-
-    public static PlayerController instance = null;
     bool raftIsPulled = false;
-    bool hasExited;
 
-    bool isFilled;
+    //Interactibles
+    public bool isSteeringRaft = false;
+    public bool hasShield = false;
 
+    //Player states
     bool gameOver = false;
     bool isDead;
 
@@ -54,6 +59,7 @@ public class PlayerController : MonoBehaviour
     public float playerHealth = 100;
     public Image HealthBarImage;
 
+    //Properties
     public bool RaftIsPulled { get => raftIsPulled; set => raftIsPulled = value; }
     public int PlayerNumber { get => playerNumber; }
     public string PlayerControls { get => playerControls; set => playerControls = value; }
@@ -88,7 +94,7 @@ public class PlayerController : MonoBehaviour
         else if (OverLapBox.OverLappedCollider == null && !hasExited)
             OnOverLappingCollidersExit2D();
 
-        
+        FillPlayerList();
         RaftHandling();
         SwordAttack();
         ShieldUsage();
@@ -104,42 +110,15 @@ public class PlayerController : MonoBehaviour
 
     void UpdatePlayerHealth()
     {
-        if (PlayerHandler.instance.playSceneActive)
-        {
-            switch (PlayerNumber)
-            {
-                case 1:
-                    if (!isFilled)
-                    {
-                        AttackScript.players.Add(gameObject);
-                        isFilled = true;
-                    }
-                    break;
-                case 2:
-                    if (!isFilled)
-                    {
-                        AttackScript.players.Add(gameObject);
-                        isFilled = true;
-                    }
-                    break;
-                case 3:
-                    if (!isFilled)
-                    {
-                        AttackScript.players.Add(gameObject);
-                        isFilled = true;
-                    }
-                    break;
-                case 4:
-                    if (!isFilled)
-                    {
-                        AttackScript.players.Add(gameObject);
-                        isFilled = true;
-                    }
-                    break;
-            }
+        float targetHealth = (playerHealth / 100);
 
-            if (HealthBarImage)
-                HealthBarImage.fillAmount = (playerHealth / 100);
+        if (HealthBarImage)
+        {
+            if (HealthBarImage.fillAmount < targetHealth)
+            {
+                HealthBarImage.fillAmount += Time.deltaTime/2;
+                targetHealth += Time.deltaTime;
+            }
         }
             
     }
@@ -577,7 +556,7 @@ public class PlayerController : MonoBehaviour
         if (playerHealth <= 0)
         {
             playerHealth = 0;
-            UpdatePlayerHealth();
+            FillPlayerList();
 
             gameObject.SetActive(false);
 
@@ -594,6 +573,44 @@ public class PlayerController : MonoBehaviour
             {
                 gameOver = true;
                 ShowEndScreen();
+            }
+        }
+    }
+
+    void FillPlayerList()
+    {
+        if (PlayerHandler.instance.playSceneActive)
+        {
+            switch (PlayerNumber)
+            {
+                case 1:
+                    if (!playerListIsFilled)
+                    {
+                        AttackScript.players.Add(gameObject);
+                        playerListIsFilled = true;
+                    }
+                    break;
+                case 2:
+                    if (!playerListIsFilled)
+                    {
+                        AttackScript.players.Add(gameObject);
+                        playerListIsFilled = true;
+                    }
+                    break;
+                case 3:
+                    if (!playerListIsFilled)
+                    {
+                        AttackScript.players.Add(gameObject);
+                        playerListIsFilled = true;
+                    }
+                    break;
+                case 4:
+                    if (!playerListIsFilled)
+                    {
+                        AttackScript.players.Add(gameObject);
+                        playerListIsFilled = true;
+                    }
+                    break;
             }
         }
     }

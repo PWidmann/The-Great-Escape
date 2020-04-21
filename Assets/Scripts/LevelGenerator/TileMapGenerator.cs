@@ -151,7 +151,7 @@ public class TileMapGenerator : MonoBehaviour
 
     public void GeneratePickups()
     {
-        for (int x = 0; x < mapWidth; x++)
+        for (int x = 21; x < mapWidth; x++)
         {
             for (int y = 0; y < mapHeight; y++)
             {
