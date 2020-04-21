@@ -29,7 +29,6 @@ public class UIManagement : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this);
         }
         else if (instance != this)
             Destroy(this);
