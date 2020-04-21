@@ -20,6 +20,7 @@ public class Hook : MonoBehaviour, Iinteractable
         Debug.Log("hookThrower " + hookThrower);
         if (playerController.CheckInput(playerController, "ButtonX", KeyCode.Space) && HookThrower.BoatHooked)
         {
+            SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[12], PlayerInterface.instance.pickUpAudio);
             Invoke("DestroyHook", 0.5f); 
         } 
     }
