@@ -370,8 +370,7 @@ public class PlayerController : MonoBehaviour
         if (distance < 1f && CheckInput(this, "ButtonA", KeyCode.E)
             && !RaftController.instance.raftIsInUse && !isSteeringRaft && !HookThrower.BoatHooked)
         {
-            SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
-            SoundManager.instance.soundFxSource.Play();
+            SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[3]);
             isSteeringRaft = true;
             RaftController.instance.raftIsInUse = true;
             RaftController.instance.raftUser = PlayerNumber.ToString();
@@ -379,8 +378,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (isSteeringRaft && CheckInput(this, "ButtonA", KeyCode.E))
         {
-            SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
-            SoundManager.instance.soundFxSource.Play();
+            SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[3]);
             isSteeringRaft = false;
             RaftController.instance.raftIsInUse = false;
             RaftController.instance.raftUser = null;
@@ -389,9 +387,8 @@ public class PlayerController : MonoBehaviour
 
         if (isSteeringRaft && distance >= 1f)
         {
-            
-            SoundManager.instance.soundFxSource.clip = SoundManager.instance.soundFx[3];
-            SoundManager.instance.soundFxSource.Play();
+
+            SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[3]);
             isSteeringRaft = false;
             RaftController.instance.raftIsInUse = false;
             RaftController.instance.raftUser = null;
