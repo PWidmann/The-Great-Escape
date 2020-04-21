@@ -11,6 +11,8 @@ public class PlayerTracker : MonoBehaviour
 
     [SerializeField] PlayerController playerController;
 
+    [SerializeField] AudioSource playerAudio;
+
     public bool WeaponMoving { get => weaponMoving; set => weaponMoving = value; }
     public static bool IsColliding { get => isColliding; set => isColliding = value; }
 
@@ -28,6 +30,7 @@ public class PlayerTracker : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Spear"))
         {
+            SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[9], playerAudio);
             isColliding = true;
             playerController.DoDamage();
             AttackScript.instance.DisableWeapon(collision.gameObject);
