@@ -5,6 +5,7 @@ using UnityEngine;
 public class Medkit : MonoBehaviour, Iinteractable
 {
     [SerializeField] PlayerInterface playerInterface;
+    [SerializeField] AudioSource medkitAudio;
 
     public void Interact(PlayerController playerController)
     {
@@ -29,6 +30,7 @@ public class Medkit : MonoBehaviour, Iinteractable
 
     void Heal(PlayerController playerController)
     {
+        SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[10], medkitAudio);
         playerInterface.medKitInfoText.text = "You healed yourself.";
         playerController.playerHealth += 80;
 
