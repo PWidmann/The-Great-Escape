@@ -23,10 +23,12 @@ public class PickupItem : MonoBehaviour
             switch (gameObject.name)
             {
                 case "Leaf(Clone)":
+                    SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[0], PlayerInterface.instance.pickUpAudio);
                     PlayerInterface.instance.leafCount += 1;
                     Debug.Log("Leaf picked up");
                     break;
                 case "Stick(Clone)":
+                    SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[0], PlayerInterface.instance.pickUpAudio);
                     PlayerInterface.instance.stickCount += 1;
                     Debug.Log("Stick picked up");
                     break;

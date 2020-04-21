@@ -2126,7 +2126,7 @@ MonoBehaviour:
   soundFxSource: {fileID: 217937083}
   audioMixer: {fileID: 24100000, guid: c6b58746cff988042b83705d1e5fbe7c, type: 2}
   soundFx:
-  - {fileID: 8300000, guid: 46abfaff03aaac34eaa7263f90c57673, type: 3}
+  - {fileID: 8300000, guid: c1f0e912dfd82f3489298071b123d685, type: 3}
   - {fileID: 8300000, guid: ac145c0bb3a3c594d94d63f080df102b, type: 3}
   - {fileID: 8300000, guid: c78e305610ba54440a37219cdd2cb409, type: 3}
   - {fileID: 8300000, guid: a35d25b7f87c1004dae5604947a62395, type: 3}

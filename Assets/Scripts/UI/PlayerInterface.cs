@@ -32,6 +32,8 @@ public class PlayerInterface : MonoBehaviour
 
     [SerializeField] Camera uiCamForTextFollowObjects;
 
+    public AudioSource pickUpAudio;
+
     void Start()
     {
         if (instance == null)
