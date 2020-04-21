@@ -3742,7 +3742,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &698781069
 GameObject:
@@ -6282,7 +6282,7 @@ PrefabInstance:
     - target: {fileID: 846531031370514744, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 846531031370514744, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
@@ -6894,7 +6894,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1309573181
 GameObject:
@@ -7099,7 +7099,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1389314835
 GameObject:
@@ -7165,7 +7165,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1397049201
 GameObject:
@@ -7489,7 +7489,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1432803344}
   - component: {fileID: 1432803343}
-  - component: {fileID: 1432803345}
   m_Layer: 0
   m_Name: MapGenerator
   m_TagString: Untagged
@@ -7533,7 +7532,7 @@ MonoBehaviour:
   - {fileID: 0}
   groundTilemap: {fileID: 983563353}
   waterTilemap: {fileID: 513284230}
-  mapWidth: 150
+  mapWidth: 350
   mapHeight: 50
   borderHeight: 7
   player1: {fileID: 418068501}
@@ -7565,20 +7564,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1432803345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432803342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d59bd453d5642a4187c35853d69aa28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1438182601
 GameObject:
   m_ObjectHideFlags: 0
@@ -7652,53 +7639,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438182601}
   m_CullTransparentMesh: 0
---- !u!1 &1447700620
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1447700622}
-  - component: {fileID: 1447700621}
-  m_Layer: 0
-  m_Name: PlayerLayerSorter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1447700621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1447700620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5cfd81bf62133b4eac67c1fc6327eca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player1: {fileID: 418068500}
-  player2: {fileID: 1464611051}
-  player3: {fileID: 119013012}
-  player4: {fileID: 2038882284}
---- !u!4 &1447700622
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1447700620}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1449051078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9379,7 +9319,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 801d5f5f3b98c3f4ea2ed059def84e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startWithTutorial: 1
+  startWithTutorial: 0
+  skipGameToFinish: 0
   tutorialPanel: {fileID: 1018889221}
   tutorialActive: 0
   leafCountText: {fileID: 1397049204}
@@ -9417,7 +9358,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1765170565
 AudioSource:
@@ -10864,7 +10805,7 @@ Transform:
   - {fileID: 530278816}
   - {fileID: 97896832}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2070067098
 BoxCollider2D:
@@ -12119,7 +12060,7 @@ Transform:
   - {fileID: 875218373363171276}
   - {fileID: 875218374609408969}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &875218374609408968
 SpriteRenderer:
