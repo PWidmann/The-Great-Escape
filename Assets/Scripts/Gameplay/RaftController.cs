@@ -42,6 +42,9 @@ public class RaftController : MonoBehaviour
     float soundFxReplayTimer = 1.5f;
     float nextRudderInteractSoundfx = 0f;
 
+    List<string> playerWithRaftCollisions = new List<string>();
+    int playerCounter = 0;
+
     [SerializeField] AIController aIController;
 
     static bool hookMoving = false;
@@ -193,10 +196,6 @@ public class RaftController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        int playerCounter = 0;
-        if (!aIController.isChecked)
-            return;
-
         if (collision.gameObject.tag.Equals("Hook"))
         {
             RaftAudio.clip = SoundManager.instance.soundFx[8];
@@ -204,16 +203,21 @@ public class RaftController : MonoBehaviour
             HookThrower.BoatHooked = true;
             Debug.Log("Hooked!");
         }
-        else if (collision.gameObject.tag.Equals("Stone"))
+        if (collision.gameObject.tag.Equals("Player") && playerCounter <= AttackScript.players.Count)
         {
-
-
-        }
-        else if (collision.gameObject.tag.Equals("Pickup"))
-            Debug.Log("IgnoreColliding pick up for now."); 
-        if (aIController.isChecked && collision.gameObject.name.Equals(AttackScript.GetActivePlayers().name))
-        {
-            playerCounter++;
+            if (playerWithRaftCollisions.Count == 0)
+            {
+                playerWithRaftCollisions.Add(collision.gameObject.name);
+                playerCounter++;
+            }
+            for (int i = 0; i < playerWithRaftCollisions.Count; i++)
+            {
+                if (!playerWithRaftCollisions[i].Equals(collision.gameObject.name))
+                {
+                    playerWithRaftCollisions.Add(collision.gameObject.name);
+                    playerCounter++;
+                }
+            }
             if (playerCounter == AttackScript.players.Count)
                 allPlayersOnRaft = true;
         }

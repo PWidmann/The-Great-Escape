@@ -20,7 +20,10 @@ public class AttackScript : MonoBehaviour
     [SerializeField] GameObject stonePrefab;
     [SerializeField] AIController aiController;
 
-    public static List<GameObject> players;
+    // Need for player List adding
+
+
+    public static List<GameObject> players = new List<GameObject>();
     public static AttackScript instance; // need for method call
 
     GameObject stone;
@@ -39,21 +42,21 @@ public class AttackScript : MonoBehaviour
     bool hasNoWeaponInHand = false;
     Collider2D stoneCollider;
     bool weaponDisabled = false;
+    static int playerCounter = 0;
 
     public Vector2 Target { get => target; set => target = value; }
     public int RandomHoleNumber { get => randomHoleNumber; set => randomHoleNumber = value; }
     public bool WeaponDisabled { get => weaponDisabled; set => weaponDisabled = value; }
 
+
     private void Start()
     {
-        players = new List<GameObject>();
         playerHandler = new PlayerHandler();
 
         if (instance == null)
             instance = this;
 
         audio = GetComponent<AudioSource>();
-        
     }
 
     public void Attack()
@@ -129,9 +132,6 @@ public class AttackScript : MonoBehaviour
 
     void Update()
     {
-        if (!aiController.isChecked)
-            CheckForActivePlayers();
-
         // Prevent out of range exception by making sure that the indexes are always updated.
         if (HoleManager.Instance.CurrentHoleListCount != HoleManager.Instance.holes.Count)
         {
@@ -170,31 +170,6 @@ public class AttackScript : MonoBehaviour
         if (weapon != null)
             ThrowWeapon(weapon, weapon.transform.position, Target,
                 aiController.hitAccuracy, aiController.throwSpeed);
-    }
-
-    void CheckForActivePlayers()
-    {
-        if (SceneManager.GetActiveScene().name.Equals("The Great Escape"))
-        {
-            if (PlayerHandler.instance.player1active) 
-                players.Add(GameObject.FindGameObjectWithTag("Player"));
-            else if (PlayerHandler.instance.player2active)
-                players.Add(GameObject.FindGameObjectWithTag("Player"));
-            else if (PlayerHandler.instance.player3active)
-                players.Add(GameObject.FindGameObjectWithTag("Player"));
-            else if (PlayerHandler.instance.player4active)
-                players.Add(GameObject.FindGameObjectWithTag("Player"));
-            aiController.isChecked = true;
-        }
-    }
-
-    public static GameObject GetActivePlayers()
-    {
-        foreach (GameObject player in players)
-        {
-            return player;
-        }
-        return null;
     }
 
     public void DisableWeapon(GameObject weapon)

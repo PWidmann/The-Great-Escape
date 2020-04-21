@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -14,6 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Shield shield;
     [SerializeField] Hook hook;
     PlayerOverlapBox overLapBox;
+
+    [SerializeField] AttackScript attackScript;
 
     Rigidbody2D myRigidbody;
     int moveSpeed = 4;
@@ -33,6 +36,8 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance = null;
     bool raftIsPulled = false;
     bool hasExited;
+
+    bool isFilled;
 
     //Animation
     private Animator animator;
@@ -94,15 +99,35 @@ public class PlayerController : MonoBehaviour
             {
                 case 1:
                     PlayerInterface.instance.player1health.GetComponent<Text>().text = "Player 1 HP: " + playerHealth.ToString();
+                    if (!isFilled)
+                    {
+                        AttackScript.players.Add(gameObject);
+                        isFilled = true;
+                    }
                     break;
                 case 2:
                     PlayerInterface.instance.player2health.GetComponent<Text>().text = "Player 2 HP: " + playerHealth.ToString();
+                    if (!isFilled)
+                    {
+                        AttackScript.players.Add(gameObject);
+                        isFilled = true;
+                    }
                     break;
                 case 3:
                     PlayerInterface.instance.player3health.GetComponent<Text>().text = "Player 3 HP: " + playerHealth.ToString();
+                    if (!isFilled)
+                    {
+                        AttackScript.players.Add(gameObject);
+                        isFilled = true;
+                    }
                     break;
                 case 4:
                     PlayerInterface.instance.player4health.GetComponent<Text>().text = "Player 4 HP: " + playerHealth.ToString();
+                    if (!isFilled)
+                    {
+                        AttackScript.players.Add(gameObject);
+                        isFilled = true;
+                    }
                     break;
             }
         }
