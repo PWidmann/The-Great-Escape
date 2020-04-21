@@ -580,7 +580,7 @@ public class PlayerController : MonoBehaviour
 
             gameObject.SetActive(false);
 
-            // Needed to check whom GameObject is still active.
+            // Needed to check which GameObject is still active.
             for (int i = 0; i < AttackScript.players.Count; i++)
             {
                 if (!AttackScript.players[i].activeSelf)
@@ -596,7 +596,6 @@ public class PlayerController : MonoBehaviour
             }
                 // TODO: 
                 // Endscreen
-                // Lose Soundfx - Mach ich noch
         }
     }
 
@@ -606,6 +605,9 @@ public class PlayerController : MonoBehaviour
         // Kann als event getriggered werden.
         SoundManager.instance.backGroundMusicSource.Stop();
         SoundManager.instance.soundFxSource.Stop();
+
+        // Lose Sound
+        SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[15]);
         Debug.Log("GameOver!");
     }
 }
