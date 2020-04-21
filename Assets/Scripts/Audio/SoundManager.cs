@@ -3,12 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-
-/// <summary>
-/// Handles the music and soundfx in the game. 
-/// Author: Dennis Bannasch 
-/// Date: 10.4.2020
-/// </summary>
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance = null;
@@ -17,7 +11,6 @@ public class SoundManager : MonoBehaviour
     public AudioSource soundFxSource;
     [SerializeField] AudioMixer audioMixer;
 
-    //public List<AudioClip> backGroundMusic;
     public List<AudioClip> soundFx;
 
     float minVolume = -80.0f; // The lowest possible volume in the audio mixer in decibel.
@@ -52,10 +45,6 @@ public class SoundManager : MonoBehaviour
 
     void Start()
     {
-        // Play background music
-        //backGroundMusicSource.clip = backGroundMusic[0];
-        //backGroundMusicSource.Play();
-
         // Get saved volume settings
         if (PlayerPrefs.HasKey("masterVolume"))
             UIManagement.instance.masterVolumeSlider.value = PlayerPrefs.GetFloat("masterVolume");
@@ -78,9 +67,6 @@ public class SoundManager : MonoBehaviour
         UIManagement.instance.sfxVolSliderTextCount.text = volumeSfxPercentage.ToString() + "%";
     }
 
-    /// <summary>
-    /// On value change on slider. Changes volume of all sounds.
-    /// </summary>
     public void ChangeMasterVolume()
     {
         PlayerPrefs.SetFloat("masterVolume", UIManagement.instance.masterVolumeSlider.value); // Sets key for every vol change
@@ -98,9 +84,6 @@ public class SoundManager : MonoBehaviour
         UIManagement.instance.masterVolSliderTextCount.text = volumePercentage.ToString() + "%";
     }
 
-    /// <summary>
-    /// On value change on slider. Changes volume of background music.
-    /// </summary>
     public void ChangeMusicVolume()
     {
         PlayerPrefs.SetFloat("musicVolume", UIManagement.instance.musicVolumeSlider.value);
@@ -117,9 +100,6 @@ public class SoundManager : MonoBehaviour
         UIManagement.instance.musicVolSliderTextCount.text = volumePercentage.ToString() + "%";
     }
 
-    /// <summary>
-    /// On slider value change. Changes volume of soundfx.
-    /// </summary>
     public void ChangeSoundFxVolume()
     {
         PlayerPrefs.SetFloat("sfxVolume", UIManagement.instance.musicVolumeSlider.value);
@@ -141,10 +121,6 @@ public class SoundManager : MonoBehaviour
         PlayerPrefs.SetInt("toggleRM", UIManagement.instance.randomMusicPlayToggle.isOn ? 1 : 0);
     }
 
-    /// <summary>
-    /// On slider value change. When volume of soundfx gets changed it plays a sound effect so the player can adjust the
-    /// volume properly.
-    /// </summary>
     public void PlayExampleSoundFx()
     {
         soundFxSource.clip = soundFx[0];
@@ -161,5 +137,11 @@ public class SoundManager : MonoBehaviour
     {
         soundFxSource.clip = soundFx[2];
         soundFxSource.Play();
+    }
+
+    public void PlaySoundFx(AudioClip audioClip, AudioSource audioSource)
+    {
+        audioSource.clip = audioClip;
+        audioSource.Play();
     }
 }
