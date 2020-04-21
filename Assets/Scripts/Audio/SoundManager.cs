@@ -8,7 +8,7 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance = null;
 
     public AudioSource backGroundMusicSource;
-    public AudioSource soundFxSource = null;
+    public AudioSource soundFxSource;
     [SerializeField] AudioMixer audioMixer;
 
     public List<AudioClip> soundFx;
@@ -25,6 +25,7 @@ public class SoundManager : MonoBehaviour
         else if (instance != this)
             Destroy(this);
 
+        // Solution for Unity not having PlayerPrefs.GetBool(), booooo
         if (PlayerPrefs.HasKey("toggleRM"))
         {
             int savedToggle = PlayerPrefs.GetInt("toggleRM");
@@ -37,9 +38,7 @@ public class SoundManager : MonoBehaviour
                 case 1:
                     UIManagement.instance.randomMusicPlayToggle.isOn = true;
                     break;
-
             }
-
         }
     }
 
@@ -121,25 +120,29 @@ public class SoundManager : MonoBehaviour
         PlayerPrefs.SetInt("toggleRM", UIManagement.instance.randomMusicPlayToggle.isOn ? 1 : 0);
     }
 
+    // Playing an example soundfx to make the user setup the sound effect's volume properly
+    // Event function don't remove!
     public void PlayExampleSoundFx()
     {
         soundFxSource.clip = soundFx[0];
         soundFxSource.Play();
     }
 
+    //Event function don't remove!
     public void PlayMenuPointerSoundFx()
     {
         soundFxSource.clip = soundFx[1];
         soundFxSource.Play();
     }
 
+    // Event function don't remove!
     public void PlayMenuClickSoundFx()
     {
         soundFxSource.clip = soundFx[2];
         soundFxSource.Play();
     }
 
-    // Methods where you need to play a sound effect. Sometimes have to overlap so you can use a different audiosource 
+    // Methods when you need to play a sound effect. Sometimes there overlap so you can use a different audiosource 
     // aswell
     public void PlaySoundFx(AudioClip audioClip)
     {
