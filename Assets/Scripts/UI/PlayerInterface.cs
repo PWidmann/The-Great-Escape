@@ -26,12 +26,15 @@ public class PlayerInterface : MonoBehaviour
     public GameObject player3health;
     public GameObject player4health;
 
-    
-
     // Player Inventory
     public int leafCount = 0;
     public int stickCount = 0;
 
+    // Pause Menu
+    [Header("PauseMenu")]
+    public GameObject pauseMenuPanel;
+
+    [Header("Endscreen")]
     // End Screen
     public bool gameOver = false;
     public bool win = false;

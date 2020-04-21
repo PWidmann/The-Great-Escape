@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Handles the Menu-UI in the game.
-/// Author: Dennis Bannasch
-/// Date: 10.4.2020
-/// </summary>
 public class UIManagement : MonoBehaviour
 {
+    // UIElements that have to be enabled/disabled and/or used with the Menuinteraction
+
     public static UIManagement instance = null;
 
     public Slider masterVolumeSlider;
