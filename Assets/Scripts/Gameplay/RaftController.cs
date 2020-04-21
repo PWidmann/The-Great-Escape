@@ -183,6 +183,8 @@ public class RaftController : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("LandTile"))
         {
+            // LandTile hit sound
+            SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[16], raftAudio);
             IscollidingWithWall = true;
             Debug.Log("Hitting wall!");
         }

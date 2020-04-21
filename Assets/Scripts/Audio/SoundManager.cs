@@ -152,7 +152,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySoundFx(AudioClip audioClip, AudioSource audioSource)
     {
-        soundFxSource.clip = audioClip;
-        soundFxSource.Play();
+        audioSource.clip = audioClip;
+        audioSource.Play();
     }
 }

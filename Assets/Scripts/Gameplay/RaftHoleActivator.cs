@@ -57,8 +57,7 @@ public class RaftHoleActivator : MonoBehaviour
             if (collision.gameObject.tag.Equals("Stone"))
             {
                 hitCounter++;
-                RaftController.instance.RaftAudio.clip = SoundManager.instance.soundFx[8];
-                RaftController.instance.RaftAudio.Play();
+                SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[8]);
                 holeSprite.enabled = true;
                 spriteEnabled = true;
                 isHit = true;
