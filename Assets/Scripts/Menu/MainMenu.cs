@@ -121,9 +121,7 @@ public class MainMenu : MonoBehaviour
         if (isInOptions)
         {
             if (optionSelected == 4)
-            {
                 ButtonSaveSettings();
-            }
         }
         else
         {
@@ -153,17 +151,13 @@ public class MainMenu : MonoBehaviour
         {
             optionSelected -= 1;
             if (optionSelected == 0)
-            {
                 optionSelected = 4;
-            }
         }
         else
         {
             mainSelectedButton -= 1;
             if (mainSelectedButton == 0)
-            {
                 mainSelectedButton = 3;
-            }
         }
         oneTimeStickMovement = true;
     }
@@ -176,17 +170,13 @@ public class MainMenu : MonoBehaviour
         {
             optionSelected += 1;
             if (optionSelected == 5)
-            {
                 optionSelected = 1;
-            }
         }
         else
         {
             mainSelectedButton += 1;
             if (mainSelectedButton == 4)
-            {
                 mainSelectedButton = 1;
-            }
         }
 
         oneTimeStickMovement = true;
