@@ -13,8 +13,6 @@ public class SoundManager : MonoBehaviour
 
     public List<AudioClip> soundFx;
 
-    float minVolume = -80.0f; // The lowest possible volume in the audio mixer in decibel.
-
     void Awake()
     {
         if (instance == null)
@@ -52,67 +50,35 @@ public class SoundManager : MonoBehaviour
         if (PlayerPrefs.HasKey("sfxVolume"))
             UIManagement.instance.soundFxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
 
-        // Get percentage of slider values
-        float volumeMasterPercentage = 
-            Mathf.Round((UIManagement.instance.masterVolumeSlider.value - minVolume) / minVolume * 100 * -1);
-        float volumeMusicPercentage = 
-            Mathf.Round((UIManagement.instance.musicVolumeSlider.value - minVolume) / minVolume * 100 * -1);
-        float volumeSfxPercentage = 
-            Mathf.Round((UIManagement.instance.soundFxSlider.value - minVolume) / minVolume * 100 * -1);
-
-        // Show the percentage in game.
-        UIManagement.instance.masterVolSliderTextCount.text = volumeMasterPercentage.ToString() + "%";
-        UIManagement.instance.musicVolSliderTextCount.text = volumeMusicPercentage.ToString() + "%";
-        UIManagement.instance.sfxVolSliderTextCount.text = volumeSfxPercentage.ToString() + "%";
+        UIManagement.instance.masterVolSliderTextCount.text = GetDecibelPercentage("MasterVolume").ToString() + "%";
+        UIManagement.instance.musicVolSliderTextCount.text = GetDecibelPercentage("MusicVolume").ToString() + "%";
+        UIManagement.instance.sfxVolSliderTextCount.text = GetDecibelPercentage("SFXVolume").ToString() + "%";
     }
 
     public void ChangeMasterVolume()
     {
-        PlayerPrefs.SetFloat("masterVolume", UIManagement.instance.masterVolumeSlider.value); // Sets key for every vol change
-        audioMixer.SetFloat("MasterVolume", Mathf.Round(UIManagement.instance.masterVolumeSlider.value)); // Get db-Level of Audiomixer
+        PlayerPrefs.SetFloat("masterVolume", UIManagement.instance.masterVolumeSlider.value);
 
-        // Audiomixer db-values in percent:
-        float masterVol = 0;
-        float volumePercentage = 0;
-        bool result = audioMixer.GetFloat("MasterVolume", out masterVol);
-        if (result)
-            volumePercentage = Mathf.Round((masterVol - minVolume) / minVolume * 100 * -1);
-        else
-            volumePercentage = 0;
+        // Get db-Level of Audiomixer
+        audioMixer.SetFloat("MasterVolume", Mathf.Round(UIManagement.instance.masterVolumeSlider.value));
 
-        UIManagement.instance.masterVolSliderTextCount.text = volumePercentage.ToString() + "%";
+        UIManagement.instance.masterVolSliderTextCount.text = GetDecibelPercentage("MasterVolume").ToString() + "%";
     }
 
     public void ChangeMusicVolume()
     {
         PlayerPrefs.SetFloat("musicVolume", UIManagement.instance.musicVolumeSlider.value);
         audioMixer.SetFloat("MusicVolume", Mathf.Round(UIManagement.instance.musicVolumeSlider.value));
-        // Audiomixer db-values in percent:
-        float musicVol = 0;
-        float volumePercentage = 0;
-        bool result = audioMixer.GetFloat("MusicVolume", out musicVol);
-        if (result)
-            volumePercentage = Mathf.Round((musicVol - minVolume) / minVolume * 100 * -1);
-        else
-            volumePercentage = 0;
 
-        UIManagement.instance.musicVolSliderTextCount.text = volumePercentage.ToString() + "%";
+        UIManagement.instance.musicVolSliderTextCount.text = GetDecibelPercentage("MusicVolume").ToString() + "%";
     }
 
     public void ChangeSoundFxVolume()
     {
         PlayerPrefs.SetFloat("sfxVolume", UIManagement.instance.musicVolumeSlider.value);
         audioMixer.SetFloat("SFXVolume", Mathf.Round(UIManagement.instance.soundFxSlider.value));
-        // Audiomixer db-values in percent:
-        float sfxVol = 0;
-        float volumePercentage = 0;
-        bool result = audioMixer.GetFloat("SFXVolume", out sfxVol);
-        if (result)
-            volumePercentage = Mathf.Round((sfxVol - minVolume) / minVolume * 100 * -1);
-        else
-            volumePercentage = 0;
 
-        UIManagement.instance.sfxVolSliderTextCount.text = volumePercentage.ToString() + "%";
+        UIManagement.instance.sfxVolSliderTextCount.text = GetDecibelPercentage("SFXVolume").ToString() + "%";
     }
 
     public void SaveRandomPlayToggle()
@@ -154,5 +120,17 @@ public class SoundManager : MonoBehaviour
     {
         audioSource.clip = audioClip;
         audioSource.Play();
+    }
+
+    float GetDecibelPercentage(string key)
+    {
+        float minVolume = -80.0f; // The lowest possible volume in the audio mixer in decibel.
+        float audioVolume = 0;
+        float volumePercentage = 0;
+        bool result = audioMixer.GetFloat(key, out audioVolume);
+        if (result)
+            return volumePercentage = Mathf.Round((audioVolume - minVolume) / minVolume * 100 * -1);
+
+        return volumePercentage = 0;
     }
 }
