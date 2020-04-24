@@ -380,23 +380,13 @@ MonoBehaviour:
   masterVolumeSlider: {fileID: 1807817414}
   musicVolumeSlider: {fileID: 729378005}
   soundFxSlider: {fileID: 1593645361}
-  masterVolumeSliderImage: {fileID: 513514822}
-  musicVolumeSliderImage: {fileID: 584177583}
-  soundFxVolumeSliderImage: {fileID: 949708962}
   masterVolSliderTextCount: {fileID: 25011952}
   musicVolSliderTextCount: {fileID: 1357648116}
   sfxVolSliderTextCount: {fileID: 1744086137}
-  masterVolumeText: {fileID: 1080691869}
-  musicVolumeText: {fileID: 564404149}
-  soundFxVolumeText: {fileID: 368350325}
   startButton: {fileID: 862562975}
   optionButton: {fileID: 1363943747}
   quitButton: {fileID: 1611000851}
   saveSettingsButton: {fileID: 1268429471}
-  startButtonText: {fileID: 220527528}
-  optionsButtonText: {fileID: 760833052}
-  quitButtonText: {fileID: 835295777}
-  saveSettingsText: {fileID: 923421058}
   randomMusicPlayToggle: {fileID: 603937047}
 --- !u!4 &71278209
 Transform:
@@ -1373,6 +1363,7 @@ GameObject:
   - component: {fileID: 729378004}
   - component: {fileID: 729378005}
   - component: {fileID: 729378006}
+  - component: {fileID: 729378007}
   m_Layer: 5
   m_Name: musicVolSlider
   m_TagString: Untagged
@@ -1392,8 +1383,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1526138199}
-  - {fileID: 1702062934}
   - {fileID: 1307005470}
+  - {fileID: 1702062934}
   - {fileID: 564404148}
   - {fileID: 1357648115}
   m_Father: {fileID: 1799245426}
@@ -1502,6 +1493,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &729378007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 729378003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2a52a2790c87314d9444150bf1f2d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &760833050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1899,6 +1902,7 @@ GameObject:
   - component: {fileID: 862562976}
   - component: {fileID: 862562975}
   - component: {fileID: 862562978}
+  - component: {fileID: 862562979}
   m_Layer: 5
   m_Name: ButtonStart
   m_TagString: Untagged
@@ -2064,6 +2068,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &862562979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862562973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7743d3923f95e4bb7d477ca5388b52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &923421056
 GameObject:
   m_ObjectHideFlags: 0
@@ -2593,6 +2609,7 @@ GameObject:
   - component: {fileID: 1268429472}
   - component: {fileID: 1268429471}
   - component: {fileID: 1268429475}
+  - component: {fileID: 1268429476}
   m_Layer: 5
   m_Name: SaveSettingsButton
   m_TagString: Untagged
@@ -2747,6 +2764,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1268429476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268429470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7743d3923f95e4bb7d477ca5388b52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1307005469
 GameObject:
   m_ObjectHideFlags: 0
@@ -2776,7 +2805,7 @@ RectTransform:
   m_Children:
   - {fileID: 1769762329}
   m_Father: {fileID: 729378004}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2950,6 +2979,7 @@ GameObject:
   - component: {fileID: 1363943748}
   - component: {fileID: 1363943747}
   - component: {fileID: 1363943750}
+  - component: {fileID: 1363943751}
   m_Layer: 5
   m_Name: ButtonOptions
   m_TagString: Untagged
@@ -3115,6 +3145,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1363943751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363943745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7743d3923f95e4bb7d477ca5388b52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1412659208
 GameObject:
   m_ObjectHideFlags: 0
@@ -3705,6 +3747,7 @@ GameObject:
   - component: {fileID: 1593645360}
   - component: {fileID: 1593645361}
   - component: {fileID: 1593645362}
+  - component: {fileID: 1593645363}
   m_Layer: 5
   m_Name: sfxVolSlider
   m_TagString: Untagged
@@ -3845,6 +3888,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1593645363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1593645359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2a52a2790c87314d9444150bf1f2d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1611000849
 GameObject:
   m_ObjectHideFlags: 0
@@ -3858,6 +3913,7 @@ GameObject:
   - component: {fileID: 1611000852}
   - component: {fileID: 1611000851}
   - component: {fileID: 1611000854}
+  - component: {fileID: 1611000855}
   m_Layer: 5
   m_Name: ButtonQuit
   m_TagString: Untagged
@@ -4023,6 +4079,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1611000855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611000849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7743d3923f95e4bb7d477ca5388b52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1702062933
 GameObject:
   m_ObjectHideFlags: 0
@@ -4052,7 +4120,7 @@ RectTransform:
   m_Children:
   - {fileID: 584177582}
   m_Father: {fileID: 729378004}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
@@ -4469,6 +4537,7 @@ GameObject:
   - component: {fileID: 1807817413}
   - component: {fileID: 1807817414}
   - component: {fileID: 1807817415}
+  - component: {fileID: 1807817416}
   m_Layer: 5
   m_Name: masterVolSlider
   m_TagString: Untagged
@@ -4598,6 +4667,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1807817416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807817412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2a52a2790c87314d9444150bf1f2d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1898962669
 GameObject:
   m_ObjectHideFlags: 0
@@ -4813,6 +4894,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 635a2479baefb7243b525a8fc36c714e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startButton: {fileID: 862562979}
+  optionButton: {fileID: 1363943751}
+  quitButton: {fileID: 1611000855}
+  saveSettingsButton: {fileID: 1268429476}
+  masterVolSlider: {fileID: 1807817416}
+  musicVolSlider: {fileID: 729378007}
+  soundFxVolSlider: {fileID: 1593645363}
 --- !u!4 &2033568288
 Transform:
   m_ObjectHideFlags: 0
