@@ -12,7 +12,6 @@ public class SliderElement : MonoBehaviour
     void Start()
     {
         thisSliderImage = GetComponentInChildren<Image>().GetComponentInChildren<Image>();
-        Debug.Log("Slider Image: " + thisSliderImage.name);
         thisSliderText = GetComponentInChildren<Text>();
     }
 

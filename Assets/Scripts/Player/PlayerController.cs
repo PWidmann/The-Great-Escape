@@ -100,6 +100,12 @@ public class PlayerController : MonoBehaviour
         ShieldUsage();
         DropShieldCheck();
         UpdatePlayerHealth();
+
+        if (!MainMenu.instance.IsPauseMenuActive &&  CheckInput(this, "StartButton", KeyCode.Escape))
+            MainMenu.instance.OpenPauseMenu(this);
+        else if (!MainMenu.instance.IsInOptions && CheckInput(this, "StartButton", KeyCode.Escape) &&
+            MainMenu.instance.IsPauseMenuActive)
+            MainMenu.instance.ResumeGame();
     }
 
     private void FixedUpdate()

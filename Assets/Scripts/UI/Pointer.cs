@@ -4,12 +4,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-/// <summary>
-/// Event for mousepointer
-/// </summary>
 public class Pointer : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public UnityEvent HoverTrigger;
+    public UnityEvent HoverTrigger = new UnityEvent();
+
+    void Start()
+    {
+        HoverTrigger.AddListener(SoundManager.instance.PlayMenuPointerSoundFx);
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {

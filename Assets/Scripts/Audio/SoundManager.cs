@@ -13,6 +13,8 @@ public class SoundManager : MonoBehaviour
 
     public List<AudioClip> soundFx;
 
+    public AudioMixer AudioMixer { get => audioMixer; set => audioMixer = value; }
+
     void Awake()
     {
         if (instance == null)
@@ -122,7 +124,7 @@ public class SoundManager : MonoBehaviour
         audioSource.Play();
     }
 
-    float GetDecibelPercentage(string key)
+    public float GetDecibelPercentage(string key)
     {
         float minVolume = -80.0f; // The lowest possible volume in the audio mixer in decibel.
         float volumePercentage = 0;

@@ -20,46 +20,54 @@ public class MainMenu : MonoBehaviour
     [SerializeField] SliderElement soundFxVolSlider;
 
 
-    bool pauseMenuActive = true;
+    bool isPauseMenuActive = false;
 
     // Gamepad
     bool oneTimeStickMovement = false;
     static bool controllerMovementStopped = false;
 
+    bool isInOptions = false;
+    string loadedSceneName;
+
     public int MainMenuSelectedButton { get => mainSelectedButton; set => mainSelectedButton = value; }
     public int OptionMenuSelectedButton { get => optionSelected; set => optionSelected = value; }
     public static bool ControllerMovementStopped { get => controllerMovementStopped; set => controllerMovementStopped = value; }
-
-    bool isInOptions = false;
+    public bool IsInOptions { get => isInOptions; set => isInOptions = value; }
+    public bool IsPauseMenuActive { get => isPauseMenuActive; set => isPauseMenuActive = value; }
 
     private void Awake()
     {
-        if (instance = null)
+        if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this);
         }
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        loadedSceneName = SceneManager.GetActiveScene().name;
+        if (loadedSceneName.Equals("Main Menu"))
+            isPauseMenuActive = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        KeyboardInput();
-        ControllerInput();
+        if (isPauseMenuActive)
+        {
+            KeyboardInput();
+            ControllerInput();
 
-        ChangeButtonAppearance(mainSelectedButton, optionSelected);
-        ChangeSliderValue();
+            ChangeButtonAppearance(mainSelectedButton, optionSelected);
+            ChangeSliderValue();
+        }
 
     }
 
     public void ButtonStart()
     {
-        pauseMenuActive = false;
+        isPauseMenuActive = false;
         SceneManager.LoadScene("Pre Game");
     }
 
@@ -129,7 +137,7 @@ public class MainMenu : MonoBehaviour
             {
                 case 1:
                     SoundManager.instance.PlayMenuClickSoundFx();
-                    ButtonStart();
+                    DecideWhichEventMethodToCall();
                     break;
                 case 2:
                     SoundManager.instance.PlayMenuClickSoundFx();
@@ -143,7 +151,15 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    private void MoveMenuPointerDown()
+    void DecideWhichEventMethodToCall()
+    {
+        if (loadedSceneName.Equals("Main Menu"))
+            ButtonStart();
+        else
+            ResumeGame();
+    }
+
+    void MoveMenuPointerDown()
     {
         SoundManager.instance.PlayMenuPointerSoundFx();
 
@@ -162,7 +178,7 @@ public class MainMenu : MonoBehaviour
         oneTimeStickMovement = true;
     }
 
-    private void MoveMenuPointerUp()
+    void MoveMenuPointerUp()
     {
         SoundManager.instance.PlayMenuPointerSoundFx();
 
@@ -270,9 +286,18 @@ public class MainMenu : MonoBehaviour
         optionSelected = optionSelect;
     }
 
-    public void ResumeButton()
+    public void ResumeGame()
     {
+        UIManagement.instance.pauseMenuPanel.SetActive(false);
+        isPauseMenuActive = false;
         Time.timeScale = 1;
+    }
+
+    public void OpenPauseMenu(PlayerController playerController = null)
+    {
+        isPauseMenuActive = true;
+        Time.timeScale = 0;
+        UIManagement.instance.pauseMenuPanel.gameObject.SetActive(true);
     }
 }
 

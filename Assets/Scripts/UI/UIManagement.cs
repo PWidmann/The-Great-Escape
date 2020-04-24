@@ -26,6 +26,7 @@ public class UIManagement : MonoBehaviour
     public Button saveSettingsButton;
 
     public Toggle randomMusicPlayToggle;
+    public GameObject pauseMenuPanel;
 
     void Awake()
     {
@@ -35,6 +36,14 @@ public class UIManagement : MonoBehaviour
         }
         else if (instance != this)
             Destroy(this);
+    }
+
+    void Start()
+    {
+        startButton.onClick.AddListener(SoundManager.instance.PlayMenuClickSoundFx);
+        optionButton.onClick.AddListener(SoundManager.instance.PlayMenuClickSoundFx);
+        quitButton.onClick.AddListener(SoundManager.instance.PlayMenuClickSoundFx);
+        saveSettingsButton.onClick.AddListener(SoundManager.instance.PlayMenuClickSoundFx);
     }
 
     public void SetOptionsMenuElementsActive(bool isActivated)
