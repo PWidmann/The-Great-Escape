@@ -48,7 +48,7 @@ public class MainMenu : MonoBehaviour
     public int OptionMenuSelectedButton { get => optionSelected; set => optionSelected = value; }
     public static bool ControllerMovementStopped { get => controllerMovementStopped; set => controllerMovementStopped = value; }
 
-    bool optionsMenu = false;
+    bool isInOptions = false;
 
     private void Awake()
     {
@@ -83,18 +83,11 @@ public class MainMenu : MonoBehaviour
 
     public void ButtonOptions()
     {
-        optionsMenu = true;
+        isInOptions = true;
         optionSelected = 1;
 
-        UIManagement.instance.startButton.gameObject.SetActive(false);
-        UIManagement.instance.optionButton.gameObject.SetActive(false);
-        UIManagement.instance.quitButton.gameObject.SetActive(false);
-
-        UIManagement.instance.saveSettingsButton.gameObject.SetActive(true);
-        UIManagement.instance.masterVolumeSlider.gameObject.SetActive(true);
-        UIManagement.instance.soundFxSlider.gameObject.SetActive(true);
-        UIManagement.instance.musicVolumeSlider.gameObject.SetActive(true);
-        UIManagement.instance.randomMusicPlayToggle.gameObject.SetActive(true);
+        UIManagement.instance.SetOptionsMenuElementsActive(true);
+        UIManagement.instance.SetMainMenuElementsActive(false);
     }
 
     public void ButtonQuit()
@@ -106,187 +99,120 @@ public class MainMenu : MonoBehaviour
     {
         PlayerPrefs.Save();
 
-        UIManagement.instance.saveSettingsButton.gameObject.SetActive(false);
-        UIManagement.instance.masterVolumeSlider.gameObject.SetActive(false);
-        UIManagement.instance.soundFxSlider.gameObject.SetActive(false);
-        UIManagement.instance.musicVolumeSlider.gameObject.SetActive(false);
-        UIManagement.instance.randomMusicPlayToggle.gameObject.SetActive(false);
+        UIManagement.instance.SetOptionsMenuElementsActive(false);
+        UIManagement.instance.SetMainMenuElementsActive(true);
 
-        UIManagement.instance.startButton.gameObject.SetActive(true);
-        UIManagement.instance.optionButton.gameObject.SetActive(true);
-        UIManagement.instance.quitButton.gameObject.SetActive(true);
-
-        optionsMenu = false;
+        isInOptions = false;
     }
     void KeyboardInput()
     {
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) && !controllerMovementStopped)
-        {
-            SoundManager.instance.PlayMenuPointerSoundFx();
-            if (optionsMenu)
-            {
-                OptionMenuSelectedButton -= 1;
-                if (OptionMenuSelectedButton == 0)
-                {
-                    OptionMenuSelectedButton = 4;
-                }
-            }
-            else
-            {
-                MainMenuSelectedButton -= 1;
-
-                if (MainMenuSelectedButton == 0)
-                {
-                    MainMenuSelectedButton = 3;
-                }
-            }
-        }
+            MoveMenuPointerDown();
 
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) && !controllerMovementStopped)
-        {
-            SoundManager.instance.PlayMenuPointerSoundFx();
-            if (optionsMenu)
-            {
-                OptionMenuSelectedButton += 1;
-                if (OptionMenuSelectedButton == 5)
-                {
-                    OptionMenuSelectedButton = 1;
-                }
-            }
-            else
-            {
-                MainMenuSelectedButton += 1;
-
-                if (MainMenuSelectedButton == 4)
-                {
-                    MainMenuSelectedButton = 1;
-                }
-            }
-        }
+            MoveMenuPointerUp();
 
         // Confirm selected button
         if (Input.GetKeyDown(KeyCode.Return))
-        {
-            if (optionsMenu)
-            {
-                if (optionSelected == 4)
-                {
-                    ButtonSaveSettings();
-                }
-            }
-            else
-            {
-                switch (MainMenuSelectedButton)
-                {
-                    case 1:
-                        SoundManager.instance.PlayMenuClickSoundFx();
-                        ButtonStart();
-                        break;
-                    case 2:
-                        SoundManager.instance.PlayMenuClickSoundFx();
-                        ButtonOptions();
-                        break;
-                    case 3:
-                        SoundManager.instance.PlayMenuClickSoundFx();
-                        ButtonQuit();
-                        break;
-                }
-            }
-        }
+            ClickOnPointingButton();
+
     }
 
     void ControllerInput()
     {
-        // Up
         if (Input.GetAxisRaw("J1Vertical") < 0 && !oneTimeStickMovement && !controllerMovementStopped)
-        {
-            
-            SoundManager.instance.PlayMenuPointerSoundFx();
+            MoveMenuPointerUp();
 
-            if (optionsMenu)
-            {
-                OptionMenuSelectedButton += 1;
-                if (OptionMenuSelectedButton == 5)
-                {
-                    OptionMenuSelectedButton = 1;
-                }
-            }
-            else
-            {
-                MainMenuSelectedButton += 1;
-                if (MainMenuSelectedButton == 4)
-                {
-                    MainMenuSelectedButton = 1;
-                }
-            }
-
-            oneTimeStickMovement = true;
-        }
-
-        // Down
         if (Input.GetAxisRaw("J1Vertical") > 0 && !oneTimeStickMovement && !controllerMovementStopped)
-        {
-            SoundManager.instance.PlayMenuPointerSoundFx();
+            MoveMenuPointerDown();
 
-            if (optionsMenu)
-            {
-                OptionMenuSelectedButton -= 1;
-                if (OptionMenuSelectedButton == 0)
-                {
-                    OptionMenuSelectedButton = 4;
-                }
-            }
-            else
-            {
-                MainMenuSelectedButton -= 1;
-                if (MainMenuSelectedButton == 0)
-                {
-                    MainMenuSelectedButton = 3;
-                }
-            }
-            oneTimeStickMovement = true;
-        }
-
-        // A Button
         if (Input.GetButtonDown("J1ButtonA"))
-        {
-            if (optionsMenu)
-            {
-                if (optionSelected == 4)
-                {
-                    ButtonSaveSettings();
-                }
-            }
-            else
-            {
-                switch (MainMenuSelectedButton)
-                {
-                    case 1:
-                        SoundManager.instance.PlayMenuClickSoundFx();
-                        ButtonStart();
-                        break;
-                    case 2:
-                        SoundManager.instance.PlayMenuClickSoundFx();
-                        ButtonOptions();
-                        break;
-                    case 3:
-                        SoundManager.instance.PlayMenuClickSoundFx();
-                        ButtonQuit();
-                        break;
-                }
-            }
-        }
+            ClickOnPointingButton();
 
         // Reset joystick for only one step per stick movement
         if (Input.GetAxisRaw("J1Vertical") == 0)
-        {
             oneTimeStickMovement = false;
+    }
+
+    private void ClickOnPointingButton()
+    {
+        if (isInOptions)
+        {
+            if (optionSelected == 4)
+            {
+                ButtonSaveSettings();
+            }
         }
+        else
+        {
+            switch (MainMenuSelectedButton)
+            {
+                case 1:
+                    SoundManager.instance.PlayMenuClickSoundFx();
+                    ButtonStart();
+                    break;
+                case 2:
+                    SoundManager.instance.PlayMenuClickSoundFx();
+                    ButtonOptions();
+                    break;
+                case 3:
+                    SoundManager.instance.PlayMenuClickSoundFx();
+                    ButtonQuit();
+                    break;
+            }
+        }
+    }
+
+    private void MoveMenuPointerDown()
+    {
+        SoundManager.instance.PlayMenuPointerSoundFx();
+
+        if (isInOptions)
+        {
+            OptionMenuSelectedButton -= 1;
+            if (OptionMenuSelectedButton == 0)
+            {
+                OptionMenuSelectedButton = 4;
+            }
+        }
+        else
+        {
+            MainMenuSelectedButton -= 1;
+            if (MainMenuSelectedButton == 0)
+            {
+                MainMenuSelectedButton = 3;
+            }
+        }
+        oneTimeStickMovement = true;
+    }
+
+    private void MoveMenuPointerUp()
+    {
+        SoundManager.instance.PlayMenuPointerSoundFx();
+
+        if (isInOptions)
+        {
+            OptionMenuSelectedButton += 1;
+            if (OptionMenuSelectedButton == 5)
+            {
+                OptionMenuSelectedButton = 1;
+            }
+        }
+        else
+        {
+            MainMenuSelectedButton += 1;
+            if (MainMenuSelectedButton == 4)
+            {
+                MainMenuSelectedButton = 1;
+            }
+        }
+
+        oneTimeStickMovement = true;
     }
 
     void ChangeButtonAppearance(int _selectedButton, int _optionSelected)
     {
-        if (optionsMenu)
+        if (isInOptions)
         {
             switch (_optionSelected)
             {
@@ -348,7 +274,7 @@ public class MainMenu : MonoBehaviour
 
     void ChangeSlider()
     {
-        if (optionsMenu)
+        if (isInOptions && !controllerMovementStopped)
         {
             switch (optionSelected)
             {
@@ -410,6 +336,11 @@ public class MainMenu : MonoBehaviour
     public void SelectButtonDisplay(int selectedButton)
     {
         MainMenuSelectedButton = selectedButton;
+    }
+
+    public void SelectedUIElementInOptions(int optionSelect)
+    {
+        optionSelected = optionSelect;
     }
 
     public void ResumeButton()

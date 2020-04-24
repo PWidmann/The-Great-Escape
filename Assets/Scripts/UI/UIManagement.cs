@@ -33,4 +33,21 @@ public class UIManagement : MonoBehaviour
         else if (instance != this)
             Destroy(this);
     }
+
+    public void SetOptionsMenuElementsActive(bool isActivated)
+    {
+        saveSettingsButton.gameObject.SetActive(isActivated);
+        masterVolumeSlider.gameObject.SetActive(isActivated);
+        soundFxSlider.gameObject.SetActive(isActivated);
+        musicVolumeSlider.gameObject.SetActive(isActivated);
+        randomMusicPlayToggle.gameObject.SetActive(isActivated);
+        
+    }
+
+    public void SetMainMenuElementsActive(bool isActivated)
+    {
+        startButton.gameObject.SetActive(isActivated);
+        instance.optionButton.gameObject.SetActive(isActivated);
+        instance.quitButton.gameObject.SetActive(isActivated);
+    }
 }

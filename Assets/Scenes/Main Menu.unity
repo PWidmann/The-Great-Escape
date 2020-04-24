@@ -1362,6 +1362,7 @@ GameObject:
   m_Component:
   - component: {fileID: 729378004}
   - component: {fileID: 729378005}
+  - component: {fileID: 729378006}
   m_Layer: 5
   m_Name: musicVolSlider
   m_TagString: Untagged
@@ -1445,6 +1446,43 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 928187799}
         m_MethodName: ChangeMusicVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &729378006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 729378003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6770339d56e05c944b1d4c53f71ce01f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HoverTrigger:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2033568287}
+        m_MethodName: SelectedUIElementInOptions
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 928187799}
+        m_MethodName: PlayMenuPointerSoundFx
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3656,6 +3694,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1593645360}
   - component: {fileID: 1593645361}
+  - component: {fileID: 1593645362}
   m_Layer: 5
   m_Name: sfxVolSlider
   m_TagString: Untagged
@@ -3750,6 +3789,43 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 928187799}
         m_MethodName: PlayExampleSoundFx
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1593645362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1593645359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6770339d56e05c944b1d4c53f71ce01f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HoverTrigger:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2033568287}
+        m_MethodName: SelectedUIElementInOptions
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 928187799}
+        m_MethodName: PlayMenuPointerSoundFx
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4382,6 +4458,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1807817413}
   - component: {fileID: 1807817414}
+  - component: {fileID: 1807817415}
   m_Layer: 5
   m_Name: masterVolSlider
   m_TagString: Untagged
@@ -4465,6 +4542,43 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 928187799}
         m_MethodName: ChangeMasterVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1807817415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807817412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6770339d56e05c944b1d4c53f71ce01f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HoverTrigger:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2033568287}
+        m_MethodName: SelectedUIElementInOptions
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 928187799}
+        m_MethodName: PlayMenuPointerSoundFx
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
