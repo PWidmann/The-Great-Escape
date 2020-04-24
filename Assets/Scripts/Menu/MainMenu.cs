@@ -70,7 +70,7 @@ public class MainMenu : MonoBehaviour
         KeyboardInput();
         ControllerInput();
 
-        ChangeButtonAppearance(MainMenuSelectedButton, OptionMenuSelectedButton);
+        ChangeButtonAppearance(mainSelectedButton, optionSelected);
         ChangeSlider();
 
     }
@@ -169,18 +169,18 @@ public class MainMenu : MonoBehaviour
 
         if (isInOptions)
         {
-            OptionMenuSelectedButton -= 1;
-            if (OptionMenuSelectedButton == 0)
+            optionSelected -= 1;
+            if (optionSelected == 0)
             {
-                OptionMenuSelectedButton = 4;
+                optionSelected = 4;
             }
         }
         else
         {
-            MainMenuSelectedButton -= 1;
-            if (MainMenuSelectedButton == 0)
+            mainSelectedButton -= 1;
+            if (mainSelectedButton == 0)
             {
-                MainMenuSelectedButton = 3;
+                mainSelectedButton = 3;
             }
         }
         oneTimeStickMovement = true;
@@ -192,10 +192,10 @@ public class MainMenu : MonoBehaviour
 
         if (isInOptions)
         {
-            OptionMenuSelectedButton += 1;
-            if (OptionMenuSelectedButton == 5)
+            optionSelected += 1;
+            if (optionSelected == 5)
             {
-                OptionMenuSelectedButton = 1;
+                optionSelected = 1;
             }
         }
         else

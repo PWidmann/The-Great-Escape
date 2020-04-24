@@ -125,10 +125,8 @@ public class SoundManager : MonoBehaviour
     float GetDecibelPercentage(string key)
     {
         float minVolume = -80.0f; // The lowest possible volume in the audio mixer in decibel.
-        float audioVolume = 0;
         float volumePercentage = 0;
-        bool result = audioMixer.GetFloat(key, out audioVolume);
-        if (result)
+        if (audioMixer.GetFloat(key, out float audioVolume))
             return volumePercentage = Mathf.Round((audioVolume - minVolume) / minVolume * 100 * -1);
 
         return volumePercentage = 0;
