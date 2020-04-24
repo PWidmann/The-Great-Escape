@@ -380,13 +380,23 @@ MonoBehaviour:
   masterVolumeSlider: {fileID: 1807817414}
   musicVolumeSlider: {fileID: 729378005}
   soundFxSlider: {fileID: 1593645361}
+  masterVolumeSliderImage: {fileID: 513514822}
+  musicVolumeSliderImage: {fileID: 584177583}
+  soundFxVolumeSliderImage: {fileID: 949708962}
   masterVolSliderTextCount: {fileID: 25011952}
   musicVolSliderTextCount: {fileID: 1357648116}
   sfxVolSliderTextCount: {fileID: 1744086137}
+  masterVolumeText: {fileID: 1080691869}
+  musicVolumeText: {fileID: 564404149}
+  soundFxVolumeText: {fileID: 368350325}
   startButton: {fileID: 862562975}
   optionButton: {fileID: 1363943747}
   quitButton: {fileID: 1611000851}
   saveSettingsButton: {fileID: 1268429471}
+  startButtonText: {fileID: 220527528}
+  optionsButtonText: {fileID: 760833052}
+  quitButtonText: {fileID: 835295777}
+  saveSettingsText: {fileID: 923421058}
   randomMusicPlayToggle: {fileID: 603937047}
 --- !u!4 &71278209
 Transform:
@@ -395,12 +405,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 71278207}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.4134645, y: -8.607632, z: -0.84535444}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.4134216, y: -8.607651, z: -0.8453545}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &93827211
 GameObject:
@@ -4291,7 +4301,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1769762328
 GameObject:
@@ -4803,23 +4813,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 635a2479baefb7243b525a8fc36c714e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startButton: {fileID: 862562975}
-  startButtonText: {fileID: 220527528}
-  optionsButton: {fileID: 1363943747}
-  optionsButtonText: {fileID: 760833052}
-  quitButton: {fileID: 1611000851}
-  quitButtonText: {fileID: 835295777}
-  masterVolumeSliderImage: {fileID: 513514822}
-  musicVolumeSliderImage: {fileID: 584177583}
-  soundFxVolumeSliderImage: {fileID: 949708962}
-  saveButton: {fileID: 1268429471}
-  saveButtonText: {fileID: 923421058}
-  masterVolumeText: {fileID: 1080691869}
-  musicVolumeText: {fileID: 564404149}
-  soundFxVolumeText: {fileID: 368350325}
-  masterVolumeSlider: {fileID: 1807817414}
-  musicVolumeSlider: {fileID: 729378005}
-  soundFxVolumeSlider: {fileID: 1593645361}
 --- !u!4 &2033568288
 Transform:
   m_ObjectHideFlags: 0
@@ -4832,7 +4825,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2053514922
 GameObject:

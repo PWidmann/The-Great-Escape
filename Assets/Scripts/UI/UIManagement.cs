@@ -9,14 +9,17 @@ public class UIManagement : MonoBehaviour
 
     public static UIManagement instance = null;
 
+    [Header("Slider Values")]
     public Slider masterVolumeSlider;
     public Slider musicVolumeSlider;
     public Slider soundFxSlider;
 
+    [Header("Slider Texts")]
     public Text masterVolSliderTextCount;
     public Text musicVolSliderTextCount;
     public Text sfxVolSliderTextCount;
 
+    [Header("Buttons")]
     public Button startButton;
     public Button optionButton;
     public Button quitButton;

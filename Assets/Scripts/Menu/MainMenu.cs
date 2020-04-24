@@ -10,33 +10,15 @@ public class MainMenu : MonoBehaviour
     int optionSelected = 1;
 
     public static MainMenu instance = null;
+    [SerializeField] ButtonElement startButton;
+    [SerializeField] ButtonElement optionButton;
+    [SerializeField] ButtonElement quitButton;
+    [SerializeField] ButtonElement saveSettingsButton;
 
-    [Header("Start Button")]
-    [SerializeField] Button startButton;
-    [SerializeField] Text startButtonText;
+    [SerializeField] SliderElement masterVolSlider;
+    [SerializeField] SliderElement musicVolSlider;
+    [SerializeField] SliderElement soundFxVolSlider;
 
-    [Header("Options Button")]
-    [SerializeField] Button optionsButton;
-    [SerializeField] Text optionsButtonText;
-
-    [Header("Quit Button")]
-    [SerializeField] Button quitButton;
-    [SerializeField] Text quitButtonText;
-
-    [Header("Options Menu")]
-    [SerializeField] Image masterVolumeSliderImage;
-    [SerializeField] Image musicVolumeSliderImage;
-    [SerializeField] Image soundFxVolumeSliderImage;
-    [SerializeField] Button saveButton;
-    [SerializeField] Text saveButtonText;
-    [SerializeField] Text masterVolumeText;
-    [SerializeField] Text musicVolumeText;
-    [SerializeField] Text soundFxVolumeText;
-
-    [Header("Sound Values")]
-    [SerializeField] Slider masterVolumeSlider;
-    [SerializeField] Slider musicVolumeSlider;
-    [SerializeField] Slider soundFxVolumeSlider;
 
     bool pauseMenuActive = true;
 
@@ -71,7 +53,7 @@ public class MainMenu : MonoBehaviour
         ControllerInput();
 
         ChangeButtonAppearance(mainSelectedButton, optionSelected);
-        ChangeSlider();
+        ChangeSliderValue();
 
     }
 
@@ -200,10 +182,10 @@ public class MainMenu : MonoBehaviour
         }
         else
         {
-            MainMenuSelectedButton += 1;
-            if (MainMenuSelectedButton == 4)
+            mainSelectedButton += 1;
+            if (mainSelectedButton == 4)
             {
-                MainMenuSelectedButton = 1;
+                mainSelectedButton = 1;
             }
         }
 
@@ -217,32 +199,28 @@ public class MainMenu : MonoBehaviour
             switch (_optionSelected)
             {
                 case 1:
-                    SliderColorTurnSelected(masterVolumeSliderImage, masterVolumeText);
-
-                    SliderColorTurnUnselected(musicVolumeSliderImage, musicVolumeText);
-                    SliderColorTurnUnselected(soundFxVolumeSliderImage, soundFxVolumeText);
-                    ButtonColorTurnUnselected(saveButton, saveButtonText);
+                    masterVolSlider.IsSelectedSlider = true;
+                    musicVolSlider.IsSelectedSlider = false;
+                    soundFxVolSlider.IsSelectedSlider = false;
+                    saveSettingsButton.IsSelectedButton = false;
                     break;
                 case 2:
-                    SliderColorTurnSelected(musicVolumeSliderImage, musicVolumeText);
-
-                    SliderColorTurnUnselected(masterVolumeSliderImage, masterVolumeText);
-                    SliderColorTurnUnselected(soundFxVolumeSliderImage, soundFxVolumeText);
-                    ButtonColorTurnUnselected(saveButton, saveButtonText);
+                    musicVolSlider.IsSelectedSlider = true;
+                    masterVolSlider.IsSelectedSlider = false;
+                    soundFxVolSlider.IsSelectedSlider = false;
+                    saveSettingsButton.IsSelectedButton = false;
                     break;
                 case 3:
-                    SliderColorTurnSelected(soundFxVolumeSliderImage, soundFxVolumeText);
-
-                    SliderColorTurnUnselected(masterVolumeSliderImage, masterVolumeText);
-                    SliderColorTurnUnselected(musicVolumeSliderImage, musicVolumeText);
-                    ButtonColorTurnUnselected(saveButton, saveButtonText);
+                    soundFxVolSlider.IsSelectedSlider = true;
+                    musicVolSlider.IsSelectedSlider = false; 
+                    masterVolSlider.IsSelectedSlider = false;
+                    saveSettingsButton.IsSelectedButton = false;
                     break;
                 case 4:
-                    ButtonColorTurnSelected(saveButton, saveButtonText);
-
-                    SliderColorTurnUnselected(masterVolumeSliderImage, masterVolumeText);
-                    SliderColorTurnUnselected(musicVolumeSliderImage, musicVolumeText);
-                    SliderColorTurnUnselected(soundFxVolumeSliderImage, soundFxVolumeText);
+                    saveSettingsButton.IsSelectedButton = true;
+                    soundFxVolSlider.IsSelectedSlider = false;
+                    musicVolSlider.IsSelectedSlider = false;
+                    masterVolSlider.IsSelectedSlider = false;
                     break;
             }
         }
@@ -251,91 +229,50 @@ public class MainMenu : MonoBehaviour
             switch (_selectedButton)
             {
                 case 1:
-                    ButtonColorTurnSelected(startButton, startButtonText);
-
-                    ButtonColorTurnUnselected(optionsButton, optionsButtonText);
-                    ButtonColorTurnUnselected(quitButton, quitButtonText);
+                    quitButton.IsSelectedButton = false;
+                    startButton.IsSelectedButton = true;
+                    optionButton.IsSelectedButton = false;
                     break;
                 case 2:
-                    ButtonColorTurnSelected(optionsButton, optionsButtonText);
-
-                    ButtonColorTurnUnselected(startButton, startButtonText);
-                    ButtonColorTurnUnselected(quitButton, quitButtonText);
+                    startButton.IsSelectedButton = false;
+                    optionButton.IsSelectedButton = true;
+                    quitButton.IsSelectedButton = false;
                     break;
                 case 3:
-                    ButtonColorTurnSelected(quitButton, quitButtonText);
-
-                    ButtonColorTurnUnselected(startButton, startButtonText);
-                    ButtonColorTurnUnselected(optionsButton, optionsButtonText);
+                    optionButton.IsSelectedButton = false;
+                    quitButton.IsSelectedButton = true;
+                    startButton.IsSelectedButton = false;
                     break;
             }
         }
     }
 
-    void ChangeSlider()
+    void ChangeSliderValue()
     {
         if (isInOptions && !controllerMovementStopped)
         {
             switch (optionSelected)
             {
                 case 1:
-                    masterVolumeSlider.value += Input.GetAxisRaw("J1Horizontal");
-                    masterVolumeSlider.value += Input.GetAxisRaw("Horizontal");
+                    UIManagement.instance.masterVolumeSlider.value += Input.GetAxisRaw("J1Horizontal");
+                    UIManagement.instance.masterVolumeSlider.value += Input.GetAxisRaw("Horizontal");
                     break;
                 case 2:
-                    musicVolumeSlider.value += Input.GetAxisRaw("J1Horizontal");
-                    musicVolumeSlider.value += Input.GetAxisRaw("Horizontal");
+                    UIManagement.instance.musicVolumeSlider.value += Input.GetAxisRaw("J1Horizontal");
+                    UIManagement.instance.musicVolumeSlider.value += Input.GetAxisRaw("Horizontal");
                     break;
                 case 3:
-                    soundFxVolumeSlider.value += Input.GetAxisRaw("J1Horizontal");
-                    soundFxVolumeSlider.value += Input.GetAxisRaw("Horizontal");
+                    UIManagement.instance.soundFxSlider.value += Input.GetAxisRaw("J1Horizontal");
+                    UIManagement.instance.soundFxSlider.value += Input.GetAxisRaw("Horizontal");
                     break;
             }
         }
     }
 
-    public void ButtonColorTurnSelected(Button btn, Text txt)
-    {
-        //Button Color
-        ColorBlock colors = btn.colors;
-        colors.normalColor = new Color32(114, 114, 114, 255);
-
-        btn.colors = colors;
-
-        txt.color = Color.white;
-    }
-
-    public void ButtonColorTurnUnselected(Button btn, Text txt)
-    {
-        //Button Color
-        ColorBlock colors = btn.colors;
-        colors.normalColor = Color.white;
-
-        btn.colors = colors;
-
-        txt.color = Color.black;
-    }
-
-    public void SliderColorTurnSelected(Image slider, Text txt)
-    {
-        //Slider Color
-        slider.color = Color.white;
-
-        txt.color = Color.white;
-    }
-
-    public void SliderColorTurnUnselected(Image slider, Text txt)
-    {
-        //Slider Color
-        slider.color = new Color32(114, 114, 114, 255);
-
-        txt.color = new Color32(114, 114, 114, 255);
-    }
-
     // On pointer event function. Highlights the button over which the mouse hovers or points.
     public void SelectButtonDisplay(int selectedButton)
     {
-        MainMenuSelectedButton = selectedButton;
+        mainSelectedButton = selectedButton;
     }
 
     public void SelectedUIElementInOptions(int optionSelect)

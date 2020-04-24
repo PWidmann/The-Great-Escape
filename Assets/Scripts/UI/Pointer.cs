@@ -21,9 +21,4 @@ public class Pointer : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         MainMenu.ControllerMovementStopped = false;
     }
-
-    
-
-
-    
 }
