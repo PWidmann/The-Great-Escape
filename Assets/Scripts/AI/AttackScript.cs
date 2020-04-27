@@ -18,13 +18,9 @@ public class AttackScript : MonoBehaviour
 
     [SerializeField] GameObject spearPrefab;
     [SerializeField] GameObject stonePrefab;
-    [SerializeField] AIController aiController;
-
-    // Need for player List adding
-
-
+   
     public static List<GameObject> players = new List<GameObject>();
-    public static AttackScript instance; // need for method call
+    public static AttackScript instance; 
 
     GameObject stone;
     GameObject spear;
@@ -35,34 +31,31 @@ public class AttackScript : MonoBehaviour
     int randomPlayerNumber;
     int randomHoleNumber;
 
-    PlayerHandler playerHandler;
     Vector2 target;
     bool hasTargetLocked = false;
     AudioSource audio;
     bool hasNoWeaponInHand = false;
     Collider2D stoneCollider;
     bool weaponDisabled = false;
-    static int playerCounter = 0;
+    bool isStoneThrower = false;
 
     public Vector2 Target { get => target; set => target = value; }
     public int RandomHoleNumber { get => randomHoleNumber; set => randomHoleNumber = value; }
     public bool WeaponDisabled { get => weaponDisabled; set => weaponDisabled = value; }
     public int RandomPlayerNumber { get => randomPlayerNumber; set => randomPlayerNumber = value; }
 
-    private void Start()
+    void Start()
     {
-        playerHandler = new PlayerHandler();
-
         if (instance == null)
             instance = this;
 
         audio = GetComponent<AudioSource>();
     }
 
-    public void Attack()
+    public void PrepareAttack()
     {
-        if (gameObject.GetComponent<StoneThrower>() is StoneThrower
-            || gameObject.GetComponent<HookThrower>() is HookThrower)
+        isStoneThrower = IsAttackerStoneThrower();
+        if (isStoneThrower)
         {
             if (Time.time > nextThrowAfterCooldown)
             {
@@ -76,13 +69,12 @@ public class AttackScript : MonoBehaviour
                     EnableWeapon(stone);
                     stone.transform.position = transform.position;
                 }
-                nextThrowAfterCooldown = Time.time + aiController.coolDownTimeInSeconds;
+                nextThrowAfterCooldown = Time.time + AIController.instance.coolDownTimeInSeconds;
 
-                // Picks the a random Hole-GameObject as target.
                 RandomHoleNumber = Random.Range(0, HoleManager.Instance.holes.Count);
             }
         }
-        else if (gameObject.GetComponent<SpearThrower>() is SpearThrower)
+        else 
         {
             if (Time.time > nextThrowAfterCooldown)
             {
@@ -96,11 +88,53 @@ public class AttackScript : MonoBehaviour
                     EnableWeapon(spear);
                     spear.transform.position = transform.position;
                 }
-                nextThrowAfterCooldown = Time.time + aiController.coolDownTimeInSeconds;
+                nextThrowAfterCooldown = Time.time + AIController.instance.coolDownTimeInSeconds;
 
-                // Picks random Player as target.
                 randomPlayerNumber = Random.Range(0, players.Count);
-                Debug.Log("RandNumber SPEAR: " + randomPlayerNumber);
+            }
+        }
+    }
+
+    bool IsAttackerStoneThrower()
+    {
+        if (gameObject.GetComponent<StoneThrower>() is StoneThrower ||
+                gameObject.GetComponent<HookThrower>() is HookThrower)
+            return true;
+        else
+            return false;
+    }
+
+    void FixedUpdate()
+    {
+        GameObject weapon = GetTypeOfWeapon();
+        LockTarget(weapon);
+        if (weapon != null)
+            ThrowWeapon(weapon, weapon.transform.position, Target,
+                AIController.instance.hitAccuracy, AIController.instance.throwSpeed);
+    }
+
+    GameObject GetTypeOfWeapon()
+    {
+        if (weaponInstantiated && !PlayerTracker.IsColliding)
+        {
+            if (isStoneThrower)
+                return stone;
+            else 
+                return spear;
+        }
+        return null;
+    }
+
+    void LockTarget(GameObject weapon)
+    {
+        if (weaponInstantiated && !PlayerTracker.IsColliding)
+        {
+            if (!hasTargetLocked)
+            {
+                if (weapon.tag.Equals("Stone"))
+                    target = HoleManager.Instance.holes[RandomHoleNumber].transform.position;
+                else
+                    target = players[randomPlayerNumber].GetComponent<PlayerTracker>().GetPlayerPos();
             }
         }
     }
@@ -110,55 +144,24 @@ public class AttackScript : MonoBehaviour
         if (!hasNoWeaponInHand && gameObject.activeSelf)
             SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[5], audio);
 
+        IgnoreStoneCollidingWithRaftTemporarly(weapon);
+
         hasTargetLocked = true;
         Vector2 direction = (target - start).normalized;
+
+        weapon.GetComponent<Rigidbody2D>().AddForce(direction * hitAccuracy * throwSpeed);
+
+        hasNoWeaponInHand = true;
+        CompareWeaponPositionsToRaft(weapon);
+
+    }
+
+    void IgnoreStoneCollidingWithRaftTemporarly(GameObject weapon)
+    {
         if (weapon.tag.Equals("Stone") && Vector2.Distance(weapon.transform.position, target) < 1f)
             weapon.layer = 10;
         else
             weapon.layer = 14;
-        direction.Normalize();
-        weapon.GetComponent<Rigidbody2D>().AddForce(direction * hitAccuracy * throwSpeed);
-
-        hasNoWeaponInHand = true;
-        foreach (GameObject player in players)
-        {
-            player.GetComponent<PlayerTracker>().WeaponMoving = true;
-        }
-        Debug.Log("Weapon: " + weapon);
-        if (weapon.transform.position.y > target.y && !PlayerTracker.IsColliding)
-            DisableWeapon(weapon);
-    }
-
-    private void FixedUpdate()
-    {
-        GameObject weapon = null;
-        if (weaponInstantiated && !PlayerTracker.IsColliding)
-        {
-            if (gameObject.GetComponent<StoneThrower>() is StoneThrower ||
-                gameObject.GetComponent<HookThrower>() is HookThrower)
-                weapon = stone;
-            else if (gameObject.GetComponent<SpearThrower>() is SpearThrower)
-                weapon = spear;
-
-            if (!hasTargetLocked)
-            {
-                if (weapon.tag.Equals("Stone"))
-                {
-                    Target = HoleManager.Instance.holes[RandomHoleNumber].transform.position;
-                    //hasTargetLocked = true;
-                    if (gameObject.name.Equals("Steinwerfer"))
-                        Debug.Log("RandNumbSame as Before? " + randomHoleNumber);
-                }
-                else
-                {
-                    Target = players[randomPlayerNumber].GetComponent<PlayerTracker>().GetPlayerPos();
-                    //hasTargetLocked = true;
-                }
-            }
-        }
-        if (weapon != null)
-            ThrowWeapon(weapon, weapon.transform.position, Target,
-                aiController.hitAccuracy, aiController.throwSpeed);
     }
 
     public void DisableWeapon(GameObject weapon)
@@ -171,10 +174,16 @@ public class AttackScript : MonoBehaviour
         }
         weaponDisabled = true;
         PlayerTracker.IsColliding = false;
-        foreach (GameObject player in players)
-        {
-            player.GetComponent<PlayerTracker>().WeaponMoving = false;
-        }
+    }
+
+    void CompareWeaponPositionsToRaft(GameObject weapon)
+    {
+        if (gameObject.transform.position.y < target.y && weapon.transform.position.y > target.y && 
+            !PlayerTracker.IsColliding)
+            DisableWeapon(weapon);
+        else if (gameObject.transform.position.y > target.y && weapon.transform.position.y < target.y &&
+            !PlayerTracker.IsColliding)
+            DisableWeapon(weapon);
     }
 
     public void EnableWeapon(GameObject weapon)
@@ -190,10 +199,6 @@ public class AttackScript : MonoBehaviour
         gameObject.SetActive(false);
         weaponDisabled = true;
         PlayerTracker.IsColliding = false;
-        foreach (GameObject player in players)
-        {
-            player.GetComponent<PlayerTracker>().WeaponMoving = false;
-        }
     }
 
     // EventTrigger

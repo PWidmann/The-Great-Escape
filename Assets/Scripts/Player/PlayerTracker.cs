@@ -4,16 +4,12 @@ using UnityEngine;
 
 public class PlayerTracker : MonoBehaviour
 {
-    static bool weaponMoving = false;
     static bool isColliding = false;
 
     [SerializeField] Transform raftTransform;
-
     [SerializeField] PlayerController playerController;
-
     [SerializeField] AudioSource playerAudio;
 
-    public bool WeaponMoving { get => weaponMoving; set => weaponMoving = value; }
     public static bool IsColliding { get => isColliding; set => isColliding = value; }
 
     void Update()

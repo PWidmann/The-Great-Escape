@@ -5,18 +5,20 @@ using UnityEngine.Events;
 
 public class AIController : MonoBehaviour
 {
+    // Usually the AI got fired by events. Everything was controlled here but due to instantiating them
+    // at runtime, it didn't work anymore. So the events had to go unfortunetly and everything has to be
+    // in seperate scripts.
+
     public UnityEvent AttackTrigger;
-    public UnityEvent RunTrigger;
+    //UnityEvent RunTrigger = new UnityEvent();
     public UnityEvent DebugTestingTrigger; // Turns off AI for other tests in our game.
     public UnityEvent WaitForAiTrigger; // Event that makes the AI wait before they attack.
-    public UnityEvent DestroyStoneTrigger; // Self-explainatory.
+    public UnityEvent DestroyStoneTrigger; 
     public UnityEvent LoseTrigger;
 
     [HideInInspector] public bool isChecked;
-    [SerializeField] bool isDebugging;
+    public bool isDebugging;
     public bool isWaitingForAi = true;
-
-    public HookThrower hookThrower;
 
     public float delayTimer; // delay for starting attack.
     public int movementSpeed = 7;
@@ -26,6 +28,7 @@ public class AIController : MonoBehaviour
     [Header("General")]
     [Range(0.0f, 1f)] public float hitAccuracy;
     [Range(1f, 1000f)] public float throwSpeed;
+    public float distanceBetweenAI = 8f;
 
     [Header("HookThrower")]
     public float minHookThrowDelayTimer = 3f;
@@ -33,8 +36,13 @@ public class AIController : MonoBehaviour
 
     [Header("Spear-/Stonethrower")]
     public float coolDownTimeInSeconds = 5f;
+    
+    public AiDifficulty aiDifficulty;
 
-    private void Awake()
+    public GameObject raftTransform; // Needed for Pathfinder reference.
+    [SerializeField] GameObject hookThrower;
+
+    void Awake()
     {
         if (instance == null)
             instance = this;
@@ -42,21 +50,33 @@ public class AIController : MonoBehaviour
             Destroy(this);
     }
 
+    void Start()
+    {
+        //RunTrigger.AddListener(hookThrower.GetComponent<Pathfinder>().Move);
+        //AttackTrigger.AddListener(AttackScript.instance.PrepareAttack);
+        //RunTrigger.AddListener(AttackScript.instance.PrepareAttack);
+
+        //DebugTestingTrigger.AddListener(AttackScript.instance.KeepAIDisabled);
+        //WaitForAiTrigger.AddListener(StartAttackWithDelay);
+        //DestroyStoneTrigger.AddListener(AttackScript.instance.DestroyStone);
+
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (HookThrower.BoatHooked && !PlayerController.instance.GameOver)
             AttackTrigger.Invoke();
-        else if (!HookThrower.BoatHooked && RaftController.AllPlayersOnRaft && !isDebugging && !isWaitingForAi && 
-            !PlayerController.instance.GameOver)
-            RunTrigger.Invoke();
+        //else if (!HookThrower.BoatHooked && RaftController.AllPlayersOnRaft && !isDebugging && !isWaitingForAi && 
+        //    !PlayerController.instance.GameOver)
+        //    RunTrigger.Invoke();
         else if (isDebugging)
             DebugTestingTrigger.Invoke();
         else if (isWaitingForAi && RaftController.AllPlayersOnRaft && !PlayerController.instance.GameOver)
             WaitForAiTrigger.Invoke();
 
-        if (RaftHoleActivator.IsHit && RaftHoleActivator.HitCounter >= 2)
-            DestroyStoneTrigger.Invoke();
+        //if (RaftHoleActivator.IsHit && RaftHoleActivator.HitCounter >= 2)
+        //    DestroyStoneTrigger.Invoke();
 
         if (PlayerController.instance.GameOver)
             LoseTrigger.Invoke();

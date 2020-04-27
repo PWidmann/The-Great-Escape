@@ -2,16 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Makes the AI find a path to the raft
-/// </summary>
 public class Pathfinder : MonoBehaviour
 {
-    [SerializeField] Transform raftTransform;
+    GameObject raftTransform;
+    public static Pathfinder instance;
+    Vector3Int targetCellLocation = Vector3Int.zero;
+    Vector3Int enemyCellLocation;
+    bool isAboveRaft; 
 
-    /// <summary>
-    /// Called in an event, finds a path on walkable tiles to the raft 
-    /// </summary>
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+    }
+
+    void Start()
+    {
+        raftTransform = AIController.instance.raftTransform;
+    }
+
     public void Move()
     {
         //gameObject.SetActive(true);
@@ -21,58 +30,61 @@ public class Pathfinder : MonoBehaviour
 
     private Vector3 GetWalktargetLocation()
     {
-        Vector3 raftTargetLocation = raftTransform.position; // Current position of raft.
-        Vector3 enemyLocation = transform.position; // current enemy position
+        Vector3 raftTargetWorldLocation = raftTransform.transform.position;
+        Vector3 enemyWorldLocation = transform.position; 
 
-        // The vector from the raft to the enemy
-        Vector3 targetToEnemy = enemyLocation - raftTargetLocation; // directional Vector
+        Vector3 targetToEnemy = enemyWorldLocation - raftTargetWorldLocation; // directional Vector
 
-        Vector3Int targetCellLocation = Vector3Int.zero; // The cell where the enemy has to go.
+        enemyCellLocation = TileMapGenerator.instance.groundTilemap.WorldToCell(enemyWorldLocation);
 
-        // Which cell the enemy is currently located on.
-        Vector3Int enemyCellLocation = TileMapGenerator.instance.groundTilemap.WorldToCell(enemyLocation);
+        isAboveRaft = targetToEnemy.y > 0; 
 
-        bool isAboveRaft = targetToEnemy.y > 0; 
+        Vector3Int raftTargetCellLocation = TileMapGenerator.instance.groundTilemap.WorldToCell(raftTargetWorldLocation);
 
-        // The postion of the raft in the cell.
-        Vector3Int raftTargetCellLocation = TileMapGenerator.instance.groundTilemap.WorldToCell(raftTargetLocation);
+        SearchForGroundTiles(raftTargetCellLocation);
+        return TileMapGenerator.instance.groundTilemap.CellToWorld(targetCellLocation);
+    }
 
-        // mapHeight is the number of tiles in the y axis
-        // Scans the map from the top to the buttom till a GrassTile is found and saves the grid position of the cell
+    void SearchForGroundTiles(Vector3Int raftTargetCellLocation)
+    {
         for (int i = 1; i <= (int)TileMapGenerator.instance.mapHeight; i++)
         {
-            if (TileMapGenerator.instance.groundTilemap.HasTile(raftTargetCellLocation + i * 
+            if (TileMapGenerator.instance.groundTilemap.HasTile(raftTargetCellLocation + i *
                 (isAboveRaft ? Vector3Int.up : Vector3Int.down)))
             {
-                targetCellLocation = raftTargetCellLocation + (i+1) * (isAboveRaft ? Vector3Int.up : Vector3Int.down);
+                EnemySpawner.spawnedEnemies[0].GetComponent<Pathfinder>().targetCellLocation = 
+                    raftTargetCellLocation + (i + 1) * (isAboveRaft ? Vector3Int.up : Vector3Int.down);
+
+                EnemySpawner.spawnedEnemies[1].GetComponent<Pathfinder>().targetCellLocation =
+                    raftTargetCellLocation + (i + 1) * (isAboveRaft ? Vector3Int.up : Vector3Int.down);
                 break;
             }
         }
+        KeepDistanceBetweenAI();
+    }
 
-        // The targettile has been found. Now the enemy has to know which direction he needs to go.
-        // => Pathfinding algo // backtracker
-        Vector3Int walkTargetCellLocation = targetCellLocation; // The positon the enemy needs to walk to
-        Vector3Int previousWalkTargetCellLocation = Vector3Int.zero; // When a new target is found, the previous target is needed
-
-        // The vector between the target cell and the enemy cell
-        Vector3Int walkTargetCellToEnemyCell = enemyCellLocation  - targetCellLocation; 
-
-        // Dictates if enemy goes up or down and when he has to go left.
-        for (int i = 0; i < 100; i++)
+    void KeepDistanceBetweenAI()
+    {
+        for (int i = 0; i < EnemySpawner.spawnedEnemies.Count - 2; i++)
         {
-            walkTargetCellLocation += (Mathf.Abs(walkTargetCellToEnemyCell.x) <= Mathf.Abs(walkTargetCellToEnemyCell.y) ? 
-                Vector3Int.left : (walkTargetCellToEnemyCell.y >= 0 ? Vector3Int.up : Vector3Int.down));
+            Vector3Int thisEnemyCell = TileMapGenerator.instance.groundTilemap.WorldToCell(
+                EnemySpawner.spawnedEnemies[i].transform.position);
 
-            walkTargetCellToEnemyCell = enemyCellLocation - walkTargetCellLocation;
+            Vector3Int otherEnemyCell = TileMapGenerator.instance.groundTilemap.WorldToCell(
+                EnemySpawner.spawnedEnemies[i + 2].transform.position);
 
-            if (walkTargetCellLocation == enemyCellLocation)
+            Vector3 thisEnemyPosWorld = TileMapGenerator.instance.groundTilemap.CellToWorld(thisEnemyCell);
+
+            Vector3 otherEnemyPosWorld = TileMapGenerator.instance.groundTilemap.CellToWorld(otherEnemyCell);
+
+            Vector3Int thisEnemyCellToOtherEnemyCell = otherEnemyCell - thisEnemyCell;
+
+            if (Vector2.Distance(thisEnemyPosWorld, otherEnemyPosWorld) < AIController.instance.distanceBetweenAI)
             {
-                walkTargetCellLocation = previousWalkTargetCellLocation;
-                return TileMapGenerator.instance.groundTilemap.CellToWorld(walkTargetCellLocation);
+                EnemySpawner.spawnedEnemies[i + 2].GetComponent<Pathfinder>().targetCellLocation =
+                    EnemySpawner.spawnedEnemies[i].GetComponent<Pathfinder>().targetCellLocation + (8 *
+                    Vector3Int.right + (1 * (isAboveRaft ? Vector3Int.up : Vector3Int.down)));
             }
-
-            previousWalkTargetCellLocation = walkTargetCellLocation;
         }
-        return enemyLocation + (TileMapGenerator.instance.groundTilemap.CellToWorld(targetCellLocation) - enemyLocation);
     }
 }

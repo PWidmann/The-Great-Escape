@@ -4,6 +4,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+/*
+ * Use AIController.instance.aiDifficulty for DifFiculty settings.
+ */
 public class MainMenu : MonoBehaviour
 {
     int mainSelectedButton = 1;

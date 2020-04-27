@@ -88,10 +88,12 @@ public class RaftController : MonoBehaviour
         trackVelocity = (rb.position - lastPos) * 50;
         lastPos = rb.position;
 
-            
-        
 
-        SteeringInteraction();
+
+        if (!PlayerInterface.instance.gameOver || !PlayerInterface.instance.win)
+            SteeringInteraction();
+        else
+            return;
         RudderMovement(change);
     }
 

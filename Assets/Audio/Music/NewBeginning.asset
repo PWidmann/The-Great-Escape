@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: NewBeginning
   m_EditorClassIdentifier: 
   audioFile: {fileID: 8300000, guid: c2c10f0ff5d6c544b9564eb3aa3dd863, type: 3}
-  authorName: 'Mikaiha '
+  authorName: Mikaiah
   titleName: New Beginning
   webUrl: mikaiah.newgrounds.com/

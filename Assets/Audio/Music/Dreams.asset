@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Dreams
   m_EditorClassIdentifier: 
   audioFile: {fileID: 8300000, guid: 5e483c2f7afecda45be5f09d071dea7d, type: 3}
-  authorName: Mikaiha
+  authorName: Mikaiah
   titleName: Dreams
   webUrl: mikaiah.newgrounds.com/
