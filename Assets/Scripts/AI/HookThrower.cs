@@ -23,7 +23,6 @@ public class HookThrower : MonoBehaviour
 
     Pathfinder pathfinder;
     AttackScript attackScript;
-    EnemyBehaviour enemyBehaviour;
 
     public static bool BoatHooked { get => boatHooked; set => boatHooked = value; }
     public static bool HookInstantiated { get => hookInstantiated; set => hookInstantiated = value; }
@@ -34,19 +33,15 @@ public class HookThrower : MonoBehaviour
         raftObject = GameObject.FindGameObjectWithTag("Raft").transform;
         pathfinder = GetComponent<Pathfinder>();
         attackScript = GetComponent<AttackScript>();
-        enemyBehaviour = GetComponent<EnemyBehaviour>();
     }
 
     void Update()
     {
-        if (enemyBehaviour.IsInRange())
+        if (!boatHooked && RaftController.AllPlayersOnRaft && !AIController.instance.isDebugging &&
+            !AIController.instance.isWaitingForAi && !PlayerController.instance.GameOver)
         {
-            if (!boatHooked && RaftController.AllPlayersOnRaft && !AIController.instance.isDebugging &&
-                !AIController.instance.isWaitingForAi && !PlayerController.instance.GameOver)
-            {
-                pathfinder.Move();
-                //attackScript.PrepareAttack();
-            }
+            pathfinder.Move();
+            //attackScript.PrepareAttack();
         }
 
         //// Deactivate enemies when endscreen

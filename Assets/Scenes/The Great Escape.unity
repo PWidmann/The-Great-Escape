@@ -8538,14 +8538,6 @@ MonoBehaviour:
   enemies:
   - {fileID: 322185724963986547, guid: d1938bc31a041424595173b905400a6f, type: 3}
   - {fileID: 322185724963986547, guid: d1938bc31a041424595173b905400a6f, type: 3}
-  - {fileID: 322185724963986547, guid: d1938bc31a041424595173b905400a6f, type: 3}
-  - {fileID: 322185724963986547, guid: d1938bc31a041424595173b905400a6f, type: 3}
-  - {fileID: 322185724963986547, guid: d1938bc31a041424595173b905400a6f, type: 3}
-  - {fileID: 322185724963986547, guid: d1938bc31a041424595173b905400a6f, type: 3}
-  - {fileID: 322185724963986547, guid: d1938bc31a041424595173b905400a6f, type: 3}
-  - {fileID: 322185724963986547, guid: d1938bc31a041424595173b905400a6f, type: 3}
-  - {fileID: 322185724963986547, guid: d1938bc31a041424595173b905400a6f, type: 3}
-  - {fileID: 322185724963986547, guid: d1938bc31a041424595173b905400a6f, type: 3}
 --- !u!1 &1137688282
 GameObject:
   m_ObjectHideFlags: 0
@@ -10877,7 +10869,7 @@ MonoBehaviour:
   raftCanMove: 1
   isSteeringRaft: 0
   hasShield: 0
-  playerHealth: 100
+  playerHealth: 1
   HealthBarImage: {fileID: 277698470}
 --- !u!61 &1464611056
 BoxCollider2D:

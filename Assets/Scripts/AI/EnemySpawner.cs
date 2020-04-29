@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public List<GameObject> enemies;
-    public static bool allEnemiesInstantiated = false;
     static GameObject previousEnemy;
     public static List<GameObject> spawnedEnemies = new List<GameObject>(); 
 
@@ -13,29 +12,25 @@ public class EnemySpawner : MonoBehaviour
 
     void Awake()
     {
-        SpawnAiObjects(AIController.instance.aiDifficulty);
+        SpawnAiObjects();
     }
 
-    void SpawnAiObjects(AiDifficulty difficulty)
+    void SpawnAiObjects()
     {
-        previousEnemy = Instantiate(enemies[0], new Vector3(6, 0, 0), Quaternion.identity);
-        spawnedEnemies.Add(previousEnemy);
-
-        for (int i = 1; i < (int)difficulty; i++)
+        for (int i = 0; i < enemies.Count; i++)
         {
             if (i % 2 == 0)
             {
-                previousEnemy = Instantiate(enemies[i], new Vector3(previousEnemy.transform.position.x + 20, 0, 0),
+                previousEnemy = Instantiate(enemies[i], new Vector3(6, 0, 0),
                     Quaternion.identity);
                 spawnedEnemies.Add(previousEnemy);
             }
             else
             {
-                previousEnemy = Instantiate(enemies[i], new Vector3(previousEnemy.transform.position.x + 20, 48, 0),
+                previousEnemy = Instantiate(enemies[i], new Vector3(6, 48, 0),
                     Quaternion.identity);
                 spawnedEnemies.Add(previousEnemy);
             }
         }
-        allEnemiesInstantiated = true;
     }
 }
