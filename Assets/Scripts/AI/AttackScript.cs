@@ -169,6 +169,7 @@ public class AttackScript : MonoBehaviour
         weapon.SetActive(false);
         if (weapon.tag.Equals("Stone"))
         {
+            AIController.IsMakingAction = false;
             RaftHoleActivator.IsHit = false;
             RaftHoleActivator.HitCounter = 0;
         }

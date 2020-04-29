@@ -155,9 +155,10 @@ public class RaftController : MonoBehaviour
 
     void PullRaftToShore()
     {
-        if (!IscollidingWithWall)
+        if (!IscollidingWithWall && HookThrower.hook != null)
         {
-            rb.MovePosition(transform.position + Vector3.down *
+            bool isAboveRaft = HookThrower.hook.transform.position.y > transform.position.y;
+            rb.MovePosition(transform.position + 1 * (isAboveRaft ? Vector3.up : Vector3.down) *
                 Time.fixedDeltaTime * 1);
         }
     }

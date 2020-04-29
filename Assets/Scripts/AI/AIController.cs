@@ -41,6 +41,12 @@ public class AIController : MonoBehaviour
 
     public GameObject raftTransform; // Needed for Pathfinder reference.
     [SerializeField] GameObject hookThrower;
+    public static List<HookThrower> hookThrowers = new List<HookThrower>();
+    static bool isMakingAction = false;
+    static bool isPreperingHook = false;
+
+    public static bool IsMakingAction { get => isMakingAction; set => isMakingAction = value; }
+    public static bool IsPreperingHook { get => isPreperingHook; set => isPreperingHook = value; }
 
     void Awake()
     {
@@ -59,12 +65,22 @@ public class AIController : MonoBehaviour
         //DebugTestingTrigger.AddListener(AttackScript.instance.KeepAIDisabled);
         //WaitForAiTrigger.AddListener(StartAttackWithDelay);
         //DestroyStoneTrigger.AddListener(AttackScript.instance.DestroyStone);
-
+        GetThrowerObjectScriptComponents();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!isMakingAction)
+        {
+            hookThrowers[Random.Range(0, hookThrowers.Count)].MakeAction();
+        }
+
+        if (!isPreperingHook)
+        {
+            hookThrowers[Random.Range(0, hookThrowers.Count)].GetHookInstantiationReady();
+        }
+
         if (HookThrower.BoatHooked && !PlayerController.instance.GameOver)
             AttackTrigger.Invoke();
         //else if (!HookThrower.BoatHooked && RaftController.AllPlayersOnRaft && !isDebugging && !isWaitingForAi && 
@@ -80,6 +96,14 @@ public class AIController : MonoBehaviour
 
         if (PlayerController.instance.GameOver)
             LoseTrigger.Invoke();
+    }
+
+    void GetThrowerObjectScriptComponents()
+    {
+        foreach (GameObject hookThrower in EnemySpawner.spawnedEnemies)
+        {
+            hookThrowers.Add(hookThrower.GetComponent<HookThrower>());
+        }
     }
 
     public void StartAttackWithDelay()

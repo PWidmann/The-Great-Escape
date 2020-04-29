@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class Hook : MonoBehaviour, Iinteractable
 {
-    GameObject hookThrowerObject;
-    HookThrower hookThrower;
-
-    void Awake()
-    {
-        hookThrowerObject = GameObject.FindGameObjectWithTag("Hookthrower");
-        hookThrower = hookThrowerObject.GetComponent<HookThrower>();
-    }
-
     public void Interact(PlayerController playerController)
     {
         if (playerController.CheckInput(playerController, "ButtonX", KeyCode.Space) && HookThrower.BoatHooked)
@@ -24,6 +15,9 @@ public class Hook : MonoBehaviour, Iinteractable
 
     void DestroyHook()
     {
-        EnemySpawner.PreviousEnemy.GetComponent<HookThrower>().DestroyHook();
+        foreach (HookThrower hookThrower in AIController.hookThrowers)
+        {
+            hookThrower.DestroyHook();
+        }
     }
 }
