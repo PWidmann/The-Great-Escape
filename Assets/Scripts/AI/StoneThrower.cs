@@ -15,12 +15,11 @@ public class StoneThrower : MonoBehaviour
 
     public void MakeAction()
     {
-        attackScript.PrepareAttack();
-        AIController.IsMakingAction = true;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("Collision With: " + collision.gameObject.name);
+        if (RaftController.AllPlayersOnRaft && !AIController.instance.isDebugging &&
+            !AIController.instance.isWaitingForAi && !PlayerController.instance.GameOver)
+        {
+            attackScript.PrepareAttack();
+            AIController.IsMakingAction = true;
+        }
     }
 }

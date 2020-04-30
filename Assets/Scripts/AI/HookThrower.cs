@@ -35,19 +35,12 @@ public class HookThrower : MonoBehaviour
 
     void Update()
     {
-        //if (!boatHooked && RaftController.AllPlayersOnRaft && !AIController.instance.isDebugging &&
-        //    !AIController.instance.isWaitingForAi && !PlayerController.instance.GameOver)
-        //{
-        //    pathfinder.Move();
-        //    attackScript.PrepareAttack();
-        //}
-
         if (!AIController.RaftHooked && RaftController.AllPlayersOnRaft && !AIController.instance.isDebugging &&
             !AIController.instance.isWaitingForAi && !PlayerController.instance.GameOver)
                 pathfinder.Move();
 
-            //// Deactivate enemies when endscreen
-            if (hookInstantiated && (PlayerInterface.instance.gameOver || PlayerInterface.instance.win))
+        // Deactivate enemies when endscreen
+        if (hookInstantiated && (PlayerInterface.instance.gameOver || PlayerInterface.instance.win))
         {
             hook.SetActive(false);
             Destroy(gameObject);
@@ -62,21 +55,6 @@ public class HookThrower : MonoBehaviour
             if (hook.transform.position.Equals(target) && !AIController.RaftHooked)
                 DestroyHook();
         }
-        //if (!AIController.instance.isWaitingForAi)
-        //{
-        //    // First instanitation of hook object.
-        //    if (!hookInstantiated && !isInstantiating && RaftController.AllPlayersOnRaft)
-        //        PrepereHookInstantiation();
-        //    else if (hookInstantiated && !boatHooked)
-        //        ThrowHook(AIController.instance.hitAccuracy, AIController.instance.throwSpeed);
-
-        //    // When hook is instantiated and the hook doesn't hit the target then it gets destroyed.
-        //    if (hookInstantiated)
-        //    {
-        //        if (hook.transform.position.Equals(target) && !boatHooked)
-        //            DestroyHook();
-        //    }
-        //}
 
         // When hook hits the target it should be parented with the raft so it gives the illusion
         // that the hook thrower pulls the raft to the shore.
@@ -89,11 +67,9 @@ public class HookThrower : MonoBehaviour
         if (!AIController.RaftHooked && RaftController.AllPlayersOnRaft && !AIController.instance.isDebugging &&
             !AIController.instance.isWaitingForAi && !PlayerController.instance.GameOver)
         {
-            //attackScript.PrepareAttack();
+            attackScript.PrepareAttack();
             AIController.IsMakingAction = true;
         }
-
-      
     }
 
     public void GetHookInstantiationReady()
@@ -127,6 +103,7 @@ public class HookThrower : MonoBehaviour
         hook = Instantiate(hookPrefab, transform.position, Quaternion.identity);
         if (gameObject.transform.position.y > raftObject.transform.position.y)
             hook.transform.Rotate(new Vector3(0, 0, 180));
+        
         hookInstantiated = true;
         RaftController.HookMoving = true;
     }

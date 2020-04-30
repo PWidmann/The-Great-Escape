@@ -45,6 +45,7 @@ public class AIController : MonoBehaviour
     [SerializeField] GameObject hookThrower;
     public static List<HookThrower> hookThrowers = new List<HookThrower>();
     public static List<StoneThrower> stoneThrowers = new List<StoneThrower>();
+    public static List<SpearThrower> spearThrowers = new List<SpearThrower>();
     static bool isMakingAction = false;
     static bool isPreperingHook = false;
     static bool raftHooked = false;
@@ -77,7 +78,11 @@ public class AIController : MonoBehaviour
     void Update()
     {
         if (!isMakingAction)
+        {
             hookThrowers[Random.Range(0, hookThrowers.Count)].MakeAction();
+            stoneThrowers[Random.Range(0, stoneThrowers.Count)].MakeAction();
+            spearThrowers[Random.Range(0, spearThrowers.Count)].MakeAction();
+        }
 
         if (!isPreperingHook)
             hookThrowers[Random.Range(0, hookThrowers.Count)].GetHookInstantiationReady();
@@ -102,7 +107,8 @@ public class AIController : MonoBehaviour
         foreach (GameObject throwerObject in EnemySpawner.spawnedEnemies)
         {
             hookThrowers.Add(throwerObject.GetComponent<HookThrower>());
-            stoneThrowers.Add(throwerObject.GetComponent<StoneThrower>());
+            stoneThrowers.Add(throwerObject.GetComponentInChildren<StoneThrower>());
+            spearThrowers.Add(throwerObject.GetComponentInChildren<SpearThrower>());
         }
     }
 
