@@ -170,7 +170,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 //Move the character with the raft
-                if (!HookThrower.BoatHooked)
+                if (!AIController.RaftHooked)
                     myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.fixedDeltaTime + RaftController.instance.change * RaftController.instance.moveSpeed * Time.fixedDeltaTime);
                 else
                 {
@@ -360,7 +360,7 @@ public class PlayerController : MonoBehaviour
         float distance = Vector2.Distance(transform.position, RaftController.instance.rudder.transform.position);
 
         if (distance < 1f && CheckInput(this, "ButtonA", KeyCode.E)
-            && !RaftController.instance.raftIsInUse && !isSteeringRaft && !HookThrower.BoatHooked)
+            && !RaftController.instance.raftIsInUse && !isSteeringRaft && !AIController.RaftHooked)
         {
             SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[3]);
             isSteeringRaft = true;

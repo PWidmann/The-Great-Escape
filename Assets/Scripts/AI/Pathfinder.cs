@@ -25,6 +25,7 @@ public class Pathfinder : MonoBehaviour
     {
         transform.position = Vector2.MoveTowards(transform.position, GetWalktargetLocation(), Time.deltaTime *
             AIController.instance.movementSpeed);
+        Debug.Log("I am MOVING!!!!");
     }
 
     private Vector3 GetWalktargetLocation()

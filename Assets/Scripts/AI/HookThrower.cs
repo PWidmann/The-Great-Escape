@@ -11,7 +11,6 @@ public class HookThrower : MonoBehaviour
     AudioSource hookThrowerSfx;
     Transform raftObject;
 
-    static bool boatHooked = false;
     static bool hookInstantiated = false;
 
     bool isInstantiating = false; // used to control the sequence of update instructions.
@@ -24,7 +23,6 @@ public class HookThrower : MonoBehaviour
     Pathfinder pathfinder;
     AttackScript attackScript;
 
-    public static bool BoatHooked { get => boatHooked; set => boatHooked = value; }
     public static bool HookInstantiated { get => hookInstantiated; set => hookInstantiated = value; }
 
     void Start()
@@ -44,7 +42,7 @@ public class HookThrower : MonoBehaviour
         //    attackScript.PrepareAttack();
         //}
 
-        if (!boatHooked && RaftController.AllPlayersOnRaft && !AIController.instance.isDebugging &&
+        if (!AIController.RaftHooked && RaftController.AllPlayersOnRaft && !AIController.instance.isDebugging &&
             !AIController.instance.isWaitingForAi && !PlayerController.instance.GameOver)
                 pathfinder.Move();
 
@@ -56,12 +54,12 @@ public class HookThrower : MonoBehaviour
             return;
         }
 
-        if (hookInstantiated && !boatHooked && hook != null)
+        if (hookInstantiated && !AIController.RaftHooked && hook != null)
             ThrowHook(AIController.instance.hitAccuracy, AIController.instance.throwSpeed);
 
         if (hookInstantiated && hook != null)
         {
-            if (hook.transform.position.Equals(target) && !boatHooked)
+            if (hook.transform.position.Equals(target) && !AIController.RaftHooked)
                 DestroyHook();
         }
         //if (!AIController.instance.isWaitingForAi)
@@ -82,16 +80,16 @@ public class HookThrower : MonoBehaviour
 
         // When hook hits the target it should be parented with the raft so it gives the illusion
         // that the hook thrower pulls the raft to the shore.
-        if (boatHooked)
+        if (AIController.RaftHooked)
             MakeHookAsChildGameObject();
     }
 
     public void MakeAction()
     {
-        if (!boatHooked && RaftController.AllPlayersOnRaft && !AIController.instance.isDebugging &&
+        if (!AIController.RaftHooked && RaftController.AllPlayersOnRaft && !AIController.instance.isDebugging &&
             !AIController.instance.isWaitingForAi && !PlayerController.instance.GameOver)
         {
-            attackScript.PrepareAttack();
+            //attackScript.PrepareAttack();
             AIController.IsMakingAction = true;
         }
 
@@ -127,6 +125,8 @@ public class HookThrower : MonoBehaviour
     void InstantiateHook()
     {
         hook = Instantiate(hookPrefab, transform.position, Quaternion.identity);
+        if (gameObject.transform.position.y > raftObject.transform.position.y)
+            hook.transform.Rotate(new Vector3(0, 0, 180));
         hookInstantiated = true;
         RaftController.HookMoving = true;
     }
@@ -135,7 +135,7 @@ public class HookThrower : MonoBehaviour
     {
         if (!hasTargetLocked)
         {
-            target = HoleManager.Instance.holes[randomHoleNumber].transform.position;
+            target = HoleManager.Instance.holes[25].transform.position;
         }
     }
 
@@ -161,7 +161,7 @@ public class HookThrower : MonoBehaviour
     public void DestroyHook()
     {
         Destroy(hook);
-        boatHooked = false;
+        AIController.RaftHooked = false;
         AIController.IsPreperingHook = false;
         hookInstantiated = false;
         RaftController.HookMoving = false;
