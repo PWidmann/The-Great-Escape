@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AttackScript attackScript;
     bool playerListIsFilled;
 
+    //Audio
+    [SerializeField] AudioSource playerAudio;
+
     //Player movement and collision
     Rigidbody2D myRigidbody;
     int moveSpeed = 4;
@@ -171,7 +174,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 //Move the character with the raft
-                if (!HookThrower.BoatHooked)
+                if (!AIController.RaftHooked)
                     myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.fixedDeltaTime + RaftController.instance.change * RaftController.instance.moveSpeed * Time.fixedDeltaTime);
                 else
                 {
@@ -361,7 +364,7 @@ public class PlayerController : MonoBehaviour
         float distance = Vector2.Distance(transform.position, RaftController.instance.rudder.transform.position);
 
         if (distance < 1f && CheckInput(this, "ButtonA", KeyCode.E)
-            && !RaftController.instance.raftIsInUse && !isSteeringRaft && !HookThrower.BoatHooked)
+            && !RaftController.instance.raftIsInUse && !isSteeringRaft && !AIController.RaftHooked)
         {
             SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[3]);
             isSteeringRaft = true;
@@ -570,20 +573,7 @@ public class PlayerController : MonoBehaviour
 
             gameObject.SetActive(false);
 
-            // Needed to check which GameObject is still active.
-            for (int i = 0; i < AttackScript.players.Count; i++)
-            {
-                if (!AttackScript.players[i].activeSelf)
-                {
-                    AttackScript.players.Remove(AttackScript.players[i]);
-                    AttackScript.instance.RandomPlayerNumber = Random.Range(0, AttackScript.players.Count);
-                }
-            }
-            if (AttackScript.players.Count == 0)
-            {
-                gameOver = true;
-                ShowEndScreen();
-            }
+            CheckHowManyPlayersAlive();
         }
     }
 
@@ -625,26 +615,38 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void CheckHowManyPlayersAlive()
+    {
+        for (int i = 0; i < AttackScript.players.Count; i++)
+        {
+            if (!AttackScript.players[i].activeSelf)
+            {
+                AttackScript.players.Remove(AttackScript.players[i]);
+                AttackScript.instance.RandomPlayerNumber = Random.Range(0, AttackScript.players.Count);
+            }
+        }
+        if (AttackScript.players.Count == 0)
+        {
+            gameOver = true;
+            ShowEndScreen();
+        }
+    }
+
     public void ShowEndScreen()
     {
-        // TODO
-        // Endscreen einfügen
-        // Mach das besser im PlayerInterface. Ist nur im PlayerController, damit du die Methode siehst.
-        // Endscreen Funktion wird im separaten Endscreen script behandelt
-        // Kann als event getriggered werden.
         SoundManager.instance.backGroundMusicSource.Stop();
         SoundManager.instance.soundFxSource.Stop();
 
         // Lose Sound
-        SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[15]);
-        Debug.Log("GameOver!");
         PlayerInterface.instance.gameOver = true;
+        SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[15], playerAudio);
     }
 
     public void ShowWinScreen()
     {
         SoundManager.instance.backGroundMusicSource.Stop();
         SoundManager.instance.soundFxSource.Stop();
+
 
         // TODO 
         // Siegesbedingung einfügen

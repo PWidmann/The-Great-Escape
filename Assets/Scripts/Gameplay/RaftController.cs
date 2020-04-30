@@ -88,10 +88,12 @@ public class RaftController : MonoBehaviour
         trackVelocity = (rb.position - lastPos) * 50;
         lastPos = rb.position;
 
-            
-        
 
-        SteeringInteraction();
+
+        if (!PlayerInterface.instance.gameOver || !PlayerInterface.instance.win)
+            SteeringInteraction();
+        else
+            return;
         RudderMovement(change);
     }
 
@@ -99,7 +101,7 @@ public class RaftController : MonoBehaviour
     {
         rb.MovePosition(transform.position + change * moveSpeed * Time.fixedDeltaTime);
         
-        if (HookThrower.BoatHooked)
+        if (AIController.RaftHooked)
         {
             PlayerController.instance.isSteeringRaft = false;
             raftIsInUse = false;
@@ -133,7 +135,7 @@ public class RaftController : MonoBehaviour
             if (p1distance < 1f || p2distance < 1f || p3distance < 1f || p4distance < 1f)
             {
                 if (!SoundManager.instance.soundFxSource.isPlaying && Time.time > nextRudderInteractSoundfx &&
-                    !HookThrower.BoatHooked)
+                    !AIController.RaftHooked)
                 {
                     nextRudderInteractSoundfx = Time.time + soundFxReplayTimer;
                     SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[11]);
@@ -153,9 +155,10 @@ public class RaftController : MonoBehaviour
 
     void PullRaftToShore()
     {
-        if (!IscollidingWithWall)
+        if (!IscollidingWithWall && HookThrower.hook != null)
         {
-            rb.MovePosition(transform.position + Vector3.down *
+            bool isAboveRaft = HookThrower.hook.transform.position.y > transform.position.y;
+            rb.MovePosition(transform.position + 1 * (isAboveRaft ? Vector3.up : Vector3.down) *
                 Time.fixedDeltaTime * 1);
         }
     }
@@ -182,7 +185,7 @@ public class RaftController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag.Equals("LandTile"))
+        if (collision.gameObject.tag.Equals("LandTile") && !AIController.RaftHooked)
         {
             // LandTile hit sound
             SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[16], raftAudio);
@@ -201,10 +204,10 @@ public class RaftController : MonoBehaviour
         if (collision.gameObject.tag.Equals("Hook"))
         {
             SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[8], raftAudio);
-            HookThrower.BoatHooked = true;
+            AIController.RaftHooked = true;
             Debug.Log("Hooked!");
         }
-        if (collision.gameObject.tag.Equals("Player") && playerCounter <= AttackScript.players.Count)
+        if (collision.gameObject.tag.Equals("Player") && playerCounter <= AttackScript.players.Count && !allPlayersOnRaft)
         {
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
             player.HasEnteredRaft = true;
@@ -217,6 +220,12 @@ public class RaftController : MonoBehaviour
             if (playerCounter == AttackScript.players.Count)
                 allPlayersOnRaft = true;
         }
+    }
+
+    private void On(Collider2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Hook"))
+            iscollidingWithWall = false;
     }
 
     public Vector2 GetRaftPos()

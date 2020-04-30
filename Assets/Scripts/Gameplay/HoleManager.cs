@@ -5,7 +5,6 @@ using UnityEngine;
 public class HoleManager : MonoBehaviour, Iinteractable
 {
     [SerializeField] PlayerInterface playerInterface;
-
     [SerializeField] AudioSource holeRepairAudio;
 
     static HoleManager instance = null;
@@ -13,10 +12,8 @@ public class HoleManager : MonoBehaviour, Iinteractable
 
     public AttackScript attackScriptHookThrowerReference;
     public AttackScript attackScriptStoneThrowerReference;
-    int currentHoleListCount;
 
     public static HoleManager Instance { get => instance; }
-    public int CurrentHoleListCount { get => currentHoleListCount; set => currentHoleListCount = value; }
 
     private void Awake()
     {
@@ -24,11 +21,6 @@ public class HoleManager : MonoBehaviour, Iinteractable
             instance = this;
         else if (instance != this)
             Destroy(this);
-    }
-
-    private void Start()
-    {
-        currentHoleListCount = holes.Count;
     }
 
     public void Interact(PlayerController playerController)

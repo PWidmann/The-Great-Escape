@@ -2,21 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class AIController : MonoBehaviour
 {
-    public UnityEvent AttackTrigger;
-    public UnityEvent RunTrigger;
-    public UnityEvent DebugTestingTrigger; // Turns off AI for other tests in our game.
-    public UnityEvent WaitForAiTrigger; // Event that makes the AI wait before they attack.
-    public UnityEvent DestroyStoneTrigger; // Self-explainatory.
-    public UnityEvent LoseTrigger;
+    // Usually the AI got fired by events. Everything was controlled here but due to instantiating them
+    // at runtime, it didn't work anymore. So the events had to go unfortunetly and everything has to be
+    // in seperate scripts.
 
     [HideInInspector] public bool isChecked;
-    [SerializeField] bool isDebugging;
+    public bool isDebugging;
     public bool isWaitingForAi = true;
-
-    public HookThrower hookThrower;
 
     public float delayTimer; // delay for starting attack.
     public int movementSpeed = 7;
@@ -26,6 +22,7 @@ public class AIController : MonoBehaviour
     [Header("General")]
     [Range(0.0f, 1f)] public float hitAccuracy;
     [Range(1f, 1000f)] public float throwSpeed;
+    public float distanceBetweenAI = 8f;
 
     [Header("HookThrower")]
     public float minHookThrowDelayTimer = 3f;
@@ -33,8 +30,24 @@ public class AIController : MonoBehaviour
 
     [Header("Spear-/Stonethrower")]
     public float coolDownTimeInSeconds = 5f;
+    
+    public AiDifficulty aiDifficulty;
 
-    private void Awake()
+    public GameObject raftTransform; // Needed for Pathfinder reference.
+    [SerializeField] GameObject hookThrower;
+    public static List<HookThrower> hookThrowers = new List<HookThrower>();
+    public static List<StoneThrower> stoneThrowers = new List<StoneThrower>();
+    public static List<SpearThrower> spearThrowers = new List<SpearThrower>();
+    static bool isMakingAction = false;
+    static bool isPreperingHook = false;
+    static bool raftHooked = false;
+    float distanceToRaft;
+
+    public static bool IsMakingAction { get => isMakingAction; set => isMakingAction = value; }
+    public static bool IsPreperingHook { get => isPreperingHook; set => isPreperingHook = value; }
+    public static bool RaftHooked { get => raftHooked; set => raftHooked = value; }
+
+    void Awake()
     {
         if (instance == null)
             instance = this;
@@ -42,24 +55,38 @@ public class AIController : MonoBehaviour
             Destroy(this);
     }
 
+    void Start()
+    {
+        GetThrowerObjectScriptComponents();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (HookThrower.BoatHooked && !PlayerController.instance.GameOver)
-            AttackTrigger.Invoke();
-        else if (!HookThrower.BoatHooked && RaftController.AllPlayersOnRaft && !isDebugging && !isWaitingForAi && 
-            !PlayerController.instance.GameOver)
-            RunTrigger.Invoke();
-        else if (isDebugging)
-            DebugTestingTrigger.Invoke();
-        else if (isWaitingForAi && RaftController.AllPlayersOnRaft && !PlayerController.instance.GameOver)
-            WaitForAiTrigger.Invoke();
+        if (!isMakingAction && !isDebugging && !isWaitingForAi)
+        {
+            hookThrowers[Random.Range(0, hookThrowers.Count)].MakeAction();
+            stoneThrowers[Random.Range(0, stoneThrowers.Count)].MakeAction();
+            spearThrowers[Random.Range(0, spearThrowers.Count)].MakeAction();
+        }
+        else if (!isMakingAction && !isDebugging && isWaitingForAi)
+            StartCoroutine(Attack(delayTimer));
 
-        if (RaftHoleActivator.IsHit && RaftHoleActivator.HitCounter >= 2)
-            DestroyStoneTrigger.Invoke();
+        if (!isPreperingHook)
+            hookThrowers[Random.Range(0, hookThrowers.Count)].GetHookInstantiationReady();
 
-        if (PlayerController.instance.GameOver)
-            LoseTrigger.Invoke();
+        if (!PlayerInterface.instance.gameOver || !PlayerInterface.instance.win)
+            distanceToRaft = GetDistanceBetweenAIandRaft();
+    }
+
+    void GetThrowerObjectScriptComponents()
+    {
+        foreach (GameObject throwerObject in EnemySpawner.spawnedEnemies)
+        {
+            hookThrowers.Add(throwerObject.GetComponent<HookThrower>());
+            stoneThrowers.Add(throwerObject.GetComponentInChildren<StoneThrower>());
+            spearThrowers.Add(throwerObject.GetComponentInChildren<SpearThrower>());
+        }
     }
 
     public void StartAttackWithDelay()
@@ -70,7 +97,9 @@ public class AIController : MonoBehaviour
     IEnumerator Attack(float delayTimeInSeconds)
     {
         yield return new WaitForSecondsRealtime(delayTimeInSeconds);
-        movementSpeed = 20;
+        if (distanceToRaft >= 40)
+            movementSpeed = 20;
+        Debug.Log("movementSpeed: " + movementSpeed + "" + "Distance: " + distanceToRaft);
         StartCoroutine(AdjustAiSpeed());
         isWaitingForAi = false;
     }
@@ -79,5 +108,14 @@ public class AIController : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delayTimer - 3);
         movementSpeed = 7;
+    }
+
+    float GetDistanceBetweenAIandRaft()
+    {
+        foreach (GameObject hookThrower in EnemySpawner.spawnedEnemies)
+        {
+            return Vector2.Distance(hookThrower.transform.position, raftTransform.transform.position);
+        }
+        return 0f;
     }
 }
