@@ -10,14 +10,6 @@ public class AIController : MonoBehaviour
     // at runtime, it didn't work anymore. So the events had to go unfortunetly and everything has to be
     // in seperate scripts.
 
-    public UnityEvent AttackTrigger;
-    //UnityEvent RunTrigger = new UnityEvent();
-    public UnityEvent DebugTestingTrigger; // Turns off AI for other tests in our game.
-    public UnityEvent WaitForAiTrigger; // Event that makes the AI wait before they attack.
-    public UnityEvent DestroyStoneTrigger; 
-    public UnityEvent LoseTrigger;
-    [SerializeField] Slider testSlider;
-
     [HideInInspector] public bool isChecked;
     public bool isDebugging;
     public bool isWaitingForAi = true;
@@ -49,6 +41,7 @@ public class AIController : MonoBehaviour
     static bool isMakingAction = false;
     static bool isPreperingHook = false;
     static bool raftHooked = false;
+    float distanceToRaft;
 
     public static bool IsMakingAction { get => isMakingAction; set => isMakingAction = value; }
     public static bool IsPreperingHook { get => isPreperingHook; set => isPreperingHook = value; }
@@ -64,42 +57,26 @@ public class AIController : MonoBehaviour
 
     void Start()
     {
-        //RunTrigger.AddListener(hookThrower.GetComponent<Pathfinder>().Move);
-        //AttackTrigger.AddListener(AttackScript.instance.PrepareAttack);
-        //RunTrigger.AddListener(AttackScript.instance.PrepareAttack);
-
-        //DebugTestingTrigger.AddListener(AttackScript.instance.KeepAIDisabled);
-        //WaitForAiTrigger.AddListener(StartAttackWithDelay);
-        //DestroyStoneTrigger.AddListener(AttackScript.instance.DestroyStone);
         GetThrowerObjectScriptComponents();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isMakingAction)
+        if (!isMakingAction && !isDebugging && !isWaitingForAi)
         {
             hookThrowers[Random.Range(0, hookThrowers.Count)].MakeAction();
             stoneThrowers[Random.Range(0, stoneThrowers.Count)].MakeAction();
             spearThrowers[Random.Range(0, spearThrowers.Count)].MakeAction();
         }
+        else if (!isMakingAction && !isDebugging && isWaitingForAi)
+            StartCoroutine(Attack(delayTimer));
 
         if (!isPreperingHook)
             hookThrowers[Random.Range(0, hookThrowers.Count)].GetHookInstantiationReady();
 
-        //else if (!HookThrower.BoatHooked && RaftController.AllPlayersOnRaft && !isDebugging && !isWaitingForAi && 
-        //    !PlayerController.instance.GameOver)
-        //    RunTrigger.Invoke();
-        else if (isDebugging)
-            DebugTestingTrigger.Invoke();
-        else if (isWaitingForAi && RaftController.AllPlayersOnRaft && !PlayerController.instance.GameOver)
-            WaitForAiTrigger.Invoke();
-
-        //if (RaftHoleActivator.IsHit && RaftHoleActivator.HitCounter >= 2)
-        //    DestroyStoneTrigger.Invoke();
-
-        if (PlayerController.instance.GameOver)
-            LoseTrigger.Invoke();
+        if (!PlayerInterface.instance.gameOver || !PlayerInterface.instance.win)
+            distanceToRaft = GetDistanceBetweenAIandRaft();
     }
 
     void GetThrowerObjectScriptComponents()
@@ -120,7 +97,9 @@ public class AIController : MonoBehaviour
     IEnumerator Attack(float delayTimeInSeconds)
     {
         yield return new WaitForSecondsRealtime(delayTimeInSeconds);
-        movementSpeed = 20;
+        if (distanceToRaft >= 40)
+            movementSpeed = 20;
+        Debug.Log("movementSpeed: " + movementSpeed + "" + "Distance: " + distanceToRaft);
         StartCoroutine(AdjustAiSpeed());
         isWaitingForAi = false;
     }
@@ -129,5 +108,14 @@ public class AIController : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delayTimer - 3);
         movementSpeed = 7;
+    }
+
+    float GetDistanceBetweenAIandRaft()
+    {
+        foreach (GameObject hookThrower in EnemySpawner.spawnedEnemies)
+        {
+            return Vector2.Distance(hookThrower.transform.position, raftTransform.transform.position);
+        }
+        return 0f;
     }
 }

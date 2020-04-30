@@ -64,8 +64,7 @@ public class HookThrower : MonoBehaviour
 
     public void MakeAction()
     {
-        if (!AIController.RaftHooked && RaftController.AllPlayersOnRaft && !AIController.instance.isDebugging &&
-            !AIController.instance.isWaitingForAi && !PlayerController.instance.GameOver)
+        if (!AIController.RaftHooked && RaftController.AllPlayersOnRaft && !PlayerController.instance.GameOver)
         {
             attackScript.PrepareAttack();
             AIController.IsMakingAction = true;
@@ -82,8 +81,6 @@ public class HookThrower : MonoBehaviour
                 PrepereHookInstantiation();
                 AIController.IsPreperingHook = true;
             }
-
-            // When hook is instantiated and the hook doesn't hit the target then it gets destroyed.
         }
     }
 

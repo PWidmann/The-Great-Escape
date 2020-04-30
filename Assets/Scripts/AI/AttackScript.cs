@@ -5,17 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class AttackScript : MonoBehaviour
 {
-
-    /* Attack algorithm:
-    * It is based of events. The GameObjects of the Hookthrower, Spearthrower and StoneThrower
-    * are subscribers to the the events Attacktrigger and Runtrigger.
-    * Now when the event Attacktrigger fires, the Attack method gets called by all subscribers.
-    * The attack method has to tell the subscribers what they have to do.
-    * Since all GameObjects are subscribed, I can check for each instances. -> Done
-    * When the instance is a StoneThrower OR a HookThrower subscriber, they should throw a stone
-    * Otherwise if the instance is a SpearThrower subscriber, he should throw a spear.
-    */
-
     [SerializeField] GameObject spearPrefab;
     [SerializeField] GameObject stonePrefab;
    
