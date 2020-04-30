@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class AIController : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class AIController : MonoBehaviour
     public UnityEvent WaitForAiTrigger; // Event that makes the AI wait before they attack.
     public UnityEvent DestroyStoneTrigger; 
     public UnityEvent LoseTrigger;
+    [SerializeField] Slider testSlider;
 
     [HideInInspector] public bool isChecked;
     public bool isDebugging;
@@ -42,11 +44,14 @@ public class AIController : MonoBehaviour
     public GameObject raftTransform; // Needed for Pathfinder reference.
     [SerializeField] GameObject hookThrower;
     public static List<HookThrower> hookThrowers = new List<HookThrower>();
+    public static List<StoneThrower> stoneThrowers = new List<StoneThrower>();
     static bool isMakingAction = false;
     static bool isPreperingHook = false;
+    static bool raftHooked = false;
 
     public static bool IsMakingAction { get => isMakingAction; set => isMakingAction = value; }
     public static bool IsPreperingHook { get => isPreperingHook; set => isPreperingHook = value; }
+    public static bool RaftHooked { get => raftHooked; set => raftHooked = value; }
 
     void Awake()
     {
@@ -72,17 +77,11 @@ public class AIController : MonoBehaviour
     void Update()
     {
         if (!isMakingAction)
-        {
             hookThrowers[Random.Range(0, hookThrowers.Count)].MakeAction();
-        }
 
         if (!isPreperingHook)
-        {
             hookThrowers[Random.Range(0, hookThrowers.Count)].GetHookInstantiationReady();
-        }
 
-        if (HookThrower.BoatHooked && !PlayerController.instance.GameOver)
-            AttackTrigger.Invoke();
         //else if (!HookThrower.BoatHooked && RaftController.AllPlayersOnRaft && !isDebugging && !isWaitingForAi && 
         //    !PlayerController.instance.GameOver)
         //    RunTrigger.Invoke();
@@ -100,9 +99,10 @@ public class AIController : MonoBehaviour
 
     void GetThrowerObjectScriptComponents()
     {
-        foreach (GameObject hookThrower in EnemySpawner.spawnedEnemies)
+        foreach (GameObject throwerObject in EnemySpawner.spawnedEnemies)
         {
-            hookThrowers.Add(hookThrower.GetComponent<HookThrower>());
+            hookThrowers.Add(throwerObject.GetComponent<HookThrower>());
+            stoneThrowers.Add(throwerObject.GetComponent<StoneThrower>());
         }
     }
 

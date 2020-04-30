@@ -4,8 +4,23 @@ using UnityEngine;
 
 public class StoneThrower : MonoBehaviour
 {
-    /*
-     * Subscriber to AttackTrigger and Runtrigger event.
-     */
+    public static AudioSource audioSource;
+    AttackScript attackScript;
 
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        attackScript = GetComponent<AttackScript>();
+    }
+
+    public void MakeAction()
+    {
+        attackScript.PrepareAttack();
+        AIController.IsMakingAction = true;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Collision With: " + collision.gameObject.name);
+    }
 }
