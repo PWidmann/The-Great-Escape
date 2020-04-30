@@ -381,7 +381,7 @@ public class MainMenu : MonoBehaviour
         else
         {
             
-            if (loadedSceneName != "The Great Escape")
+            if (loadedSceneName == "Main Menu")
             {
                 //Main Menu
                 switch (_mainMenuSelected)
@@ -473,17 +473,25 @@ public class MainMenu : MonoBehaviour
         loadedSceneName = m_Scene.name;
     }
 
+    public void SetSceneName(string sceneName)
+    {
+        loadedSceneName = sceneName;
+    }
+
     public void SetDifficultyEasy()
     {
         UIManagement.instance.difficultyText.text = "Difficulty: Easy";
+        AIController.instance.aiDifficulty = AiDifficulty.Easy;
     }
     public void SetDifficultyMedium()
     {
         UIManagement.instance.difficultyText.text = "Difficulty: Medium";
+        AIController.instance.aiDifficulty = AiDifficulty.Normal;
     }
     public void SetDifficultyHard()
     {
         UIManagement.instance.difficultyText.text = "Difficulty: Hard";
+        AIController.instance.aiDifficulty = AiDifficulty.Hard;
     }
 }
 

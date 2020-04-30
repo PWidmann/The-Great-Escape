@@ -55,8 +55,8 @@ public class PauseMenu : MonoBehaviour
     public void BackToMainMenu()
     {
         Time.timeScale = 1;
-        MainMenu.instance.IsInPauseMenu = false;
         SceneManager.LoadScene("Main Menu");
+        MainMenu.instance.IsInPauseMenu = false;
         MainMenu.instance.loadedSceneName = "Main Menu";
     }
 
