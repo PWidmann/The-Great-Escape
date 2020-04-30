@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class SpearThrower : MonoBehaviour
 {
-    // Start is called before the first frame update
+    AudioSource audioSource;
+    AttackScript attackScript;
+
     void Start()
     {
-        
+        attackScript = GetComponent<AttackScript>();   
     }
 
-    // Update is called once per frame
-    void Update()
+    public void MakeAction()
     {
-        
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("Collision With: " + collision.gameObject.name);
+        if (RaftController.AllPlayersOnRaft && !AIController.instance.isDebugging &&
+            !AIController.instance.isWaitingForAi && !PlayerController.instance.GameOver)
+        {
+            attackScript.PrepareAttack();
+            AIController.IsMakingAction = true;
+        }
     }
 }
