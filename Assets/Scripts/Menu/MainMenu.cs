@@ -291,7 +291,7 @@ public class MainMenu : MonoBehaviour
 
     void ChangeButtonAppearance(int _mainMenuSelected, int _gameOptionMenuSelected, int _soundOptionMenuSelected, int _pauseMenuSelected)
     {
-        if (isInGameOptionsMenu)
+        if (isInGameOptionsMenu && loadedSceneName == "Main Menu")
         {
             //Options Menu
             switch (_gameOptionMenuSelected)
