@@ -103,6 +103,7 @@ public class HookThrower : MonoBehaviour
         hook = Instantiate(hookPrefab, transform.position, Quaternion.identity);
         if (gameObject.transform.position.y > raftObject.transform.position.y)
             hook.transform.Rotate(new Vector3(0, 0, 180));
+        
         hookInstantiated = true;
         RaftController.HookMoving = true;
     }

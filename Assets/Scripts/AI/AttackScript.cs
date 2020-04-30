@@ -81,6 +81,13 @@ public class AttackScript : MonoBehaviour
                 if (!weaponInstantiated)
                 {
                     spear = Instantiate(spearPrefab, transform.position, Quaternion.identity);
+
+                    if (spear.transform.position.y > AIController.instance.raftTransform.transform.position.y)
+                    {
+                        spear.transform.Rotate(new Vector3(0, 0, 180));
+                        spear.transform.localScale = new Vector3(-1, 1, 1);
+                    }
+
                     weaponInstantiated = true;
                 }
                 else
