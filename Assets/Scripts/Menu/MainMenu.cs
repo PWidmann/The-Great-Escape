@@ -42,6 +42,8 @@ public class MainMenu : MonoBehaviour
     bool isInPauseMenu = false;
     public string loadedSceneName;
 
+    AiDifficulty aiDifficulty = new AiDifficulty();
+
     public int MainMenuSelectedButton { get => mainMenuSelectedButton; set => mainMenuSelectedButton = value; }
     public int OptionMenuSelectedButton { get => gameOptionSelectedButton; set => gameOptionSelectedButton = value; }
     public int SoundMenuSelectedButton { get => soundOptionSelectedButton; set => soundOptionSelectedButton = value; }
@@ -51,6 +53,7 @@ public class MainMenu : MonoBehaviour
     public bool IsInSoundOptions { get => isInSoundMenu; set => isInSoundMenu = value; }
     public bool IsInPauseMenu { get => isInPauseMenu; set => isInPauseMenu = value; }
     public bool IsPauseMenuActive { get => isPauseMenuActive; set => isPauseMenuActive = value; }
+    public AiDifficulty AiDifficulty { get => aiDifficulty; set => aiDifficulty = value; }
 
     private void Awake()
     {
@@ -493,17 +496,23 @@ public class MainMenu : MonoBehaviour
     public void SetDifficultyEasy()
     {
         UIManagement.instance.difficultyText.text = "Difficulty: Easy";
-        AIController.instance.aiDifficulty = AiDifficulty.Easy;
+        aiDifficulty = AiDifficulty.Easy;
+        PlayerPrefs.SetInt("Difficulty", (int)aiDifficulty);
+        Debug.Log("Difficulty: " + aiDifficulty);
     }
     public void SetDifficultyMedium()
     {
         UIManagement.instance.difficultyText.text = "Difficulty: Medium";
-        AIController.instance.aiDifficulty = AiDifficulty.Normal;
+        aiDifficulty = AiDifficulty.Normal;
+        PlayerPrefs.SetInt("Difficulty", (int)aiDifficulty);
+        Debug.Log("Difficulty: " + aiDifficulty);
     }
     public void SetDifficultyHard()
     {
         UIManagement.instance.difficultyText.text = "Difficulty: Hard";
-        AIController.instance.aiDifficulty = AiDifficulty.Hard;
+        aiDifficulty = AiDifficulty.Hard;
+        PlayerPrefs.SetInt("Difficulty", (int)aiDifficulty);
+        Debug.Log("Difficulty: " + aiDifficulty);
     }
 }
 

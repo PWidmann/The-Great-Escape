@@ -30,8 +30,8 @@ public class AIController : MonoBehaviour
 
     [Header("Spear-/Stonethrower")]
     public float coolDownTimeInSeconds = 5f;
-    
-    public AiDifficulty aiDifficulty;
+
+    public AiDifficulty aiDifficulty; 
 
     public GameObject raftTransform; // Needed for Pathfinder reference.
     [SerializeField] GameObject hookThrower;
@@ -42,6 +42,8 @@ public class AIController : MonoBehaviour
     static bool isPreperingHook = false;
     static bool raftHooked = false;
     float distanceToRaft;
+
+    AiDifficulty currentDifficultyForTesting;
 
     public static bool IsMakingAction { get => isMakingAction; set => isMakingAction = value; }
     public static bool IsPreperingHook { get => isPreperingHook; set => isPreperingHook = value; }
@@ -58,6 +60,8 @@ public class AIController : MonoBehaviour
     void Start()
     {
         GetThrowerObjectScriptComponents();
+        LoadAiDifficulty();
+        SetThrowValuesDependingOnDifficulty();
     }
 
     // Update is called once per frame
@@ -77,6 +81,10 @@ public class AIController : MonoBehaviour
 
         if (!PlayerInterface.instance.gameOver || !PlayerInterface.instance.win)
             distanceToRaft = GetDistanceBetweenAIandRaft();
+
+        // For Design Tweaking/Testing
+        if (currentDifficultyForTesting != aiDifficulty)
+            SetThrowValuesDependingOnDifficulty();
     }
 
     void GetThrowerObjectScriptComponents()
@@ -86,6 +94,44 @@ public class AIController : MonoBehaviour
             hookThrowers.Add(throwerObject.GetComponent<HookThrower>());
             stoneThrowers.Add(throwerObject.GetComponentInChildren<StoneThrower>());
             spearThrowers.Add(throwerObject.GetComponentInChildren<SpearThrower>());
+        }
+    }
+
+    void LoadAiDifficulty()
+    {
+        if (PlayerPrefs.HasKey("Difficulty"))
+            aiDifficulty = (AiDifficulty)PlayerPrefs.GetInt("Difficulty");
+        else
+            aiDifficulty = AiDifficulty.Normal;
+
+        currentDifficultyForTesting = aiDifficulty;
+    }
+
+    void SetThrowValuesDependingOnDifficulty()
+    {
+        switch (aiDifficulty)
+        {
+            case AiDifficulty.Easy:
+                throwSpeed = 4f;
+                hitAccuracy = 0.95f;
+                minHookThrowDelayTimer = 6f;
+                maxHookThrowDelayTimer = 10f;
+                coolDownTimeInSeconds = 10f;
+                break;
+            case AiDifficulty.Normal:
+                throwSpeed = 6.5f;
+                hitAccuracy = 0.97f;
+                minHookThrowDelayTimer = 5.5f;
+                maxHookThrowDelayTimer = 8.5f;
+                coolDownTimeInSeconds = 7.5f;
+                break;
+            case AiDifficulty.Hard:
+                throwSpeed = 9f;
+                hitAccuracy = 1f;
+                minHookThrowDelayTimer = 3f;
+                maxHookThrowDelayTimer = 6f;
+                coolDownTimeInSeconds = 5f;
+                break;
         }
     }
 
