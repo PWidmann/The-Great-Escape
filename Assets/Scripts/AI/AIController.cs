@@ -114,7 +114,8 @@ public class AIController : MonoBehaviour
     {
         foreach (GameObject hookThrower in EnemySpawner.spawnedEnemies)
         {
-            return Vector2.Distance(hookThrower.transform.position, raftTransform.transform.position);
+            if (hookThrower != null)
+                return Vector2.Distance(hookThrower.transform.position, raftTransform.transform.position);
         }
         return 0f;
     }

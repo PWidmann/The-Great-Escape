@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
     PlayerOverlapBox overLapBox;
 
     //Misc
-    [SerializeField] AttackScript attackScript;
     bool playerListIsFilled;
 
     //Audio
@@ -104,11 +103,11 @@ public class PlayerController : MonoBehaviour
         DropShieldCheck();
         UpdatePlayerHealth();
 
-        if (!PauseMenu.instance.isInPauseMenu && Input.GetKeyDown(KeyCode.Escape) || !PauseMenu.instance.isInPauseMenu && Input.GetButtonDown("J1StartButton") || !PauseMenu.instance.isInPauseMenu && Input.GetButtonDown("J2StartButton") || !PauseMenu.instance.isInPauseMenu && Input.GetButtonDown("J3StartButton") || !PauseMenu.instance.isInPauseMenu && Input.GetButtonDown("J4StartButton"))
+        if (!PauseMenu.instance.isInPauseMenu && CheckInput(this, "StartButton", KeyCode.Escape))
         {
             PauseMenu.instance.OpenPauseMenu();
         }  
-        else if (PauseMenu.instance.isInPauseMenu && Input.GetKeyDown(KeyCode.Escape) || PauseMenu.instance.isInPauseMenu && Input.GetButtonDown("J1StartButton") || PauseMenu.instance.isInPauseMenu && Input.GetButtonDown("J2StartButton") || PauseMenu.instance.isInPauseMenu && Input.GetButtonDown("J3StartButton") || PauseMenu.instance.isInPauseMenu && Input.GetButtonDown("J4StartButton"))
+        else if (PauseMenu.instance.isInPauseMenu && CheckInput(this, "StartButton", KeyCode.Escape))
         {
             PauseMenu.instance.ResumeGame();
         }

@@ -4,10 +4,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-/*
- * Use AIController.instance.aiDifficulty for DifFiculty settings.
- */
 public class MainMenu : MonoBehaviour
 {
     int mainMenuSelectedButton = 1;
@@ -154,44 +150,71 @@ public class MainMenu : MonoBehaviour
 
     private void ClickOnPointingButton()
     {
-        if (isInGameOptionsMenu)
+        if (loadedSceneName.Equals("Main Menu"))
         {
-            switch (gameOptionSelectedButton)
+            if (isInGameOptionsMenu)
             {
-                case 1:
-                    SetDifficultyEasy();
-                    break;
-                case 2:
-                    SetDifficultyMedium();
-                    break;
-                case 3:
-                    SetDifficultyHard();
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    ButtonSaveSettings();
-                    break;
-            }
+                switch (gameOptionSelectedButton)
+                {
+                    case 1:
+                        SetDifficultyEasy();
+                        break;
+                    case 2:
+                        SetDifficultyMedium();
+                        break;
+                    case 3:
+                        SetDifficultyHard();
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        ButtonSaveSettings();
+                        break;
+                }
 
-        }
-        else if (isInSoundMenu)
-        {
-            switch (soundOptionSelectedButton)
+            }
+            else if (isInSoundMenu)
             {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    ButtonSaveSettings();
-                    break;
+                switch (soundOptionSelectedButton)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        ButtonSaveSettings();
+                        break;
+                }
+            }
+            else if (!isInSoundMenu && !isInGameOptionsMenu)
+            {
+                switch (MainMenuSelectedButton)
+                {
+                    case 1:
+                        SoundManager.instance.PlayMenuClickSoundFx();
+                        ButtonStart();
+                        break;
+                    case 2:
+                        SoundManager.instance.PlayMenuClickSoundFx();
+                        ButtonGameOptions();
+                        break;
+                    case 3:
+                        SoundManager.instance.PlayMenuClickSoundFx();
+                        ButtonSoundOptions();
+                        break;
+                    case 4:
+                        SoundManager.instance.PlayMenuClickSoundFx();
+                        ButtonQuit();
+                        break;
+                }
             }
         }
-        else if (isInPauseMenu)
+        else
         {
+            if (isInPauseMenu)
+            {
                 switch (pauseMenuSelectedButton)
                 {
                     case 1:
@@ -201,91 +224,80 @@ public class MainMenu : MonoBehaviour
                         PauseMenu.instance.BackToMainMenu();
                         break;
                 }
-        }
-        else if (!isInSoundMenu && !isInGameOptionsMenu)
-        {
-            switch (MainMenuSelectedButton)
-            {
-                case 1:
-                    SoundManager.instance.PlayMenuClickSoundFx();
-                    ButtonStart();
-                    break;
-                case 2:
-                    SoundManager.instance.PlayMenuClickSoundFx();
-                    ButtonGameOptions();
-                    break;
-                case 3:
-                    SoundManager.instance.PlayMenuClickSoundFx();
-                    ButtonSoundOptions();
-                    break;
-                case 4:
-                    SoundManager.instance.PlayMenuClickSoundFx();
-                    ButtonQuit();
-                    break;
             }
         }
     }
 
     void MoveMenuPointerDown()
     {
-        SoundManager.instance.PlayMenuPointerSoundFx();
-
-        if (isInGameOptionsMenu)
+        if (loadedSceneName.Equals("Main Menu"))
         {
-            gameOptionSelectedButton -= 1;
-            if (gameOptionSelectedButton == 0)
-                gameOptionSelectedButton = 5;
-        }
-        else if (isInSoundMenu)
-        {
-            soundOptionSelectedButton -= 1;
-            if (soundOptionSelectedButton == 0)
-                soundOptionSelectedButton = 4;
-        }
-        else if (isInPauseMenu)
-        {
-            pauseMenuSelectedButton -= 1;
-            if (pauseMenuSelectedButton == 0)
-                pauseMenuSelectedButton = 2;
+            SoundManager.instance.PlayMenuPointerSoundFx();
+            if (isInGameOptionsMenu)
+            {
+                gameOptionSelectedButton -= 1;
+                if (gameOptionSelectedButton == 0)
+                    gameOptionSelectedButton = 5;
+            }
+            else if (isInSoundMenu)
+            {
+                soundOptionSelectedButton -= 1;
+                if (soundOptionSelectedButton == 0)
+                    soundOptionSelectedButton = 4;
+            }
+            else
+            {
+                mainMenuSelectedButton -= 1;
+                if (mainMenuSelectedButton == 0)
+                    mainMenuSelectedButton = 4;
+            }
         }
         else
         {
-            mainMenuSelectedButton -= 1;
-            if (mainMenuSelectedButton == 0)
-                mainMenuSelectedButton = 4;
+            if (isInPauseMenu)
+            {
+                pauseMenuSelectedButton -= 1;
+                if (pauseMenuSelectedButton == 0)
+                    pauseMenuSelectedButton = 2;
+            }
         }
+
         oneTimeStickMovement = true;
     }
 
     void MoveMenuPointerUp()
     {
-        SoundManager.instance.PlayMenuPointerSoundFx();
-
-        if (isInGameOptionsMenu)
+        if (loadedSceneName.Equals("Main Menu"))
         {
-            gameOptionSelectedButton += 1;
-            if (gameOptionSelectedButton == 6)
-                gameOptionSelectedButton = 1;
-        }
-        else if (isInSoundMenu)
-        {
-            soundOptionSelectedButton += 1;
-            if (soundOptionSelectedButton == 5)
-                soundOptionSelectedButton = 1;
-        }
-        else if (isInPauseMenu)
-        {
-            pauseMenuSelectedButton += 1;
-            if (pauseMenuSelectedButton == 3)
-                pauseMenuSelectedButton = 1;
+            SoundManager.instance.PlayMenuPointerSoundFx();
+            if (isInGameOptionsMenu)
+            {
+                gameOptionSelectedButton += 1;
+                if (gameOptionSelectedButton == 6)
+                    gameOptionSelectedButton = 1;
+            }
+            else if (isInSoundMenu)
+            {
+                soundOptionSelectedButton += 1;
+                if (soundOptionSelectedButton == 5)
+                    soundOptionSelectedButton = 1;
+            }
+            else
+            {
+                mainMenuSelectedButton += 1;
+                if (mainMenuSelectedButton == 5)
+                    mainMenuSelectedButton = 1;
+            }
         }
         else
         {
-            mainMenuSelectedButton += 1;
-            if (mainMenuSelectedButton == 5)
-                mainMenuSelectedButton = 1;
+            if (isInPauseMenu)
+            {
+                pauseMenuSelectedButton += 1;
+                if (pauseMenuSelectedButton == 3)
+                    pauseMenuSelectedButton = 1;
+            }
         }
-
         oneTimeStickMovement = true;
     }
 
