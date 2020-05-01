@@ -10,19 +10,30 @@ using UnityEngine.UI;
  */
 public class MainMenu : MonoBehaviour
 {
-    int mainSelectedButton = 1;
-    int optionSelected = 1;
+    int mainMenuSelectedButton = 1;
+    int gameOptionSelectedButton = 1;
+    int soundOptionSelectedButton = 1;
+    int pauseMenuSelectedButton = 2;
 
     public static MainMenu instance = null;
+    [Header("Main Menu")]
     [SerializeField] ButtonElement startButton;
-    [SerializeField] ButtonElement optionButton;
+    [SerializeField] ButtonElement gameOptionButton;
+    [SerializeField] ButtonElement soundOptionButton;
     [SerializeField] ButtonElement quitButton;
-    [SerializeField] ButtonElement saveSettingsButton;
 
+    [Header("Sound Option Menu")]
+    [SerializeField] ButtonElement saveSoundSettingsButton;
     [SerializeField] SliderElement masterVolSlider;
     [SerializeField] SliderElement musicVolSlider;
     [SerializeField] SliderElement soundFxVolSlider;
 
+    [Header("Game Option Menu")]
+    [SerializeField] ButtonElement saveOptionSettingsButton;
+    [SerializeField] ButtonElement easyButton;
+    [SerializeField] ButtonElement mediumButton;
+    [SerializeField] ButtonElement hardButton;
+    [SerializeField] SliderElement pickUpAmountSlider;
 
     bool isPauseMenuActive = false;
 
@@ -30,13 +41,19 @@ public class MainMenu : MonoBehaviour
     bool oneTimeStickMovement = false;
     static bool controllerMovementStopped = false;
 
-    bool isInOptions = false;
-    string loadedSceneName;
+    bool isInGameOptionsMenu = false;
+    bool isInSoundMenu = false;
+    bool isInPauseMenu = false;
+    public string loadedSceneName;
 
-    public int MainMenuSelectedButton { get => mainSelectedButton; set => mainSelectedButton = value; }
-    public int OptionMenuSelectedButton { get => optionSelected; set => optionSelected = value; }
+    public int MainMenuSelectedButton { get => mainMenuSelectedButton; set => mainMenuSelectedButton = value; }
+    public int OptionMenuSelectedButton { get => gameOptionSelectedButton; set => gameOptionSelectedButton = value; }
+    public int SoundMenuSelectedButton { get => soundOptionSelectedButton; set => soundOptionSelectedButton = value; }
+    public int PauseMenuSelectedButton { get => pauseMenuSelectedButton; set => pauseMenuSelectedButton = value; }
     public static bool ControllerMovementStopped { get => controllerMovementStopped; set => controllerMovementStopped = value; }
-    public bool IsInOptions { get => isInOptions; set => isInOptions = value; }
+    public bool IsInGameOptions { get => isInGameOptionsMenu; set => isInGameOptionsMenu = value; }
+    public bool IsInSoundOptions { get => isInSoundMenu; set => isInSoundMenu = value; }
+    public bool IsInPauseMenu { get => isInPauseMenu; set => isInPauseMenu = value; }
     public bool IsPauseMenuActive { get => isPauseMenuActive; set => isPauseMenuActive = value; }
 
     private void Awake()
@@ -50,22 +67,18 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        loadedSceneName = SceneManager.GetActiveScene().name;
-        if (loadedSceneName.Equals("Main Menu"))
-            isPauseMenuActive = true;
+        Scene m_Scene = SceneManager.GetActiveScene();
+        loadedSceneName = m_Scene.name;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isPauseMenuActive)
-        {
-            KeyboardInput();
-            ControllerInput();
+        KeyboardInput();
+        ControllerInput();
 
-            ChangeButtonAppearance(mainSelectedButton, optionSelected);
-            ChangeSliderValue();
-        }
+        ChangeButtonAppearance(mainMenuSelectedButton, gameOptionSelectedButton, soundOptionSelectedButton, pauseMenuSelectedButton);
+        ChangeSliderValue();
 
     }
 
@@ -74,14 +87,22 @@ public class MainMenu : MonoBehaviour
         isPauseMenuActive = false;
         SceneManager.LoadScene("Pre Game");
     }
-
-    public void ButtonOptions()
+    public void ButtonGameOptions()
     {
-        isInOptions = true;
-        optionSelected = 1;
+        isInGameOptionsMenu = true;
+        gameOptionSelectedButton = 1;
 
-        UIManagement.instance.SetOptionsMenuElementsActive(true);
-        UIManagement.instance.SetMainMenuElementsActive(false);
+        UIManagement.instance.mainMenu.SetActive(false);
+        UIManagement.instance.gameOptionsMenu.SetActive(true);
+    }
+
+    public void ButtonSoundOptions()
+    {
+        isInSoundMenu = true;
+        soundOptionSelectedButton = 1;
+
+        UIManagement.instance.mainMenu.SetActive(false);
+        UIManagement.instance.soundOptionsMenu.SetActive(true);
     }
 
     public void ButtonQuit()
@@ -93,10 +114,13 @@ public class MainMenu : MonoBehaviour
     {
         PlayerPrefs.Save();
 
-        UIManagement.instance.SetOptionsMenuElementsActive(false);
-        UIManagement.instance.SetMainMenuElementsActive(true);
+        UIManagement.instance.soundOptionsMenu.SetActive(false);
+        UIManagement.instance.gameOptionsMenu.SetActive(false);
+        UIManagement.instance.mainMenu.SetActive(true);
 
-        isInOptions = false;
+        isInSoundMenu = false;
+        isInGameOptionsMenu = false;
+        mainMenuSelectedButton = 1;
     }
     void KeyboardInput()
     {
@@ -130,24 +154,71 @@ public class MainMenu : MonoBehaviour
 
     private void ClickOnPointingButton()
     {
-        if (isInOptions)
+        if (isInGameOptionsMenu)
         {
-            if (optionSelected == 4)
-                ButtonSaveSettings();
+            switch (gameOptionSelectedButton)
+            {
+                case 1:
+                    SetDifficultyEasy();
+                    break;
+                case 2:
+                    SetDifficultyMedium();
+                    break;
+                case 3:
+                    SetDifficultyHard();
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    ButtonSaveSettings();
+                    break;
+            }
+
         }
-        else
+        else if (isInSoundMenu)
+        {
+            switch (soundOptionSelectedButton)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    ButtonSaveSettings();
+                    break;
+            }
+        }
+        else if (isInPauseMenu)
+        {
+                switch (pauseMenuSelectedButton)
+                {
+                    case 1:
+                        PauseMenu.instance.ResumeGame();
+                        break;
+                    case 2:
+                        PauseMenu.instance.BackToMainMenu();
+                        break;
+                }
+        }
+        else if (!isInSoundMenu && !isInGameOptionsMenu)
         {
             switch (MainMenuSelectedButton)
             {
                 case 1:
                     SoundManager.instance.PlayMenuClickSoundFx();
-                    DecideWhichEventMethodToCall();
+                    ButtonStart();
                     break;
                 case 2:
                     SoundManager.instance.PlayMenuClickSoundFx();
-                    ButtonOptions();
+                    ButtonGameOptions();
                     break;
                 case 3:
+                    SoundManager.instance.PlayMenuClickSoundFx();
+                    ButtonSoundOptions();
+                    break;
+                case 4:
                     SoundManager.instance.PlayMenuClickSoundFx();
                     ButtonQuit();
                     break;
@@ -155,29 +226,33 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    void DecideWhichEventMethodToCall()
-    {
-        if (loadedSceneName.Equals("Main Menu"))
-            ButtonStart();
-        else
-            ResumeGame();
-    }
-
     void MoveMenuPointerDown()
     {
         SoundManager.instance.PlayMenuPointerSoundFx();
 
-        if (isInOptions)
+        if (isInGameOptionsMenu)
         {
-            optionSelected -= 1;
-            if (optionSelected == 0)
-                optionSelected = 4;
+            gameOptionSelectedButton -= 1;
+            if (gameOptionSelectedButton == 0)
+                gameOptionSelectedButton = 5;
+        }
+        else if (isInSoundMenu)
+        {
+            soundOptionSelectedButton -= 1;
+            if (soundOptionSelectedButton == 0)
+                soundOptionSelectedButton = 4;
+        }
+        else if (isInPauseMenu)
+        {
+            pauseMenuSelectedButton -= 1;
+            if (pauseMenuSelectedButton == 0)
+                pauseMenuSelectedButton = 2;
         }
         else
         {
-            mainSelectedButton -= 1;
-            if (mainSelectedButton == 0)
-                mainSelectedButton = 3;
+            mainMenuSelectedButton -= 1;
+            if (mainMenuSelectedButton == 0)
+                mainMenuSelectedButton = 4;
         }
         oneTimeStickMovement = true;
     }
@@ -186,82 +261,165 @@ public class MainMenu : MonoBehaviour
     {
         SoundManager.instance.PlayMenuPointerSoundFx();
 
-        if (isInOptions)
+        if (isInGameOptionsMenu)
         {
-            optionSelected += 1;
-            if (optionSelected == 5)
-                optionSelected = 1;
+            gameOptionSelectedButton += 1;
+            if (gameOptionSelectedButton == 6)
+                gameOptionSelectedButton = 1;
+        }
+        else if (isInSoundMenu)
+        {
+            soundOptionSelectedButton += 1;
+            if (soundOptionSelectedButton == 5)
+                soundOptionSelectedButton = 1;
+        }
+        else if (isInPauseMenu)
+        {
+            pauseMenuSelectedButton += 1;
+            if (pauseMenuSelectedButton == 3)
+                pauseMenuSelectedButton = 1;
         }
         else
         {
-            mainSelectedButton += 1;
-            if (mainSelectedButton == 4)
-                mainSelectedButton = 1;
+            mainMenuSelectedButton += 1;
+            if (mainMenuSelectedButton == 5)
+                mainMenuSelectedButton = 1;
         }
 
         oneTimeStickMovement = true;
     }
 
-    void ChangeButtonAppearance(int _selectedButton, int _optionSelected)
+    void ChangeButtonAppearance(int _mainMenuSelected, int _gameOptionMenuSelected, int _soundOptionMenuSelected, int _pauseMenuSelected)
     {
-        if (isInOptions)
+        if (isInGameOptionsMenu && loadedSceneName == "Main Menu")
         {
-            switch (_optionSelected)
+            //Options Menu
+            switch (_gameOptionMenuSelected)
+            {
+                case 1:
+                    easyButton.IsSelectedButton = true;
+                    mediumButton.IsSelectedButton = false;
+                    hardButton.IsSelectedButton = false;
+                    pickUpAmountSlider.IsSelectedSlider = false;
+                    saveOptionSettingsButton.IsSelectedButton = false;
+                    break;
+                case 2:
+                    easyButton.IsSelectedButton = false;
+                    mediumButton.IsSelectedButton = true;
+                    hardButton.IsSelectedButton = false;
+                    pickUpAmountSlider.IsSelectedSlider = false;
+                    saveOptionSettingsButton.IsSelectedButton = false;
+                    break;
+                case 3:
+                    easyButton.IsSelectedButton = false;
+                    mediumButton.IsSelectedButton = false;
+                    hardButton.IsSelectedButton = true;
+                    pickUpAmountSlider.IsSelectedSlider = false;
+                    saveOptionSettingsButton.IsSelectedButton = false;
+                    break;
+                case 4:
+                    easyButton.IsSelectedButton = false;
+                    mediumButton.IsSelectedButton = false;
+                    hardButton.IsSelectedButton = false;
+                    pickUpAmountSlider.IsSelectedSlider = true;
+                    saveOptionSettingsButton.IsSelectedButton = false;
+                    break;
+                case 5:
+                    easyButton.IsSelectedButton = false;
+                    mediumButton.IsSelectedButton = false;
+                    hardButton.IsSelectedButton = false;
+                    pickUpAmountSlider.IsSelectedSlider = false;
+                    saveOptionSettingsButton.IsSelectedButton = true;
+                    break;
+            }
+        }
+        else if (isInSoundMenu)
+        {
+            //Sound Options
+            switch (_soundOptionMenuSelected)
             {
                 case 1:
                     masterVolSlider.IsSelectedSlider = true;
                     musicVolSlider.IsSelectedSlider = false;
                     soundFxVolSlider.IsSelectedSlider = false;
-                    saveSettingsButton.IsSelectedButton = false;
+                    saveSoundSettingsButton.IsSelectedButton = false;
                     break;
                 case 2:
-                    musicVolSlider.IsSelectedSlider = true;
                     masterVolSlider.IsSelectedSlider = false;
+                    musicVolSlider.IsSelectedSlider = true;
                     soundFxVolSlider.IsSelectedSlider = false;
-                    saveSettingsButton.IsSelectedButton = false;
+                    saveSoundSettingsButton.IsSelectedButton = false;
                     break;
                 case 3:
-                    soundFxVolSlider.IsSelectedSlider = true;
-                    musicVolSlider.IsSelectedSlider = false; 
                     masterVolSlider.IsSelectedSlider = false;
-                    saveSettingsButton.IsSelectedButton = false;
+                    musicVolSlider.IsSelectedSlider = false;
+                    soundFxVolSlider.IsSelectedSlider = true;
+                    saveSoundSettingsButton.IsSelectedButton = false;
                     break;
                 case 4:
-                    saveSettingsButton.IsSelectedButton = true;
-                    soundFxVolSlider.IsSelectedSlider = false;
-                    musicVolSlider.IsSelectedSlider = false;
                     masterVolSlider.IsSelectedSlider = false;
+                    musicVolSlider.IsSelectedSlider = false;
+                    soundFxVolSlider.IsSelectedSlider = false;
+                    saveSoundSettingsButton.IsSelectedButton = true;
+                    break;
+            }
+        }
+        else if (isInPauseMenu)
+        {
+            switch (_pauseMenuSelected)
+            {
+                case 1:
+                    PauseMenu.instance.resumeButton.IsSelectedButton = true;
+                    PauseMenu.instance.quitButton.IsSelectedButton = false;
+                    break;
+                case 2:
+                    PauseMenu.instance.resumeButton.IsSelectedButton = false;
+                    PauseMenu.instance.quitButton.IsSelectedButton = true;
                     break;
             }
         }
         else
         {
-            switch (_selectedButton)
+            
+            if (loadedSceneName == "Main Menu")
             {
-                case 1:
-                    quitButton.IsSelectedButton = false;
-                    startButton.IsSelectedButton = true;
-                    optionButton.IsSelectedButton = false;
-                    break;
-                case 2:
-                    startButton.IsSelectedButton = false;
-                    optionButton.IsSelectedButton = true;
-                    quitButton.IsSelectedButton = false;
-                    break;
-                case 3:
-                    optionButton.IsSelectedButton = false;
-                    quitButton.IsSelectedButton = true;
-                    startButton.IsSelectedButton = false;
-                    break;
+                //Main Menu
+                switch (_mainMenuSelected)
+                {
+                    case 1:
+                        startButton.IsSelectedButton = true;
+                        gameOptionButton.IsSelectedButton = false;
+                        soundOptionButton.IsSelectedButton = false;
+                        quitButton.IsSelectedButton = false;
+                        break;
+                    case 2:
+                        startButton.IsSelectedButton = false;
+                        gameOptionButton.IsSelectedButton = true;
+                        soundOptionButton.IsSelectedButton = false;
+                        quitButton.IsSelectedButton = false;
+                        break;
+                    case 3:
+                        startButton.IsSelectedButton = false;
+                        gameOptionButton.IsSelectedButton = false;
+                        soundOptionButton.IsSelectedButton = true;
+                        quitButton.IsSelectedButton = false;
+                        break;
+                    case 4:
+                        startButton.IsSelectedButton = false;
+                        gameOptionButton.IsSelectedButton = false;
+                        soundOptionButton.IsSelectedButton = false;
+                        quitButton.IsSelectedButton = true;
+                        break;
+                }
             }
         }
     }
 
     void ChangeSliderValue()
     {
-        if (isInOptions && !controllerMovementStopped)
+        if (isInSoundMenu && !controllerMovementStopped)
         {
-            switch (optionSelected)
+            switch (soundOptionSelectedButton)
             {
                 case 1:
                     UIManagement.instance.masterVolumeSlider.value += Input.GetAxisRaw("J1Horizontal");
@@ -277,31 +435,63 @@ public class MainMenu : MonoBehaviour
                     break;
             }
         }
+
+        if (isInGameOptionsMenu && !controllerMovementStopped)
+        {
+            if (gameOptionSelectedButton == 4)
+            { 
+                UIManagement.instance.pickUpAmountSlider.value += Input.GetAxisRaw("J1Horizontal");
+                UIManagement.instance.pickUpAmountSlider.value += Input.GetAxisRaw("Horizontal");
+            }
+        }
     }
 
     // On pointer event function. Highlights the button over which the mouse hovers or points.
     public void SelectButtonDisplay(int selectedButton)
     {
-        mainSelectedButton = selectedButton;
+        if(!isInSoundMenu && !isInGameOptionsMenu)
+            mainMenuSelectedButton = selectedButton;
+        if(isInSoundMenu)
+            SoundMenuSelectedButton = selectedButton;
+        if(isInGameOptionsMenu)
+            gameOptionSelectedButton = selectedButton;
+        if (isInPauseMenu)
+            pauseMenuSelectedButton = selectedButton;
     }
 
     public void SelectedUIElementInOptions(int optionSelect)
     {
-        optionSelected = optionSelect;
+        if(isInSoundMenu)
+            soundOptionSelectedButton = optionSelect;
+        if(isInGameOptionsMenu)
+            gameOptionSelectedButton = optionSelect;
     }
 
-    public void ResumeGame()
+    public void GetSceneName()
     {
-        UIManagement.instance.pauseMenuPanel.SetActive(false);
-        isPauseMenuActive = false;
-        Time.timeScale = 1;
+        Scene m_Scene = SceneManager.GetActiveScene();
+        loadedSceneName = m_Scene.name;
     }
 
-    public void OpenPauseMenu(PlayerController playerController = null)
+    public void SetSceneName(string sceneName)
     {
-        isPauseMenuActive = true;
-        Time.timeScale = 0;
-        UIManagement.instance.pauseMenuPanel.gameObject.SetActive(true);
+        loadedSceneName = sceneName;
+    }
+
+    public void SetDifficultyEasy()
+    {
+        UIManagement.instance.difficultyText.text = "Difficulty: Easy";
+        AIController.instance.aiDifficulty = AiDifficulty.Easy;
+    }
+    public void SetDifficultyMedium()
+    {
+        UIManagement.instance.difficultyText.text = "Difficulty: Medium";
+        AIController.instance.aiDifficulty = AiDifficulty.Normal;
+    }
+    public void SetDifficultyHard()
+    {
+        UIManagement.instance.difficultyText.text = "Difficulty: Hard";
+        AIController.instance.aiDifficulty = AiDifficulty.Hard;
     }
 }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerInterface : MonoBehaviour
 {
@@ -32,10 +33,6 @@ public class PlayerInterface : MonoBehaviour
     // Player Inventory
     public int leafCount = 0;
     public int stickCount = 0;
-
-    // Pause Menu
-    [Header("PauseMenu")]
-    public GameObject pauseMenuPanel;
 
     [Header("Endscreen")]
     // End Screen

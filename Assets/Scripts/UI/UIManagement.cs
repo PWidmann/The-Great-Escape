@@ -9,24 +9,25 @@ public class UIManagement : MonoBehaviour
 
     public static UIManagement instance = null;
 
-    [Header("Slider Values")]
+    [Header("Menu Panels")]
+    public GameObject mainMenu;
+    public GameObject gameOptionsMenu;
+    public GameObject soundOptionsMenu;
+
+    [Header("Sound Options Menu")]
     public Slider masterVolumeSlider;
     public Slider musicVolumeSlider;
     public Slider soundFxSlider;
-
-    [Header("Slider Texts")]
     public Text masterVolSliderTextCount;
     public Text musicVolSliderTextCount;
     public Text sfxVolSliderTextCount;
-
-    [Header("Buttons")]
-    public Button startButton;
-    public Button optionButton;
-    public Button quitButton;
-    public Button saveSettingsButton;
-
     public Toggle randomMusicPlayToggle;
-    public GameObject pauseMenuPanel;
+
+    [Header("Game Options Menu")]
+    public Text difficultyText;
+    public Slider pickUpAmountSlider;
+    public Text pickUpAmountText;
+
 
     void Awake()
     {
@@ -40,26 +41,30 @@ public class UIManagement : MonoBehaviour
 
     void Start()
     {
-        startButton.onClick.AddListener(SoundManager.instance.PlayMenuClickSoundFx);
-        optionButton.onClick.AddListener(SoundManager.instance.PlayMenuClickSoundFx);
-        quitButton.onClick.AddListener(SoundManager.instance.PlayMenuClickSoundFx);
-        saveSettingsButton.onClick.AddListener(SoundManager.instance.PlayMenuClickSoundFx);
-    }
-
-    public void SetOptionsMenuElementsActive(bool isActivated)
-    {
-        saveSettingsButton.gameObject.SetActive(isActivated);
-        masterVolumeSlider.gameObject.SetActive(isActivated);
-        soundFxSlider.gameObject.SetActive(isActivated);
-        musicVolumeSlider.gameObject.SetActive(isActivated);
-        randomMusicPlayToggle.gameObject.SetActive(isActivated);
         
     }
 
-    public void SetMainMenuElementsActive(bool isActivated)
+    private void Update()
     {
-        startButton.gameObject.SetActive(isActivated);
-        instance.optionButton.gameObject.SetActive(isActivated);
-        instance.quitButton.gameObject.SetActive(isActivated);
+        if(MainMenu.instance.IsInGameOptions)
+            pickUpAmountText.text = pickUpAmountSlider.value + " %";
+    }
+
+    
+
+
+    public void SetOptionsMenuElementsActive()
+    {
+        
+    }
+
+    public void SetMainMenuElementsActive()
+    {
+        
+    }
+
+    public void PlayClickSound()
+    {
+        SoundManager.instance.PlayMenuClickSoundFx();
     }
 }

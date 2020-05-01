@@ -104,11 +104,15 @@ public class PlayerController : MonoBehaviour
         DropShieldCheck();
         UpdatePlayerHealth();
 
-        if (!MainMenu.instance.IsPauseMenuActive &&  CheckInput(this, "StartButton", KeyCode.Escape))
-            MainMenu.instance.OpenPauseMenu(this);
-        else if (!MainMenu.instance.IsInOptions && CheckInput(this, "StartButton", KeyCode.Escape) &&
-            MainMenu.instance.IsPauseMenuActive)
-            MainMenu.instance.ResumeGame();
+        if (!PauseMenu.instance.isInPauseMenu && Input.GetKeyDown(KeyCode.Escape) || !PauseMenu.instance.isInPauseMenu && Input.GetButtonDown("J1StartButton") || !PauseMenu.instance.isInPauseMenu && Input.GetButtonDown("J2StartButton") || !PauseMenu.instance.isInPauseMenu && Input.GetButtonDown("J3StartButton") || !PauseMenu.instance.isInPauseMenu && Input.GetButtonDown("J4StartButton"))
+        {
+            PauseMenu.instance.OpenPauseMenu();
+        }  
+        else if (PauseMenu.instance.isInPauseMenu && Input.GetKeyDown(KeyCode.Escape) || PauseMenu.instance.isInPauseMenu && Input.GetButtonDown("J1StartButton") || PauseMenu.instance.isInPauseMenu && Input.GetButtonDown("J2StartButton") || PauseMenu.instance.isInPauseMenu && Input.GetButtonDown("J3StartButton") || PauseMenu.instance.isInPauseMenu && Input.GetButtonDown("J4StartButton"))
+        {
+            PauseMenu.instance.ResumeGame();
+        }
+            
     }
 
     private void FixedUpdate()
