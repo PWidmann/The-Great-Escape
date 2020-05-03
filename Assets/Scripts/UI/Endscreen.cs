@@ -19,7 +19,6 @@ public class Endscreen : MonoBehaviour
 
     void Start()
     {
-        
         winScreen.SetActive(false);
         gameOverScreen.SetActive(false);
         confirmationText.SetActive(false);

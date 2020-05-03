@@ -129,11 +129,16 @@ public class PlayerController : MonoBehaviour
 
         if (HealthBarImage)
         {
-            if (HealthBarImage.fillAmount < targetHealth)
-            {
-                HealthBarImage.fillAmount += Time.deltaTime/2;
-                targetHealth += Time.deltaTime;
-            }
+            //if (HealthBarImage.fillAmount < targetHealth)
+            //{
+            //    HealthBarImage.fillAmount += Time.deltaTime;
+            //}
+            //else if (HealthBarImage.fillAmount > targetHealth)
+            //{
+            //    HealthBarImage.fillAmount -= Time.deltaTime;
+            //}
+
+            HealthBarImage.fillAmount = playerHealth / 100;
         }
 
         // Healing Animation
@@ -589,6 +594,8 @@ public class PlayerController : MonoBehaviour
 
             CheckHowManyPlayersAlive();
         }
+
+        UpdatePlayerHealth();
     }
 
     void FillPlayerList()

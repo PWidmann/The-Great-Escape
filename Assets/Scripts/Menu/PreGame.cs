@@ -35,7 +35,6 @@ public class PreGame : MonoBehaviour
         player3panel.SetActive(false);
         player4panel.SetActive(false);
 
-
     }
     // Update is called once per frame
     void Update()

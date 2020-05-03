@@ -8,9 +8,13 @@ public class PickUpAmount : MonoBehaviour
     public static PickUpAmount instance = null;
 
     public int pickupAmount;
-    [SerializeField] Slider pickUpSlider;
+    public Slider pickUpSlider;
     [SerializeField] Text pickUpText;
 
+    private void Awake()
+    {
+        pickupAmount = (int)pickUpSlider.value;
+    }
     void Start()
     {
         if (instance == null)

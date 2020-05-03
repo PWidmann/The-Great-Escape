@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class TileMapGenerator : MonoBehaviour
@@ -58,7 +59,9 @@ public class TileMapGenerator : MonoBehaviour
     {
         mapArray = new int[(int)Math.Round(mapWidth, 0), (int)Math.Round(mapHeight, 0)];
 
+
         pickupAmount = PickUpAmount.instance.pickupAmount;
+
         GenerateTileMap();
     }
 

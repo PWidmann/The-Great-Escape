@@ -84,7 +84,9 @@ public class MainMenu : MonoBehaviour
     public void ButtonStart()
     {
         isPauseMenuActive = false;
+        
         SceneManager.LoadScene("Pre Game");
+        UIManagement.instance.gameOptionsMenu.SetActive(true);
     }
     public void ButtonGameOptions()
     {
