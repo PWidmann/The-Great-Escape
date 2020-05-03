@@ -60,7 +60,9 @@ public class PlayerController : MonoBehaviour
     //User Interface
     public float playerHealth = 100;
     public Image HealthBarImage;
-
+    public GameObject healingAnimation;
+    float healTimer = 0f;
+    private bool isHealing;
     //Properties
     public bool RaftIsPulled { get => raftIsPulled; set => raftIsPulled = value; }
     public int PlayerNumber { get => playerNumber; }
@@ -71,6 +73,7 @@ public class PlayerController : MonoBehaviour
     public bool IsDead { get => isDead; set => isDead = value; }
     public bool HasEnteredRaft { get => hasEnteredRaft; set => hasEnteredRaft = value; }
     public bool IsColliding { get => isColliding; set => isColliding = value; }
+    public bool IsHealing { get => isHealing; set => isHealing = value; }
 
     void Start()
     {
@@ -130,6 +133,20 @@ public class PlayerController : MonoBehaviour
             {
                 HealthBarImage.fillAmount += Time.deltaTime/2;
                 targetHealth += Time.deltaTime;
+            }
+        }
+
+        // Healing Animation
+        if (isHealing)
+        {
+            healingAnimation.SetActive(true);
+            healTimer += Time.deltaTime;
+
+            if (healTimer >= 2f)
+            {
+                isHealing = false;
+                healTimer = 0f;
+                healingAnimation.SetActive(false);
             }
         }
             
