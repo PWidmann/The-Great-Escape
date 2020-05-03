@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 322185724741408982}
   - component: {fileID: 322185724741408983}
   - component: {fileID: 602853758045128915}
-  - component: {fileID: 8024070730296573570}
+  - component: {fileID: 4059971889591265594}
+  - component: {fileID: 6808897840320838040}
   m_Layer: 12
   m_Name: Steinwerfer
   m_TagString: Untagged
@@ -237,7 +238,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8024070730296573570
+--- !u!114 &4059971889591265594
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -246,9 +247,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 322185724741408977}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 259588063e3c0eb498ab0cb10cb63b32, type: 3}
+  m_Script: {fileID: 11500000, guid: 09aedb5e1e8f82a4bbfe7a28e2f11f0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 6808897840320838040}
+  change: {x: 1, y: 0}
+--- !u!95 &6808897840320838040
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322185724741408977}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9129f6bd2b71d7e469d78a7f517004e4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &322185724963986547
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +287,8 @@ GameObject:
   - component: {fileID: 322185724963986826}
   - component: {fileID: 602853758045128925}
   - component: {fileID: -7815562250280268042}
-  - component: {fileID: 2279908997131271791}
+  - component: {fileID: 8592697512518007829}
+  - component: {fileID: 8327699604294519861}
   m_Layer: 12
   m_Name: Hakenwerfer
   m_TagString: Hookthrower
@@ -525,7 +548,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44fffc4f8d4bccb4ab295346b833c816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2279908997131271791
+  animator: {fileID: 8327699604294519861}
+--- !u!114 &8592697512518007829
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -534,9 +558,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 322185724963986547}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 259588063e3c0eb498ab0cb10cb63b32, type: 3}
+  m_Script: {fileID: 11500000, guid: 09aedb5e1e8f82a4bbfe7a28e2f11f0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 8327699604294519861}
+  change: {x: 1, y: 0}
+--- !u!95 &8327699604294519861
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322185724963986547}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9129f6bd2b71d7e469d78a7f517004e4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &322185725642552532
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,7 +595,8 @@ GameObject:
   - component: {fileID: 322185725642552552}
   - component: {fileID: 322185725642552553}
   - component: {fileID: 602853758045128913}
-  - component: {fileID: 8440990309281232997}
+  - component: {fileID: 4819212193848415119}
+  - component: {fileID: 1700821159793218405}
   m_Layer: 12
   m_Name: Speerwerfer
   m_TagString: Untagged
@@ -747,7 +793,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8440990309281232997
+--- !u!114 &4819212193848415119
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -756,6 +802,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 322185725642552532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 259588063e3c0eb498ab0cb10cb63b32, type: 3}
+  m_Script: {fileID: 11500000, guid: 09aedb5e1e8f82a4bbfe7a28e2f11f0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 1700821159793218405}
+  change: {x: 1, y: 0}
+--- !u!95 &1700821159793218405
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322185725642552532}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9129f6bd2b71d7e469d78a7f517004e4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

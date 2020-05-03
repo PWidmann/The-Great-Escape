@@ -190,7 +190,7 @@ public class RaftController : MonoBehaviour
             // LandTile hit sound
             SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[16], raftAudio);
             IscollidingWithWall = true;
-            Debug.Log("Hitting wall!");
+            //Debug.Log("Hitting wall!");
         }
     }
 

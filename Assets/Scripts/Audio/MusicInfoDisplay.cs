@@ -33,7 +33,7 @@ public class MusicInfoDisplay : MonoBehaviour
     void UpdateMusicPanel()
     {
         Debug.Log("Toggle Enabled? " + randomMusicPlayToogle.isOn);
-        Debug.Log("Counter: " + counter);
+        //Debug.Log("Counter: " + counter);
         if (counter == musicPlaylist.Count && !randomMusicPlayToogle.isOn)
             counter = 0;
 

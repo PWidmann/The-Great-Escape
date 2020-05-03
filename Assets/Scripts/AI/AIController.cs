@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -59,6 +60,7 @@ public class AIController : MonoBehaviour
 
     void Start()
     {
+        
         GetThrowerObjectScriptComponents();
         LoadAiDifficulty();
         SetThrowValuesDependingOnDifficulty();
@@ -67,6 +69,8 @@ public class AIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
         if (!isMakingAction && !isDebugging && !isWaitingForAi)
         {
             hookThrowers[Random.Range(0, hookThrowers.Count)].MakeAction();
@@ -86,6 +90,8 @@ public class AIController : MonoBehaviour
         if (currentDifficultyForTesting != aiDifficulty)
             SetThrowValuesDependingOnDifficulty();
     }
+
+    
 
     void GetThrowerObjectScriptComponents()
     {
@@ -145,7 +151,7 @@ public class AIController : MonoBehaviour
         yield return new WaitForSecondsRealtime(delayTimeInSeconds);
         if (distanceToRaft >= 40)
             movementSpeed = 20;
-        Debug.Log("movementSpeed: " + movementSpeed + "" + "Distance: " + distanceToRaft);
+        //Debug.Log("movementSpeed: " + movementSpeed + "" + "Distance: " + distanceToRaft);
         StartCoroutine(AdjustAiSpeed());
         isWaitingForAi = false;
     }

@@ -8,7 +8,10 @@ public class Pathfinder : MonoBehaviour
     public static Pathfinder instance;
     Vector3Int targetCellLocation = Vector3Int.zero;
     Vector3Int enemyCellLocation;
-    bool isAboveRaft; 
+    bool isAboveRaft;
+
+    public Vector3Int TargetCellLocation { get => targetCellLocation; set => targetCellLocation = value; }
+    public Vector3Int EnemyCellLocation { get => enemyCellLocation; set => enemyCellLocation = value; }
 
     private void Awake()
     {
@@ -19,6 +22,10 @@ public class Pathfinder : MonoBehaviour
     void Start()
     {
         raftTransform = AIController.instance.raftTransform;
+    }
+    private void Update()
+    {
+        
     }
 
     public void Move()
@@ -34,14 +41,14 @@ public class Pathfinder : MonoBehaviour
 
         Vector3 targetToEnemy = enemyWorldLocation - raftTargetWorldLocation; // directional Vector
 
-        enemyCellLocation = TileMapGenerator.instance.groundTilemap.WorldToCell(enemyWorldLocation);
+        EnemyCellLocation = TileMapGenerator.instance.groundTilemap.WorldToCell(enemyWorldLocation);
 
         isAboveRaft = targetToEnemy.y > 0; 
 
         Vector3Int raftTargetCellLocation = TileMapGenerator.instance.groundTilemap.WorldToCell(raftTargetWorldLocation);
 
         SearchForGroundTiles(raftTargetCellLocation);
-        return TileMapGenerator.instance.groundTilemap.CellToWorld(targetCellLocation);
+        return TileMapGenerator.instance.groundTilemap.CellToWorld(TargetCellLocation);
     }
 
     void SearchForGroundTiles(Vector3Int raftTargetCellLocation)
@@ -51,7 +58,7 @@ public class Pathfinder : MonoBehaviour
             if (TileMapGenerator.instance.groundTilemap.HasTile(raftTargetCellLocation + i *
                 (isAboveRaft ? Vector3Int.up : Vector3Int.down)))
             {
-                targetCellLocation = raftTargetCellLocation + (i + 1) * (isAboveRaft ? Vector3Int.up : Vector3Int.down);
+                TargetCellLocation = raftTargetCellLocation + (i + 1) * (isAboveRaft ? Vector3Int.up : Vector3Int.down);
                 break;
             }
         }

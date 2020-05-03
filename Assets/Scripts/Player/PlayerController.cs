@@ -369,7 +369,6 @@ public class PlayerController : MonoBehaviour
             isSteeringRaft = true;
             RaftController.instance.raftIsInUse = true;
             RaftController.instance.raftUser = PlayerNumber.ToString();
-            Debug.Log(RaftController.instance.raftUser + " is steering raft!");
         }
         else if (isSteeringRaft && CheckInput(this, "ButtonA", KeyCode.E))
         {
@@ -377,7 +376,6 @@ public class PlayerController : MonoBehaviour
             isSteeringRaft = false;
             RaftController.instance.raftIsInUse = false;
             RaftController.instance.raftUser = null;
-            Debug.Log("Player " + PlayerNumber + " stopped steering raft");
         }
 
         if (isSteeringRaft && distance >= 1f)
