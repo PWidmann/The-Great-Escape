@@ -25,6 +25,7 @@ public class TileMapGenerator : MonoBehaviour
     public Transform player4;
 
     [Header("Pickup Objects")]
+    public float pickupAmount;
     public GameObject[] pickUps = new GameObject[4];
     public Transform instanceGrouping;
 
@@ -57,6 +58,7 @@ public class TileMapGenerator : MonoBehaviour
     {
         mapArray = new int[(int)Math.Round(mapWidth, 0), (int)Math.Round(mapHeight, 0)];
 
+        pickupAmount = PickUpAmount.instance.pickupAmount;
         GenerateTileMap();
     }
 
@@ -157,7 +159,7 @@ public class TileMapGenerator : MonoBehaviour
             {
                 if (mapArray[x, y] == 1) // If on water
                 {
-                    int rnd = Random.Range(0, 100);
+                    float rnd = Random.Range(0, 100);
                     int pickupItem = Random.Range(0, 3);
                     int rotationDegreeOption = Random.Range(1, 4);
                     float rotationChange = 0f;
@@ -184,7 +186,8 @@ public class TileMapGenerator : MonoBehaviour
                     leafObject.Rotate(Vector3.forward * rotationChange);
                     stickObject.Rotate(Vector3.forward * rotationChange);
 
-                    if (rnd > 94)
+                    
+                    if (rnd < pickupAmount / 4)
                     {
                         switch (pickupItem)
                         {
