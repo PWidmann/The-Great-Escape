@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AIAnimation : MonoBehaviour
 {
+    public static AIAnimation instance;
+
     public Animator animator;
 
     Vector3 previousPosition;
@@ -14,6 +16,9 @@ public class AIAnimation : MonoBehaviour
 
     void Start()
     {
+        if (instance == null)
+            instance = this;
+
         previousPosition = transform.position;
     }
 
@@ -41,10 +46,6 @@ public class AIAnimation : MonoBehaviour
         else
             animator.SetBool("isMoving", true);
 
-
-        // Um die Attack Animation auszulösen, Animation wechselt danach automatisch wieder in Idle oder Walk:
-        // animator.SetTrigger("isAttacking");
-
         // Set animation state dependable on movement.
         animator.SetFloat("moveX", currentVelocity.x);
         animator.SetFloat("moveY", currentVelocity.y);
@@ -54,5 +55,10 @@ public class AIAnimation : MonoBehaviour
         {
             animator.SetFloat("moveY", 0.5f);
         }
+    }
+
+    public void TriggerAttackAnimation()
+    {
+        animator.SetTrigger("isAttacking");
     }
 }
