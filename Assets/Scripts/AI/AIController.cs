@@ -118,14 +118,14 @@ public class AIController : MonoBehaviour
         switch (aiDifficulty)
         {
             case AiDifficulty.Easy:
-                throwSpeed = 4f;
+                throwSpeed = 7f;
                 hitAccuracy = 0.95f;
                 minHookThrowDelayTimer = 6f;
                 maxHookThrowDelayTimer = 10f;
                 coolDownTimeInSeconds = 10f;
                 break;
             case AiDifficulty.Normal:
-                throwSpeed = 6.5f;
+                throwSpeed = 7f;
                 hitAccuracy = 0.97f;
                 minHookThrowDelayTimer = 5.5f;
                 maxHookThrowDelayTimer = 8.5f;

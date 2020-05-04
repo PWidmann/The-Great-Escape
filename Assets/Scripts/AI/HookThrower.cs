@@ -52,7 +52,10 @@ public class HookThrower : MonoBehaviour
 
         if (hookInstantiated && hook != null)
         {
-            if (hook.transform.position.Equals(target) && !AIController.RaftHooked)
+            bool isAboveRaft = hook.transform.position.y > AIController.instance.raftTransform.transform.position.y;
+            if (isAboveRaft && hook.transform.position.y <= target.y && !AIController.RaftHooked)
+                DestroyHook();
+            else if (!isAboveRaft && hook.transform.position.y >= target.y && !AIController.RaftHooked)
                 DestroyHook();
         }
 
@@ -109,7 +112,7 @@ public class HookThrower : MonoBehaviour
     {
         if (!hasTargetLocked)
         {
-            target = HoleManager.Instance.holes[25].transform.position;
+            target = HoleManager.Instance.holes[Random.Range(0, HoleManager.Instance.holes.Count)].transform.position;
         }
     }
 
@@ -122,7 +125,7 @@ public class HookThrower : MonoBehaviour
 
         hasTargetLocked = true;
         hook.transform.position = Vector2.MoveTowards(hook.transform.position,
-            target * hitAccuracy, Time.deltaTime * throwSpeed);
+            new Vector2(target.x * hitAccuracy, target.y), Time.deltaTime * throwSpeed);
         hasNoHookInHand = true;
     }
 
