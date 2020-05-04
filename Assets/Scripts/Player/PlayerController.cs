@@ -526,7 +526,7 @@ public class PlayerController : MonoBehaviour
         {
             if (hasShield)
             {
-                Animator.SetBool("isBlocking", true);
+                animator.SetBool("isBlocking", true);
                 canMove = false;
                 change = Vector3.zero;
             }
