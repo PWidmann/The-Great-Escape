@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     //Audio
     [SerializeField] AudioSource playerAudio;
+    int winAudioCounter;
 
     //Player movement and collision
     Rigidbody2D myRigidbody;
@@ -63,6 +64,7 @@ public class PlayerController : MonoBehaviour
     public GameObject healingAnimation;
     float healTimer = 0f;
     private bool isHealing;
+
     //Properties
     public bool RaftIsPulled { get => raftIsPulled; set => raftIsPulled = value; }
     public int PlayerNumber { get => playerNumber; }
@@ -120,6 +122,9 @@ public class PlayerController : MonoBehaviour
         {
             AIAnimation.instance.TriggerAttackAnimation();
         }
+
+        if (PlayerInterface.instance.win && winAudioCounter == 0)
+            UpdateSoundFx();
     }
 
     private void FixedUpdate()
@@ -668,15 +673,16 @@ public class PlayerController : MonoBehaviour
         SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[15], playerAudio);
     }
 
-    public void ShowWinScreen()
+    // For winning
+    public void UpdateSoundFx()
     {
         SoundManager.instance.backGroundMusicSource.Stop();
         SoundManager.instance.soundFxSource.Stop();
 
-
-        // TODO 
-        // Siegesbedingung einfügen
-        // Siegsound abspielen lassen -> // SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[14]);
-        // Siegscreen einfügen
+        if (!playerAudio.isPlaying)
+        {
+            winAudioCounter++;
+            SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[14], playerAudio);
+        }
     }
 }
