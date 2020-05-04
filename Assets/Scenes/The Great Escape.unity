@@ -596,7 +596,7 @@ MonoBehaviour:
   raftCanMove: 1
   isSteeringRaft: 0
   hasShield: 0
-  playerHealth: 70
+  playerHealth: 1
   HealthBarImage: {fileID: 327132203585895517}
   healingAnimation: {fileID: 1906128057}
 --- !u!212 &119013016
@@ -4226,6 +4226,7 @@ MonoBehaviour:
   mediumButton: {fileID: 0}
   hardButton: {fileID: 0}
   pickUpAmountSlider: {fileID: 0}
+  levelLengthSlider: {fileID: 0}
   loadedSceneName: 
 --- !u!4 &652563155
 Transform:
@@ -4266,6 +4267,10 @@ MonoBehaviour:
   difficultyText: {fileID: 0}
   pickUpAmountSlider: {fileID: 0}
   pickUpAmountText: {fileID: 0}
+  levelLengthSlider: {fileID: 0}
+  levelLengthText: {fileID: 0}
+  pickUpAmount: 0
+  levelLength: 0
 --- !u!1 &672246462
 GameObject:
   m_ObjectHideFlags: 0

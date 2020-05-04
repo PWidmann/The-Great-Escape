@@ -15,6 +15,21 @@ public class EnemySpawner : MonoBehaviour
         SpawnAiObjects();
     }
 
+    void Update()
+    {
+        if (PlayerInterface.instance.gameOver || PlayerInterface.instance.win)
+        {
+            for (int i = 0; i < spawnedEnemies.Count; i++)
+            {
+                Destroy(spawnedEnemies[i]);
+                spawnedEnemies.Remove(spawnedEnemies[i]);
+                AIController.RaftHooked = false;
+                AIController.IsMakingAction = false;
+                RaftController.AllPlayersOnRaft = false;
+            }
+        }
+    }
+
     void SpawnAiObjects()
     {
         for (int i = 0; i < enemies.Count; i++)

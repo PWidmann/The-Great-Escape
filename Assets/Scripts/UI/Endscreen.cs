@@ -64,6 +64,7 @@ public class Endscreen : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("J1ButtonA") || Input.GetButtonDown("J2ButtonA") || Input.GetButtonDown("J3ButtonA") || Input.GetButtonDown("J4ButtonA"))
             {
+                PlayerController.instance.GameOver = false;
                 SceneManager.LoadScene("Main Menu");
             }
         }

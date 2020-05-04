@@ -65,7 +65,7 @@ public class AttackScript : MonoBehaviour
                 RandomHoleNumber = Random.Range(0, HoleManager.Instance.holes.Count);
             }
         }
-        else 
+        else if (!isStoneThrower && this != null)
         {
             if (Time.time > nextThrowAfterCooldown)
             {
@@ -95,11 +95,13 @@ public class AttackScript : MonoBehaviour
 
     bool IsAttackerStoneThrower()
     {
-        if (gameObject.GetComponent<StoneThrower>() is StoneThrower ||
-                gameObject.GetComponent<HookThrower>() is HookThrower)
-            return true;
-        else
-            return false;
+        if (this != null)
+        {
+            if (gameObject.GetComponent<StoneThrower>() is StoneThrower ||
+                    gameObject.GetComponent<HookThrower>() is HookThrower)
+                return true;
+        }
+        return false;
     }
 
     void FixedUpdate()

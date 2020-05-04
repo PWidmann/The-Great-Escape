@@ -59,8 +59,7 @@ public class AIController : MonoBehaviour
     }
 
     void Start()
-    {
-        
+    { 
         GetThrowerObjectScriptComponents();
         LoadAiDifficulty();
         SetThrowValuesDependingOnDifficulty();
@@ -91,15 +90,16 @@ public class AIController : MonoBehaviour
             SetThrowValuesDependingOnDifficulty();
     }
 
-    
-
     void GetThrowerObjectScriptComponents()
     {
         foreach (GameObject throwerObject in EnemySpawner.spawnedEnemies)
         {
-            hookThrowers.Add(throwerObject.GetComponent<HookThrower>());
-            stoneThrowers.Add(throwerObject.GetComponentInChildren<StoneThrower>());
-            spearThrowers.Add(throwerObject.GetComponentInChildren<SpearThrower>());
+            if (throwerObject != null)
+            {
+                hookThrowers.Add(throwerObject.GetComponent<HookThrower>());
+                stoneThrowers.Add(throwerObject.GetComponentInChildren<StoneThrower>());
+                spearThrowers.Add(throwerObject.GetComponentInChildren<SpearThrower>());
+            }
         }
     }
 

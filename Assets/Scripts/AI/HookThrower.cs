@@ -43,7 +43,7 @@ public class HookThrower : MonoBehaviour
         if (hookInstantiated && (PlayerInterface.instance.gameOver || PlayerInterface.instance.win))
         {
             hook.SetActive(false);
-            Destroy(gameObject);
+            //Destroy(gameObject);
             return;
         }
 
