@@ -24,14 +24,21 @@ public class PlayerTracker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        float lookDirection = playerController.Animator.GetFloat("moveY");
+        float yLookDirection = playerController.Animator.GetFloat("moveY");
+        float xLookDirection = playerController.Animator.GetFloat("moveX");
+
         bool isAbovePlayer = collision.gameObject.transform.position.y > gameObject.transform.position.y;
+        bool isRightFromPlayer = collision.gameObject.transform.position.x > gameObject.transform.position.x;
 
         if (collision.gameObject.tag.Equals("Spear") && !playerController.Animator.GetBool("isBlocking"))
             DoDamage(collision.gameObject);
 
         else if (collision.gameObject.tag.Equals("Spear") && playerController.Animator.GetBool("isBlocking") &&
-            (isAbovePlayer && lookDirection < 0 || !isAbovePlayer && lookDirection > 0))
+            (isAbovePlayer && yLookDirection < 0 || !isAbovePlayer && yLookDirection > 0))
+            DoDamage(collision.gameObject);
+
+        else if (collision.gameObject.tag.Equals("Spear") && playerController.Animator.GetBool("isBlocking") &&
+            (isRightFromPlayer && xLookDirection < 0 || !isRightFromPlayer && xLookDirection > 0))
             DoDamage(collision.gameObject);
 
         else if (collision.gameObject.tag.Equals("Spear") && playerController.Animator.GetBool("isBlocking"))
