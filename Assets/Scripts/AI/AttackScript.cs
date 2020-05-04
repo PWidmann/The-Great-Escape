@@ -7,6 +7,7 @@ public class AttackScript : MonoBehaviour
 {
     [SerializeField] GameObject spearPrefab;
     [SerializeField] GameObject stonePrefab;
+    Animator animator;
    
     public static List<GameObject> players = new List<GameObject>();
     public static AttackScript instance; 
@@ -39,6 +40,7 @@ public class AttackScript : MonoBehaviour
             instance = this;
 
         audio = GetComponent<AudioSource>();
+        animator = GetComponent<Animator>();
     }
 
     public void PrepareAttack()
@@ -138,7 +140,10 @@ public class AttackScript : MonoBehaviour
     void ThrowWeapon(GameObject weapon, Vector3 start, Vector3 target, float hitAccuracy, float throwSpeed)
     {
         if (!hasNoWeaponInHand && gameObject.activeSelf)
+        {
+            animator.SetTrigger("isAttacking");
             SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[5], audio);
+        }
 
         IgnoreStoneCollidingWithRaftTemporarly(weapon);
 

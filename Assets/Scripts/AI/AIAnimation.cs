@@ -20,6 +20,8 @@ public class AIAnimation : MonoBehaviour
             instance = this;
 
         previousPosition = transform.position;
+
+        animator = gameObject.GetComponent<Animator>();
     }
 
     void Update()
@@ -59,6 +61,7 @@ public class AIAnimation : MonoBehaviour
 
     public void TriggerAttackAnimation()
     {
+        
         animator.SetTrigger("isAttacking");
     }
 }

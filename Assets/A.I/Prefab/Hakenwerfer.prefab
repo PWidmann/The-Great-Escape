@@ -251,7 +251,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6808897840320838040}
-  change: {x: 1, y: 0}
 --- !u!95 &6808897840320838040
 Animator:
   serializedVersion: 3
@@ -548,7 +547,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44fffc4f8d4bccb4ab295346b833c816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 8327699604294519861}
 --- !u!114 &8592697512518007829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,7 +560,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8327699604294519861}
-  change: {x: 1, y: 0}
 --- !u!95 &8327699604294519861
 Animator:
   serializedVersion: 3
@@ -573,7 +570,7 @@ Animator:
   m_GameObject: {fileID: 322185724963986547}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9129f6bd2b71d7e469d78a7f517004e4, type: 2}
+  m_Controller: {fileID: 9100000, guid: 826caec9d3f99d1458df6954d724f467, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -806,7 +803,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1700821159793218405}
-  change: {x: 1, y: 0}
 --- !u!95 &1700821159793218405
 Animator:
   serializedVersion: 3
@@ -817,7 +813,7 @@ Animator:
   m_GameObject: {fileID: 322185725642552532}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9129f6bd2b71d7e469d78a7f517004e4, type: 2}
+  m_Controller: {fileID: 9100000, guid: 136f08e643e37f946bd971498ff8338c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
