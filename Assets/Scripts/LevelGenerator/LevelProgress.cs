@@ -9,6 +9,8 @@ public class LevelProgress : MonoBehaviour
     public Transform raftObject;
     float mapWidth;
 
+    bool isWidthUpdated = false;
+
     void Start()
     {
         progressSlider.value = 0;
@@ -16,9 +18,15 @@ public class LevelProgress : MonoBehaviour
         progressSlider.maxValue = mapWidth - 41;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (!isWidthUpdated)
+        {
+            mapWidth = TileMapGenerator.instance.mapWidth;
+            progressSlider.maxValue = mapWidth - 41;
+            isWidthUpdated = true;
+        }
+        
         progressSlider.value += RaftController.instance.change.x * RaftController.instance.moveSpeed * Time.deltaTime;
     }
 }

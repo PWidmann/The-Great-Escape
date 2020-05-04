@@ -30,6 +30,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] ButtonElement mediumButton;
     [SerializeField] ButtonElement hardButton;
     [SerializeField] SliderElement pickUpAmountSlider;
+    [SerializeField] SliderElement levelLengthSlider;
 
     bool isPauseMenuActive = false;
 
@@ -173,6 +174,8 @@ public class MainMenu : MonoBehaviour
                     case 4:
                         break;
                     case 5:
+                        break;
+                    case 6:
                         ButtonSaveSettings();
                         break;
                 }
@@ -242,7 +245,7 @@ public class MainMenu : MonoBehaviour
             {
                 gameOptionSelectedButton -= 1;
                 if (gameOptionSelectedButton == 0)
-                    gameOptionSelectedButton = 5;
+                    gameOptionSelectedButton = 6;
             }
             else if (isInSoundMenu)
             {
@@ -278,7 +281,7 @@ public class MainMenu : MonoBehaviour
             if (isInGameOptionsMenu)
             {
                 gameOptionSelectedButton += 1;
-                if (gameOptionSelectedButton == 6)
+                if (gameOptionSelectedButton == 7)
                     gameOptionSelectedButton = 1;
             }
             else if (isInSoundMenu)
@@ -318,6 +321,7 @@ public class MainMenu : MonoBehaviour
                     mediumButton.IsSelectedButton = false;
                     hardButton.IsSelectedButton = false;
                     pickUpAmountSlider.IsSelectedSlider = false;
+                    levelLengthSlider.IsSelectedSlider = false;
                     saveOptionSettingsButton.IsSelectedButton = false;
                     break;
                 case 2:
@@ -325,6 +329,7 @@ public class MainMenu : MonoBehaviour
                     mediumButton.IsSelectedButton = true;
                     hardButton.IsSelectedButton = false;
                     pickUpAmountSlider.IsSelectedSlider = false;
+                    levelLengthSlider.IsSelectedSlider = false;
                     saveOptionSettingsButton.IsSelectedButton = false;
                     break;
                 case 3:
@@ -332,6 +337,7 @@ public class MainMenu : MonoBehaviour
                     mediumButton.IsSelectedButton = false;
                     hardButton.IsSelectedButton = true;
                     pickUpAmountSlider.IsSelectedSlider = false;
+                    levelLengthSlider.IsSelectedSlider = false;
                     saveOptionSettingsButton.IsSelectedButton = false;
                     break;
                 case 4:
@@ -339,6 +345,7 @@ public class MainMenu : MonoBehaviour
                     mediumButton.IsSelectedButton = false;
                     hardButton.IsSelectedButton = false;
                     pickUpAmountSlider.IsSelectedSlider = true;
+                    levelLengthSlider.IsSelectedSlider = false;
                     saveOptionSettingsButton.IsSelectedButton = false;
                     break;
                 case 5:
@@ -346,6 +353,15 @@ public class MainMenu : MonoBehaviour
                     mediumButton.IsSelectedButton = false;
                     hardButton.IsSelectedButton = false;
                     pickUpAmountSlider.IsSelectedSlider = false;
+                    levelLengthSlider.IsSelectedSlider = true;
+                    saveOptionSettingsButton.IsSelectedButton = false;
+                    break;
+                case 6:
+                    easyButton.IsSelectedButton = false;
+                    mediumButton.IsSelectedButton = false;
+                    hardButton.IsSelectedButton = false;
+                    pickUpAmountSlider.IsSelectedSlider = false;
+                    levelLengthSlider.IsSelectedSlider = false;
                     saveOptionSettingsButton.IsSelectedButton = true;
                     break;
             }
@@ -459,6 +475,12 @@ public class MainMenu : MonoBehaviour
             { 
                 UIManagement.instance.pickUpAmountSlider.value += Input.GetAxisRaw("J1Horizontal");
                 UIManagement.instance.pickUpAmountSlider.value += Input.GetAxisRaw("Horizontal");
+            }
+
+            if (gameOptionSelectedButton == 5)
+            {
+                UIManagement.instance.levelLengthSlider.value += Input.GetAxisRaw("J1Horizontal");
+                UIManagement.instance.levelLengthSlider.value += Input.GetAxisRaw("Horizontal");
             }
         }
     }

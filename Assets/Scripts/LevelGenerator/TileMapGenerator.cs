@@ -57,10 +57,10 @@ public class TileMapGenerator : MonoBehaviour
 
     private void Start()
     {
-        mapArray = new int[(int)Math.Round(mapWidth, 0), (int)Math.Round(mapHeight, 0)];
-
-
         pickupAmount = PickUpAmount.instance.pickupAmount;
+        mapWidth = LevelLength.instance.levelLength;
+
+        mapArray = new int[(int)Math.Round(mapWidth, 0), (int)Math.Round(mapHeight, 0)];
 
         GenerateTileMap();
     }

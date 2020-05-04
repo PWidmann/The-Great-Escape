@@ -28,6 +28,9 @@ public class UIManagement : MonoBehaviour
     public Slider pickUpAmountSlider;
     public Text pickUpAmountText;
 
+    public Slider levelLengthSlider;
+    public Text levelLengthText;
+
 
     void Awake()
     {
@@ -46,8 +49,12 @@ public class UIManagement : MonoBehaviour
 
     private void Update()
     {
-        if(MainMenu.instance.IsInGameOptions)
+        if (MainMenu.instance.IsInGameOptions)
+        {
             pickUpAmountText.text = pickUpAmountSlider.value + " %";
+            levelLengthText.text = levelLengthSlider.value.ToString();
+        }
+            
     }
 
     
