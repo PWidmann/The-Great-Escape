@@ -13,6 +13,7 @@ public class Shield : MonoBehaviour, Iinteractable
                 playerController.hasShield = true;
                 RaftController.instance.shieldIsInUse = true;
                 RaftController.instance.shieldObject.SetActive(false);
+                playerController.UIImageElement.shieldImage.gameObject.SetActive(true);
             }
         }
     }

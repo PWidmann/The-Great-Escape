@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
     float healTimer = 0f;
     private bool isHealing;
     private bool hasExitedRaft;
+    UIImageElement uIImageElement;
 
     //Properties
     public bool RaftIsPulled { get => raftIsPulled; set => raftIsPulled = value; }
@@ -79,6 +80,8 @@ public class PlayerController : MonoBehaviour
     public bool HasEnteredRaft { get => hasEnteredRaft; set => hasEnteredRaft = value; }
     public bool IsColliding { get => isColliding; set => isColliding = value; }
     public bool IsHealing { get => isHealing; set => isHealing = value; }
+    public int MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
+    public UIImageElement UIImageElement { get => uIImageElement; set => uIImageElement = value; }
 
     void Start()
     {
@@ -90,6 +93,7 @@ public class PlayerController : MonoBehaviour
             PlayerControls = GetPlayerController();
             Animator = GetComponent<Animator>();
             DestroyPlayerObjectIfNotActive();
+            uIImageElement = GetComponent<UIImageElement>();
         }
 
         if (instance == null)
@@ -591,6 +595,7 @@ public class PlayerController : MonoBehaviour
             if (CheckInput(this, "ButtonB", KeyCode.F))
             {
                 hasShield = false;
+                uIImageElement.shieldImage.gameObject.SetActive(false);
                 RaftController.instance.shieldIsInUse = false;
                 RaftController.instance.shieldObject.transform.position = transform.position;
                 RaftController.instance.shieldObject.SetActive(true);
@@ -603,6 +608,7 @@ public class PlayerController : MonoBehaviour
         if (hasShield)
         {
             hasShield = false;
+            uIImageElement.shieldImage.gameObject.SetActive(false);
             RaftController.instance.shieldIsInUse = false;
             RaftController.instance.shieldObject.transform.position = transform.position;
             RaftController.instance.shieldObject.SetActive(true);

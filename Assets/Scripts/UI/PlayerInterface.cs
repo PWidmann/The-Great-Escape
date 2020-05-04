@@ -176,9 +176,9 @@ public class PlayerInterface : MonoBehaviour
         if (raftDistanceToEnd <= 21f && PlayerController.hasTreasureTaken)
         {
             raftPlayerCollider.enabled = false;
-            //RaftController.isPlayerLeavingRaft = true;
-            treasureObject.layer = 15;
         }
+        else if (raftDistanceToEnd <= 21f && !PlayerController.hasTreasureTaken)
+            treasureObject.layer = 15;
     }
 
     void SkipGameToFinish()
