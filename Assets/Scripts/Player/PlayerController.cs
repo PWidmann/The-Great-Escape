@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] HoleManager hole;
     [SerializeField] Shield shield;
     [SerializeField] Hook hook;
+    [SerializeField] Treasure treasure;
     PlayerOverlapBox overLapBox;
 
     //Misc
@@ -521,6 +522,12 @@ public class PlayerController : MonoBehaviour
             playerInterface.ShowTextAbovePlayer(gameObject, playerInterface.destroyHookInfoText);
             hook.Interact(this);
 
+        }
+
+        // Treasure
+        if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Treasure"))
+        {
+            treasure.Interact(this);
         }
     }
 
