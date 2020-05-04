@@ -112,18 +112,28 @@ public class HookThrower : MonoBehaviour
     {
         if (!hasTargetLocked)
         {
+<<<<<<< HEAD
             target = HoleManager.Instance.holes[Random.Range(0, HoleManager.Instance.holes.Count)].transform.position;
+=======
+            target = HoleManager.Instance.holes[25].transform.position;
+
+            
+>>>>>>> 4297b0b4cff07c80b3355cfccf012c8d3fcfbc85
         }
     }
 
     public void ThrowHook(float hitAccuracy, float throwSpeed)
     {
+        
         LockTarget();
+
+        
 
         if (!hasNoHookInHand)
             SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[5], hookThrowerSfx);
 
         hasTargetLocked = true;
+        
         hook.transform.position = Vector2.MoveTowards(hook.transform.position,
             new Vector2(target.x * hitAccuracy, target.y), Time.deltaTime * throwSpeed);
         hasNoHookInHand = true;

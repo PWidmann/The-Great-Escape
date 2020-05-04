@@ -28,6 +28,12 @@ public class UIManagement : MonoBehaviour
     public Slider pickUpAmountSlider;
     public Text pickUpAmountText;
 
+    public Slider levelLengthSlider;
+    public Text levelLengthText;
+
+    public int pickUpAmount;
+    public int levelLength;
+
 
     void Awake()
     {
@@ -41,13 +47,18 @@ public class UIManagement : MonoBehaviour
 
     void Start()
     {
-        
+        pickUpAmount = 55;
+        levelLength = 300;
     }
 
     private void Update()
     {
-        if(MainMenu.instance.IsInGameOptions)
+        // Change visible values in game option menu
+        if (MainMenu.instance.IsInGameOptions)
+        {
             pickUpAmountText.text = pickUpAmountSlider.value + " %";
+            levelLengthText.text = levelLengthSlider.value.ToString();
+        } 
     }
 
     
@@ -66,5 +77,19 @@ public class UIManagement : MonoBehaviour
     public void PlayClickSound()
     {
         SoundManager.instance.PlayMenuClickSoundFx();
+    }
+
+    public void OnValueChangePickUpAmount()
+    {
+        pickUpAmount = (int)pickUpAmountSlider.value;
+        PlayerPrefs.SetInt("pickUpAmount", (int)pickUpAmountSlider.value);
+        Debug.Log("Setpickupamount" + (int)pickUpAmountSlider.value);
+    }
+
+    public void OnValueChangeLevelLength()
+    {
+        levelLength = (int)levelLengthSlider.value;
+        PlayerPrefs.SetInt("levelLength", (int)levelLengthSlider.value);
+        Debug.Log("SetLevellength" + (int)levelLengthSlider.value);
     }
 }

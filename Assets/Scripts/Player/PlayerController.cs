@@ -114,7 +114,12 @@ public class PlayerController : MonoBehaviour
         {
             PauseMenu.instance.ResumeGame();
         }
-            
+
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            AIAnimation.instance.TriggerAttackAnimation();
+        }
     }
 
     private void FixedUpdate()

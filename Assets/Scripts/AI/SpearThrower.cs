@@ -9,7 +9,7 @@ public class SpearThrower : MonoBehaviour
 
     void Start()
     {
-        attackScript = GetComponent<AttackScript>();   
+        attackScript = GetComponent<AttackScript>();
     }
 
     public void MakeAction()
