@@ -27,6 +27,8 @@ public class TileMapGenerator : MonoBehaviour
 
     [Header("Pickup Objects")]
     public float pickupAmount;
+    private bool noobMode = true;
+
     public GameObject[] pickUps = new GameObject[4];
     public Transform instanceGrouping;
 
@@ -43,16 +45,14 @@ public class TileMapGenerator : MonoBehaviour
 
     public int[,] mapArray;
 
+    public bool NoobMode { get => noobMode; set => noobMode = value; }
+
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
-        //else if (instance != this)
-        //{
-        //    Destroy(this);
-        //}
     }
 
     private void Start()
@@ -63,10 +63,12 @@ public class TileMapGenerator : MonoBehaviour
 
     private void LoadMapValues()
     {
+
         if (PlayerPrefs.HasKey("pickUpAmount"))
             pickupAmount = PlayerPrefs.GetInt("pickUpAmount");
         else
             pickupAmount = 55;
+        
 
         if (PlayerPrefs.HasKey("levelLength"))
             mapWidth = PlayerPrefs.GetInt("levelLength");
@@ -200,19 +202,37 @@ public class TileMapGenerator : MonoBehaviour
                     leafObject.Rotate(Vector3.forward * rotationChange);
                     stickObject.Rotate(Vector3.forward * rotationChange);
 
-                    
-                    if (rnd < pickupAmount / 4)
+                    if (noobMode)
                     {
-                        switch (pickupItem)
+                        if (rnd < 100)
                         {
-                            case 0:
-                                Instantiate(pickUps[0], new Vector3(x, y, -3f), leafObject.transform.rotation).transform.SetParent(instanceGrouping);
-                                break;
-                            case 1:
-                                Instantiate(pickUps[1], new Vector3(x, y, -3f), stickObject.transform.rotation).transform.SetParent(instanceGrouping);
-                                break;
+                            switch (pickupItem)
+                            {
+                                case 0:
+                                    Instantiate(pickUps[0], new Vector3(x, y, -3f), leafObject.transform.rotation).transform.SetParent(instanceGrouping);
+                                    break;
+                                case 1:
+                                    Instantiate(pickUps[1], new Vector3(x, y, -3f), stickObject.transform.rotation).transform.SetParent(instanceGrouping);
+                                    break;
+                            }
                         }
                     }
+                    else
+                    {
+                        if (rnd < pickupAmount / 4)
+                        {
+                            switch (pickupItem)
+                            {
+                                case 0:
+                                    Instantiate(pickUps[0], new Vector3(x, y, -3f), leafObject.transform.rotation).transform.SetParent(instanceGrouping);
+                                    break;
+                                case 1:
+                                    Instantiate(pickUps[1], new Vector3(x, y, -3f), stickObject.transform.rotation).transform.SetParent(instanceGrouping);
+                                    break;
+                            }
+                        }
+                    }
+                    
                 }
             }
         }
