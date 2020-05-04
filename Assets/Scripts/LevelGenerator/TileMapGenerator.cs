@@ -49,20 +49,29 @@ public class TileMapGenerator : MonoBehaviour
         {
             instance = this;
         }
-        else if (instance != this)
-        {
-            Destroy(this);
-        }
+        //else if (instance != this)
+        //{
+        //    Destroy(this);
+        //}
     }
 
     private void Start()
     {
-        pickupAmount = PickUpAmount.instance.pickupAmount;
-        mapWidth = LevelLength.instance.levelLength;
-
-        mapArray = new int[(int)Math.Round(mapWidth, 0), (int)Math.Round(mapHeight, 0)];
-
+        LoadMapValues();
         GenerateTileMap();
+    }
+
+    private void LoadMapValues()
+    {
+        if (PlayerPrefs.HasKey("pickUpAmount"))
+            pickupAmount = PlayerPrefs.GetInt("pickUpAmount");
+        else
+            pickupAmount = 55;
+
+        if (PlayerPrefs.HasKey("levelLength"))
+            mapWidth = PlayerPrefs.GetInt("levelLength");
+        else
+            mapWidth = 300;
     }
 
     private void GenerateTileMap()
@@ -70,6 +79,8 @@ public class TileMapGenerator : MonoBehaviour
         // Tilemap coordinates 
         // X: Increasing left to right
         // Y: Increasing bottom to top
+
+        mapArray = new int[(int)Math.Round(mapWidth, 0), (int)Math.Round(mapHeight, 0)];
 
         GenerateMapArray();
         

@@ -87,12 +87,22 @@ public class MainMenu : MonoBehaviour
         isPauseMenuActive = false;
         
         SceneManager.LoadScene("Pre Game");
-        UIManagement.instance.gameOptionsMenu.SetActive(true);
+        //UIManagement.instance.gameOptionsMenu.SetActive(true);
     }
     public void ButtonGameOptions()
     {
         isInGameOptionsMenu = true;
         gameOptionSelectedButton = 1;
+
+        if (PlayerPrefs.HasKey("pickUpAmount"))
+            UIManagement.instance.pickUpAmountSlider.value = PlayerPrefs.GetInt("pickUpAmount");
+        else
+            UIManagement.instance.pickUpAmountSlider.value = 55;
+
+        if (PlayerPrefs.HasKey("levelLength"))
+            UIManagement.instance.levelLengthSlider.value = PlayerPrefs.GetInt("levelLength");
+        else
+            UIManagement.instance.levelLengthSlider.value = 300;
 
         UIManagement.instance.mainMenu.SetActive(false);
         UIManagement.instance.gameOptionsMenu.SetActive(true);
