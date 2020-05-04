@@ -25,7 +25,7 @@ public class Pathfinder : MonoBehaviour
     }
     private void Update()
     {
-        
+
     }
 
     public void Move()

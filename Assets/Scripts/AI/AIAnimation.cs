@@ -5,28 +5,38 @@ using UnityEngine;
 public class AIAnimation : MonoBehaviour
 {
     public Animator animator;
-    
-    // Die änderungen hier wirken sich auf alle Gegner Charakter aus
+
+    Vector3 previousPosition;
+    Vector2 currentVelocity = Vector2.zero;
+
+    float checkTimer = 0f;
 
 
     void Start()
     {
-        
+        previousPosition = transform.position;
     }
 
     void Update()
     {
-        // Float Werte -1 bis 1 für x und y, ein Vektor 2 mit der Momentanen Richtung des Charakters
-        // Nach rechts = new Vector2(1, 0);
-        // Nach links = new Vector2(-1, 0);
-        // Nach unten = new Vector2(0, -1);
-        // Nach oben = new Vector2(0, -1);
+        checkTimer += Time.deltaTime;
 
-        // Hier Funktion machen für aktuelle Bewegung der 3er Gruppe in den "change" Vektor schreiben
-        Vector2 change = new Vector2(1, 0);
+        if (checkTimer >= 0.2f)
+        {
+            checkTimer = 0f;
+
+            if (previousPosition != null)
+            {
+                currentVelocity = (previousPosition - transform.position) / Time.deltaTime * -1;
+            }
+
+            previousPosition = transform.position;
+
+            currentVelocity = currentVelocity.normalized;
+        }
 
 
-        if (change == Vector2.zero)
+        if (currentVelocity == Vector2.zero)
             animator.SetBool("isMoving", false);
         else
             animator.SetBool("isMoving", true);
@@ -35,8 +45,14 @@ public class AIAnimation : MonoBehaviour
         // Um die Attack Animation auszulösen, Animation wechselt danach automatisch wieder in Idle oder Walk:
         // animator.SetTrigger("isAttacking");
 
-        // Sprites werden im Animator ausgewählt nach Bewegung des Charakters.
-        animator.SetFloat("moveX", change.x);
-        animator.SetFloat("moveY", change.y);
+        // Set animation state dependable on movement.
+        animator.SetFloat("moveX", currentVelocity.x);
+        animator.SetFloat("moveY", currentVelocity.y);
+
+        // If the raft is over the enemy group
+        if (RaftController.instance.transform.position.y > transform.position.y)
+        {
+            animator.SetFloat("moveY", 0.5f);
+        }
     }
 }
