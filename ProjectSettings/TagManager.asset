@@ -19,6 +19,7 @@ TagManager:
   - Shield
   - Hole
   - Hookthrower
+  - RaftExit
   layers:
   - Default
   - TransparentFX
@@ -37,7 +38,7 @@ TagManager:
   - IgnoreRaftCollision
   - Interactables
   - CameraPlayerCollider
-  - 
+  - ExitCollider
   - 
   - 
   - 

@@ -54,7 +54,13 @@ public class PlayerInterface : MonoBehaviour
 
     [SerializeField] Camera uiCamForTextFollowObjects;
 
+    [SerializeField] GameObject treasureObject;
+
     public AudioSource pickUpAudio;
+
+    public Text treasureWarningText;
+
+    public float RaftDistanceToEnd { get => raftDistanceToEnd; set => raftDistanceToEnd = value; }
 
     void Start()
     {
@@ -86,6 +92,9 @@ public class PlayerInterface : MonoBehaviour
 
         Tutorial();
         GameOver();
+
+        if (gameOver)
+            treasureWarningText.gameObject.SetActive(false);
     }
 
     void ShowPlayerHealth()
@@ -164,9 +173,11 @@ public class PlayerInterface : MonoBehaviour
     { 
         raftDistanceToEnd = Vector2.Distance(RaftPosition.transform.position, endFlag.transform.position);
 
-        if (raftDistanceToEnd <= 21f)
+        if (raftDistanceToEnd <= 21f && PlayerController.hasTreasureTaken)
         {
             raftPlayerCollider.enabled = false;
+            //RaftController.isPlayerLeavingRaft = true;
+            treasureObject.layer = 15;
         }
     }
 

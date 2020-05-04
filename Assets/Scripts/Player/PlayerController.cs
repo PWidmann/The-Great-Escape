@@ -48,6 +48,8 @@ public class PlayerController : MonoBehaviour
     //Interactibles
     public bool isSteeringRaft = false;
     public bool hasShield = false;
+    public bool hasTreasure = false; // For display
+    public static bool hasTreasureTaken; // For exit check.
 
     //Player states
     bool gameOver = false;
@@ -64,6 +66,7 @@ public class PlayerController : MonoBehaviour
     public GameObject healingAnimation;
     float healTimer = 0f;
     private bool isHealing;
+    private bool hasExitedRaft;
 
     //Properties
     public bool RaftIsPulled { get => raftIsPulled; set => raftIsPulled = value; }
@@ -336,22 +339,26 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Player unable to fall off the raft.
         if (isOnRaft || RaftIsPulled)
         {
-            if (transform.position.x >= raft.transform.position.x + collider.bounds.size.x / 
-                raft.transform.localScale.x)
-                transform.position = new Vector2(transform.position.x - 0.1f, transform.position.y);
-            else if (transform.position.x <= raft.transform.position.x - collider.bounds.size.x /
-                raft.transform.localScale.x)
-                transform.position = new Vector2(transform.position.x + 0.1f, transform.position.y);
-            else if (transform.position.y >= raft.transform.position.y + collider.bounds.size.y /
-                raft.transform.localScale.y)
-                transform.position = new Vector2(transform.position.x, transform.position.y - 0.1f);
-            else if (transform.position.y <= raft.transform.position.y - collider.bounds.size.y /
-                raft.transform.localScale.y)
-                transform.position = new Vector2(transform.position.x, transform.position.y + 0.1f);
+            MakePlayerUnableToFallOfRaft();
         }
+    }
+
+    void MakePlayerUnableToFallOfRaft()
+    {
+        if (transform.position.x >= raft.transform.position.x + collider.bounds.size.x /
+            raft.transform.localScale.x)
+            transform.position = new Vector2(transform.position.x - 0.1f, transform.position.y);
+        else if (transform.position.x <= raft.transform.position.x - collider.bounds.size.x /
+            raft.transform.localScale.x)
+            transform.position = new Vector2(transform.position.x + 0.1f, transform.position.y);
+        else if (transform.position.y >= raft.transform.position.y + collider.bounds.size.y /
+            raft.transform.localScale.y)
+            transform.position = new Vector2(transform.position.x, transform.position.y - 0.1f);
+        else if (transform.position.y <= raft.transform.position.y - collider.bounds.size.y /
+            raft.transform.localScale.y)
+            transform.position = new Vector2(transform.position.x, transform.position.y + 0.1f);
     }
 
     void DestroyPlayerObjectIfNotActive()
@@ -431,6 +438,32 @@ public class PlayerController : MonoBehaviour
         {
             isOnRaft = true;
         }
+
+        if (other.gameObject.tag.Equals("RaftExit") && isOnRaft && !hasExitedRaft && 
+            PlayerInterface.instance.RaftDistanceToEnd <= 21f)
+        {
+            Debug.Log("I try to exit.");
+            RaftController.instance.PlayerCounter--;
+            if (!hasTreasureTaken)
+            {
+                //PlayerInterface.instance.raftPlayerCollider.enabled = true;
+                MakePlayerUnableToFallOfRaft();
+                PlayerInterface.instance.treasureWarningText.gameObject.SetActive(true);
+                Debug.Log("You have to take the treasure!");
+            }
+            else if (hasTreasureTaken)
+            {
+                RaftController.instance.PlayerCounter--;
+                hasExitedRaft = true;
+
+            }
+            else if (RaftController.instance.PlayerCounter == 0)
+            {
+                PlayerInterface.instance.raftPlayerCollider.enabled = false;
+                RaftController.AllPlayersOnRaft = false;
+            }
+
+        }
     }
 
     //For movement handling on raft
@@ -439,6 +472,13 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Raft")
         {
             isOnRaft = false;
+        }
+
+        if (other.gameObject.tag.Equals("RaftExit") && isOnRaft &&
+            PlayerInterface.instance.RaftDistanceToEnd <= 21f)
+        {
+            PlayerInterface.instance.treasureWarningText.gameObject.SetActive(false);
+
         }
     }
 

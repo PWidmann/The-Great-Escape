@@ -46,6 +46,8 @@ public class RaftController : MonoBehaviour
 
     string previousGOName;
 
+    public static bool isPlayerLeavingRaft = false; // For AI stop moving when one player is at end of river.
+
     [SerializeField] AIController aIController;
 
     static bool hookMoving = false;
@@ -58,6 +60,8 @@ public class RaftController : MonoBehaviour
     public static bool AllPlayersOnRaft { get => allPlayersOnRaft; set => allPlayersOnRaft = value; }
     public bool IsHitByStone { get => isHitByStone; set => isHitByStone = value; }
     public AudioSource RaftAudio { get => raftAudio; set => raftAudio = value; }
+    public Collider2D RaftCollider { get => raftCollider; set => raftCollider = value; }
+    public int PlayerCounter { get => playerCounter; set => playerCounter = value; }
 
     void Awake()
     {
@@ -220,12 +224,6 @@ public class RaftController : MonoBehaviour
             if (playerCounter == AttackScript.players.Count)
                 allPlayersOnRaft = true;
         }
-    }
-
-    private void On(Collider2D collision)
-    {
-        if (collision.gameObject.tag.Equals("Hook"))
-            iscollidingWithWall = false;
     }
 
     public Vector2 GetRaftPos()
