@@ -112,13 +112,7 @@ public class HookThrower : MonoBehaviour
     {
         if (!hasTargetLocked)
         {
-<<<<<<< HEAD
             target = HoleManager.Instance.holes[Random.Range(0, HoleManager.Instance.holes.Count)].transform.position;
-=======
-            target = HoleManager.Instance.holes[25].transform.position;
-
-            
->>>>>>> 4297b0b4cff07c80b3355cfccf012c8d3fcfbc85
         }
     }
 
