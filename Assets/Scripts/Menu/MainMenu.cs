@@ -430,10 +430,13 @@ public class MainMenu : MonoBehaviour
                 switch (_mainMenuSelected)
                 {
                     case 1:
-                        startButton.IsSelectedButton = true;
-                        gameOptionButton.IsSelectedButton = false;
-                        soundOptionButton.IsSelectedButton = false;
-                        quitButton.IsSelectedButton = false;
+                        if (startButton != null)
+                        {
+                            startButton.IsSelectedButton = true;
+                            gameOptionButton.IsSelectedButton = false;
+                            soundOptionButton.IsSelectedButton = false;
+                            quitButton.IsSelectedButton = false;
+                        }
                         break;
                     case 2:
                         startButton.IsSelectedButton = false;
