@@ -78,7 +78,7 @@ public class AIController : MonoBehaviour
         else if (!isMakingAction && !isDebugging && isWaitingForAi)
             StartCoroutine(Attack(delayTimer));
 
-        if (!isPreperingHook)
+        if (!isPreperingHook && !isDebugging)
             hookThrowers[Random.Range(0, hookThrowers.Count)].GetHookInstantiationReady();
 
         if (!PlayerInterface.instance.gameOver || !PlayerInterface.instance.win)
