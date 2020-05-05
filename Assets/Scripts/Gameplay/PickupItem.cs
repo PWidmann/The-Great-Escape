@@ -24,11 +24,13 @@ public class PickupItem : MonoBehaviour
             {
                 case "Leaf(Clone)":
                     SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[0], PlayerInterface.instance.pickUpAudio);
-                    PlayerInterface.instance.leafCount += 1;
+                    if(PlayerInterface.instance.leafCount < 998)
+                        PlayerInterface.instance.leafCount += 1;
                     break;
                 case "Stick(Clone)":
                     SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[0], PlayerInterface.instance.pickUpAudio);
-                    PlayerInterface.instance.stickCount += 1;
+                    if (PlayerInterface.instance.stickCount < 998)
+                        PlayerInterface.instance.stickCount += 1;
                     break;
             }
             

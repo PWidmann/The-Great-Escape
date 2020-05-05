@@ -149,14 +149,6 @@ public class PlayerController : MonoBehaviour
 
         if (HealthBarImage)
         {
-            //if (HealthBarImage.fillAmount < targetHealth)
-            //{
-            //    HealthBarImage.fillAmount += Time.deltaTime;
-            //}
-            //else if (HealthBarImage.fillAmount > targetHealth)
-            //{
-            //    HealthBarImage.fillAmount -= Time.deltaTime;
-            //}
 
             HealthBarImage.fillAmount = playerHealth / 100;
         }

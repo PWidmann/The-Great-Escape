@@ -88,11 +88,8 @@ public class RaftController : MonoBehaviour
             change = Vector2.zero;
         }
 
-
         trackVelocity = (rb.position - lastPos) * 50;
         lastPos = rb.position;
-
-
 
         if (!PlayerInterface.instance.gameOver || !PlayerInterface.instance.win)
             SteeringInteraction();
@@ -105,6 +102,10 @@ public class RaftController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Prevent Raft from moving backwards
+        if (change.x < 0)
+            change.x = 0;
+
         rb.MovePosition(transform.position + change * moveSpeed * Time.fixedDeltaTime);
         
         if (AIController.RaftHooked)

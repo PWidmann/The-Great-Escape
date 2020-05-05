@@ -78,12 +78,18 @@ public class TileMapGenerator : MonoBehaviour
             pickupAmount = PlayerPrefs.GetInt("pickUpAmount");
         else
             pickupAmount = 55;
-        
 
-        if (PlayerPrefs.HasKey("levelLength"))
-            mapWidth = PlayerPrefs.GetInt("levelLength");
-        else
+        if (noobMode)
             mapWidth = 1000;
+        else
+        {
+            if (PlayerPrefs.HasKey("levelLength"))
+                mapWidth = PlayerPrefs.GetInt("levelLength");
+            else
+            {
+                mapWidth = 3000;
+            }
+        }   
     }
 
     private void GenerateTileMap()
@@ -121,13 +127,11 @@ public class TileMapGenerator : MonoBehaviour
 
         tilesDraw += viewDistance;
 
-        
-
         GeneratePickups();
         GeneratePlants();
     }
 
-
+    // Load next chunk of tiles and delete behind player
     public void LoadNextTiles()
     {
         if (RaftController.instance.GetRaftPos().x > tilesDraw - 50)
