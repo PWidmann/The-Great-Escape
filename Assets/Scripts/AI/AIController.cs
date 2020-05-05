@@ -73,7 +73,6 @@ public class AIController : MonoBehaviour
     {
         if (!isMakingAction && !isDebugging && !isWaitingForAi)
         {
-            //hookThrowers[Random.Range(0, hookThrowers.Count)].MakeAction();
             stoneThrowers[Random.Range(0, stoneThrowers.Count)].MakeAction();
             spearThrowers[Random.Range(0, spearThrowers.Count)].MakeAction();
         }
@@ -109,7 +108,7 @@ public class AIController : MonoBehaviour
         if (PlayerPrefs.HasKey("Difficulty"))
             aiDifficulty = (AiDifficulty)PlayerPrefs.GetInt("Difficulty");
         else
-            aiDifficulty = AiDifficulty.Normal;
+            aiDifficulty = AiDifficulty.Easy;
 
         currentDifficultyForTesting = aiDifficulty;
     }

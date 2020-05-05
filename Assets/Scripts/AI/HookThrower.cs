@@ -126,9 +126,7 @@ public class HookThrower : MonoBehaviour
     void LockTarget()
     {
         if (!hasTargetLocked)
-        {
             target = HoleManager.Instance.holes[Random.Range(0, HoleManager.Instance.holes.Count)].transform.position;
-        }
     }
 
     public void ThrowHook(float hitAccuracy, float throwSpeed)
@@ -181,8 +179,6 @@ public class HookThrower : MonoBehaviour
             lineRenderer.SetPositions(pos.ToArray());
         }
         else
-        {
             lineRenderer.enabled = false;
-        }
     }
 }
