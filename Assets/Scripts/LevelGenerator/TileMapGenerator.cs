@@ -27,7 +27,7 @@ public class TileMapGenerator : MonoBehaviour
 
     [Header("Pickup Objects")]
     public float pickupAmount;
-    private bool noobMode = true;
+    public bool noobMode = true;
 
     public GameObject[] pickUps = new GameObject[4];
     public Transform instanceGrouping;

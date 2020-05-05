@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,8 +21,14 @@ public class HookThrower : MonoBehaviour
     int randomHoleNumber;
     bool startAttack = false;
 
+    bool isPullingHook = false;
+
     Pathfinder pathfinder;
     AttackScript attackScript;
+
+    // Hook rope
+    public LineRenderer lineRenderer;
+    public Material lineRendererMaterial;
 
     public static bool HookInstantiated { get => hookInstantiated; set => hookInstantiated = value; }
 
@@ -57,12 +64,16 @@ public class HookThrower : MonoBehaviour
                 DestroyHook();
             else if (!isAboveRaft && hook.transform.position.y >= target.y && !AIController.RaftHooked)
                 DestroyHook();
+
         }
 
         // When hook hits the target it should be parented with the raft so it gives the illusion
         // that the hook thrower pulls the raft to the shore.
         if (AIController.RaftHooked)
             MakeHookAsChildGameObject();
+
+        HookRope();
+
     }
 
     public void MakeAction()
@@ -81,6 +92,7 @@ public class HookThrower : MonoBehaviour
             // First instanitation of hook object.
             if (!hookInstantiated && !isInstantiating && RaftController.AllPlayersOnRaft)
             {
+                isPullingHook = true;
                 PrepereHookInstantiation();
                 AIController.IsPreperingHook = true;
             }
@@ -127,10 +139,12 @@ public class HookThrower : MonoBehaviour
             SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[5], hookThrowerSfx);
 
         hasTargetLocked = true;
-        
-        hook.transform.position = Vector2.MoveTowards(hook.transform.position,
+
+        hook.transform.position = Vector3.MoveTowards(hook.transform.position,
             new Vector2(target.x * hitAccuracy, target.y), Time.deltaTime * throwSpeed);
         hasNoHookInHand = true;
+
+        
     }
 
     void MakeHookAsChildGameObject()
@@ -149,5 +163,28 @@ public class HookThrower : MonoBehaviour
         isInstantiating = false;
         hasTargetLocked = false;
         hasNoHookInHand = false;
+        isPullingHook = false;
+    }
+
+    void HookRope()
+    {
+        if (AIController.RaftHooked && isPullingHook)
+        {
+            List<Vector3> pos = new List<Vector3>();
+
+            pos.Add(new Vector3(transform.position.x, transform.position.y, -5));
+            pos.Add(new Vector3(hook.transform.position.x, hook.transform.position.y, -5));
+
+            lineRenderer.enabled = true;
+            lineRenderer.sortingLayerName = "HookRope";
+            lineRenderer.startWidth = 0.1f;
+            lineRenderer.endWidth = 0.1f;
+
+            lineRenderer.SetPositions(pos.ToArray());
+        }
+        else
+        {
+            lineRenderer.enabled = false;
+        }
     }
 }

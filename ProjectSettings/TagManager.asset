@@ -58,6 +58,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: HookRope
+    uniqueID: 1601318739
+    locked: 0
   - name: Characters and Weapons
     uniqueID: 2406066285
     locked: 0

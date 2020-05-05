@@ -148,15 +148,6 @@ public class PlayerController : MonoBehaviour
 
         if (HealthBarImage)
         {
-            //if (HealthBarImage.fillAmount < targetHealth)
-            //{
-            //    HealthBarImage.fillAmount += Time.deltaTime;
-            //}
-            //else if (HealthBarImage.fillAmount > targetHealth)
-            //{
-            //    HealthBarImage.fillAmount -= Time.deltaTime;
-            //}
-
             HealthBarImage.fillAmount = playerHealth / 100;
         }
 
@@ -172,8 +163,7 @@ public class PlayerController : MonoBehaviour
                 healTimer = 0f;
                 healingAnimation.SetActive(false);
             }
-        }
-            
+        }  
     }
 
     void Move()
@@ -203,9 +193,6 @@ public class PlayerController : MonoBehaviour
                 {
                     SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[4]);
                 }
-
-                
-
                 RaftController.instance.change = change;
 
                 //Move the character with the raft
@@ -430,7 +417,6 @@ public class PlayerController : MonoBehaviour
             isSteeringRaft = false;
             RaftController.instance.raftIsInUse = false;
             RaftController.instance.raftUser = null;
-            Debug.Log("Player " + PlayerNumber + " stopped steering raft");
         }
         
     }
