@@ -108,7 +108,7 @@ public class AttackScript : MonoBehaviour
     {
         GameObject weapon = GetTypeOfWeapon();
         LockTarget(weapon);
-        if (weapon != null)
+        if (weapon != null && (!PlayerInterface.instance.gameOver || !PlayerInterface.instance.win))
             ThrowWeapon(weapon, weapon.transform.position, Target,
                 AIController.instance.hitAccuracy, AIController.instance.throwSpeed);
     }
@@ -182,11 +182,15 @@ public class AttackScript : MonoBehaviour
 
     void CompareWeaponPositionsToRaft(GameObject weapon)
     {
-        if (gameObject.transform.position.y < target.y && weapon.transform.position.y > target.y && 
+        if (gameObject.transform.position.y < target.y && weapon.transform.position.y > target.y &&
             !PlayerTracker.IsColliding)
             DisableWeapon(weapon);
+
         else if (gameObject.transform.position.y > target.y && weapon.transform.position.y < target.y &&
             !PlayerTracker.IsColliding)
+            DisableWeapon(weapon);
+
+        else if (PlayerInterface.instance.gameOver || PlayerInterface.instance.win)
             DisableWeapon(weapon);
     }
 

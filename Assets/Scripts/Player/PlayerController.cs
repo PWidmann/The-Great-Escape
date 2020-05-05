@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
     {
         if (OverLapBox.OverLappedCollider != null)
             OnOverLappingCollidersEnter2D();
-        else if (OverLapBox.OverLappedCollider == null && !hasExited)
+        else if (OverLapBox.OverLappedCollider == null || !hasExited)
             OnOverLappingCollidersExit2D();
 
         FillPlayerList();
@@ -503,7 +503,7 @@ public class PlayerController : MonoBehaviour
         {
             hasExited = false;
             playerInterface.repairInfoText.gameObject.SetActive(true);
-            playerInterface.ShowTextAbovePlayer(gameObject, playerInterface.repairInfoText);
+            playerInterface.ShowTextAbovePlayer(gameObject, playerInterface.repairInfoText, true);
             hole.Interact(this);
         }
 
@@ -518,7 +518,7 @@ public class PlayerController : MonoBehaviour
         {
             hasExited = false;
             playerInterface.destroyHookInfoText.gameObject.SetActive(true);
-            playerInterface.ShowTextAbovePlayer(gameObject, playerInterface.destroyHookInfoText);
+            playerInterface.ShowTextAbovePlayer(gameObject, playerInterface.destroyHookInfoText, true);
             hook.Interact(this);
 
         }
