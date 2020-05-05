@@ -22,6 +22,7 @@ public class AIController : MonoBehaviour
     [Header("General")]
     [Range(0.0f, 1f)] public float hitAccuracy;
     [Range(1f, 1000f)] public float throwSpeed;
+    [Range(1f, 1000f)] public float spearThrowSpeed;
     public float distanceBetweenAI = 8f;
 
     [Header("HookThrower")]
@@ -121,21 +122,26 @@ public class AIController : MonoBehaviour
         switch (aiDifficulty)
         {
             case AiDifficulty.Easy:
-                throwSpeed = 7f;
-                hitAccuracy = 0.95f;
-                minHookThrowDelayTimer = 6f;
-                maxHookThrowDelayTimer = 10f;
-                coolDownTimeInSeconds = 10000f;
+                throwSpeed = 14f;
+                spearThrowSpeed = 9f;
+                hitAccuracy = 0.991f;
+                minHookThrowDelayTimer = 20f;
+                maxHookThrowDelayTimer = 25f;
+                coolDownTimeInSeconds = 25f;
                 break;
+                // Game is balanced for one player at the moment because we can't test the balancing with only one
+                // person. So we focus on the easy difficulty for one player. 
             case AiDifficulty.Normal:
                 throwSpeed = 7f;
-                hitAccuracy = 0.97f;
+                spearThrowSpeed = 9f;
+                hitAccuracy = 0.995f;
                 minHookThrowDelayTimer = 5.5f;
                 maxHookThrowDelayTimer = 8.5f;
                 coolDownTimeInSeconds = 7.5f;
                 break;
             case AiDifficulty.Hard:
                 throwSpeed = 9f;
+                spearThrowSpeed = 9f;
                 hitAccuracy = 1f;
                 minHookThrowDelayTimer = 3f;
                 maxHookThrowDelayTimer = 6f;
@@ -146,10 +152,11 @@ public class AIController : MonoBehaviour
 
     void UseNoobModeSettings()
     {
-        minHookThrowDelayTimer = 35f;
-        maxHookThrowDelayTimer = 40f;
-        coolDownTimeInSeconds = 40f;
+        minHookThrowDelayTimer = 15f;
+        maxHookThrowDelayTimer = 20f;
+        coolDownTimeInSeconds = 20f;
         throwSpeed = 9f;
+        spearThrowSpeed = 9f;
         hitAccuracy = 1f;
     }
 

@@ -152,8 +152,10 @@ public class AttackScript : MonoBehaviour
         hasTargetLocked = true;
         Vector2 direction = (target - start).normalized;
 
-        weapon.GetComponent<Rigidbody2D>().AddForce(direction * hitAccuracy * throwSpeed);
-
+        if (isStoneThrower)
+            weapon.GetComponent<Rigidbody2D>().AddForce(direction * hitAccuracy * throwSpeed);
+        else
+            weapon.GetComponent<Rigidbody2D>().AddForce(direction * hitAccuracy * AIController.instance.spearThrowSpeed);
         hasNoWeaponInHand = true;
         CompareWeaponPositionsToRaft(weapon);
 
