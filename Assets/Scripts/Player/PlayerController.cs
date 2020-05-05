@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 change;
     public Vector2 changeToNormalize;
     public BoxCollider2D collider;
-    bool hasExited;
+    bool hasExited = true;
 
     //Raft
     public GameObject raft;
@@ -104,9 +104,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (OverLapBox.OverLappedCollider != null)
+        if (OverLapBox.OverLappedCollider != null && hasExited)
             OnOverLappingCollidersEnter2D();
-        else if (OverLapBox.OverLappedCollider == null || !hasExited)
+        else if ((OverLapBox.OverLappedCollider != overLapBox.PreviousOverlappedColliders || overLapBox.OverLappedCollider
+            == null) && !hasExited)
             OnOverLappingCollidersExit2D();
 
         FillPlayerList();
@@ -534,27 +535,27 @@ public class PlayerController : MonoBehaviour
 
     void OnOverLappingCollidersExit2D()
     {
-        if (overLapBox.PreviousOverlappedColliders != null &&
-           (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Medkit") ||
-            overLapBox.OverLappedCollider == null))
+        if (overLapBox.PreviousOverlappedColliders == null)
+            return; 
+
+        if (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Medkit") ||
+            overLapBox.OverLappedCollider == null || !overLapBox.OverLappedCollider.gameObject.tag.Equals("Medkit"))
         {
             //overLapBox.PreviousOverlappedColliders = null;
             hasExited = true;
             playerInterface.ResetInfoTexts(playerInterface.medKitInfoText, "Interact to heal");
         }
 
-        if (overLapBox.PreviousOverlappedColliders != null &&
-           (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hole") ||
-            overLapBox.OverLappedCollider == null))
+        if (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hole") ||
+            overLapBox.OverLappedCollider == null || !overLapBox.OverLappedCollider.gameObject.tag.Equals("Hole"))
         {
             //overLapBox.PreviousOverlappedColliders = null;
             hasExited = true;
             playerInterface.ResetInfoTexts(playerInterface.repairInfoText, "Interact to repair");
         }
 
-        if (overLapBox.PreviousOverlappedColliders != null &&
-           (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hook") ||
-            overLapBox.OverLappedCollider == null))
+        if (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hook") ||
+            overLapBox.OverLappedCollider == null || !overLapBox.OverLappedCollider.gameObject.tag.Equals("Hook"))
         {
             hasExited = true;
             playerInterface.ResetInfoTexts(playerInterface.destroyHookInfoText, "Attack!");

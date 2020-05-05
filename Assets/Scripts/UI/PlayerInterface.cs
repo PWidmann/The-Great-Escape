@@ -77,7 +77,7 @@ public class PlayerInterface : MonoBehaviour
         player3health.SetActive(false);
         player4health.SetActive(false);
         repairInfoText.gameObject.SetActive(false);
-        medKitInfoText.text = "Press E/Button A to heal";
+        medKitInfoText.text = "Interact to heal";
         medKitInfoText.gameObject.SetActive(false);
         endScreenPanel.SetActive(false);
 
