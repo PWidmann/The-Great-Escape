@@ -80,7 +80,12 @@ public class AIController : MonoBehaviour
             StartCoroutine(Attack(delayTimer));
 
         if (!isPreperingHook && !isDebugging)
-            hookThrowers[Random.Range(0, hookThrowers.Count)].GetHookInstantiationReady();
+        {
+            int randomHookThrower = Random.Range(0, hookThrowers.Count);
+            hookThrowers[randomHookThrower].ThisIsActive = true;
+            hookThrowers[randomHookThrower].GetHookInstantiationReady();
+            
+        }
 
         if (!PlayerInterface.instance.gameOver || !PlayerInterface.instance.win)
             distanceToRaft = GetDistanceBetweenAIandRaft();
@@ -123,7 +128,7 @@ public class AIController : MonoBehaviour
                 hitAccuracy = 0.991f;
                 minHookThrowDelayTimer = 20f;
                 maxHookThrowDelayTimer = 25f;
-                coolDownTimeInSeconds = 25f;
+                coolDownTimeInSeconds = 5f;
                 break;
                 // Game is balanced for one player at the moment because we can't test the balancing with only one
                 // person. So we focus on the easy difficulty for one player. 

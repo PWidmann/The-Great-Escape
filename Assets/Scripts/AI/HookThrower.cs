@@ -26,12 +26,15 @@ public class HookThrower : MonoBehaviour
 
     Pathfinder pathfinder;
     AttackScript attackScript;
+    float nextThrowCoolDown;
+    bool thisIsActive = false;
 
     // Hook rope
     public LineRenderer lineRenderer;
     public Material lineRendererMaterial;
 
     public static bool HookInstantiated { get => hookInstantiated; set => hookInstantiated = value; }
+    public bool ThisIsActive { get => thisIsActive; set => thisIsActive = value; }
 
     void Start()
     {
@@ -70,6 +73,9 @@ public class HookThrower : MonoBehaviour
         if (AIController.RaftHooked)
             MakeHookAsChildGameObject();
 
+        if (!hookInstantiated && thisIsActive && RaftController.AllPlayersOnRaft && isPullingHook)
+            InstantiateHook();
+
         HookRope();
     }
 
@@ -79,15 +85,6 @@ public class HookThrower : MonoBehaviour
             ThrowHook(hookThrowerAccuaracy, AIController.instance.throwSpeed);
     }
 
-    public void MakeAction()
-    {
-        if (!AIController.RaftHooked && RaftController.AllPlayersOnRaft && !PlayerController.instance.GameOver)
-        {
-            attackScript.PrepareAttack();
-            AIController.IsMakingAction = true;
-        }
-    }
-
     public void GetHookInstantiationReady()
     {
         if (!AIController.instance.isWaitingForAi)
@@ -95,32 +92,25 @@ public class HookThrower : MonoBehaviour
             // First instanitation of hook object.
             if (!hookInstantiated && !isInstantiating && RaftController.AllPlayersOnRaft)
             {
-                isPullingHook = true;
-                PrepereHookInstantiation();
                 AIController.IsPreperingHook = true;
+                isPullingHook = true;
             }
         }
     }
 
-    void PrepereHookInstantiation()
-    {
-        if (!RaftController.HookMoving)
-            Invoke("InstantiateHook", Random.Range(AIController.instance.minHookThrowDelayTimer,
-                AIController.instance.maxHookThrowDelayTimer));
-
-        randomHoleNumber = Random.Range(0, HoleManager.Instance.holes.Count);
-
-        isInstantiating = true;
-    }
-
     void InstantiateHook()
     {
-        hook = Instantiate(hookPrefab, transform.position, Quaternion.identity);
-        if (gameObject.transform.position.y > raftObject.transform.position.y)
-            hook.transform.Rotate(new Vector3(0, 0, 180));
-        
-        hookInstantiated = true;
-        RaftController.HookMoving = true;
+        if (Time.time > nextThrowCoolDown)
+        {
+            hook = Instantiate(hookPrefab, transform.position, Quaternion.identity);
+            if (gameObject.transform.position.y > raftObject.transform.position.y)
+                hook.transform.Rotate(new Vector3(0, 0, 180));
+
+            hookInstantiated = true;
+            isInstantiating = true;
+            RaftController.HookMoving = true;
+            nextThrowCoolDown = Time.time + AIController.instance.coolDownTimeInSeconds;
+        }
     }
 
     void LockTarget()
@@ -152,6 +142,7 @@ public class HookThrower : MonoBehaviour
     public void DestroyHook()
     {
         Destroy(hook);
+        thisIsActive = false;
         AIController.RaftHooked = false;
         AIController.IsPreperingHook = false;
         hookInstantiated = false;
