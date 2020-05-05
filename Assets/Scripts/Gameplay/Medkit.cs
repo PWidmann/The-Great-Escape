@@ -32,7 +32,7 @@ public class Medkit : MonoBehaviour, Iinteractable
     {
         SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[10], medkitAudio);
         playerInterface.medKitInfoText.text = "You healed yourself.";
-        playerController.playerHealth += 80;
+        playerController.playerHealth += 60f;
         playerController.IsHealing = true;
 
         if (playerController.playerHealth > 100)
