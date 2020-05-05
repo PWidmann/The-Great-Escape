@@ -672,7 +672,7 @@ MonoBehaviour:
   isSteeringRaft: 0
   hasShield: 0
   hasTreasure: 0
-  playerHealth: 1
+  playerHealth: 9999999
   HealthBarImage: {fileID: 327132203585895517}
   healingAnimation: {fileID: 1906128057}
 --- !u!212 &119013016
@@ -11094,7 +11094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startWithTutorial: 0
-  skipGameToFinish: 1
+  skipGameToFinish: 0
   tutorialPanel: {fileID: 1018889221}
   tutorialActive: 0
   leafCountText: {fileID: 1397049204}
