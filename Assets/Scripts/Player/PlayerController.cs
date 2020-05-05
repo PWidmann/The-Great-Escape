@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 change;
     public Vector2 changeToNormalize;
     public BoxCollider2D collider;
-    bool hasExited = true;
+    bool hasExited;
 
     //Raft
     public GameObject raft;
@@ -104,10 +104,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (OverLapBox.OverLappedCollider != null && hasExited)
+        if (OverLapBox.OverLappedCollider != null)
             OnOverLappingCollidersEnter2D();
-        else if ((OverLapBox.OverLappedCollider != overLapBox.PreviousOverlappedColliders || overLapBox.OverLappedCollider
-            == null) && !hasExited)
+        else if (OverLapBox.OverLappedCollider == null || !hasExited)
             OnOverLappingCollidersExit2D();
 
         FillPlayerList();
@@ -148,6 +147,15 @@ public class PlayerController : MonoBehaviour
 
         if (HealthBarImage)
         {
+            //if (HealthBarImage.fillAmount < targetHealth)
+            //{
+            //    HealthBarImage.fillAmount += Time.deltaTime;
+            //}
+            //else if (HealthBarImage.fillAmount > targetHealth)
+            //{
+            //    HealthBarImage.fillAmount -= Time.deltaTime;
+            //}
+
             HealthBarImage.fillAmount = playerHealth / 100;
         }
 
@@ -163,7 +171,8 @@ public class PlayerController : MonoBehaviour
                 healTimer = 0f;
                 healingAnimation.SetActive(false);
             }
-        }  
+        }
+            
     }
 
     void Move()
@@ -193,6 +202,9 @@ public class PlayerController : MonoBehaviour
                 {
                     SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[4]);
                 }
+
+                
+
                 RaftController.instance.change = change;
 
                 //Move the character with the raft
@@ -417,6 +429,7 @@ public class PlayerController : MonoBehaviour
             isSteeringRaft = false;
             RaftController.instance.raftIsInUse = false;
             RaftController.instance.raftUser = null;
+            Debug.Log("Player " + PlayerNumber + " stopped steering raft");
         }
         
     }
@@ -521,27 +534,27 @@ public class PlayerController : MonoBehaviour
 
     void OnOverLappingCollidersExit2D()
     {
-        if (overLapBox.PreviousOverlappedColliders == null)
-            return; 
-
-        if (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Medkit") ||
-            overLapBox.OverLappedCollider == null || !overLapBox.OverLappedCollider.gameObject.tag.Equals("Medkit"))
+        if (overLapBox.PreviousOverlappedColliders != null &&
+           (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Medkit") ||
+            overLapBox.OverLappedCollider == null))
         {
             //overLapBox.PreviousOverlappedColliders = null;
             hasExited = true;
             playerInterface.ResetInfoTexts(playerInterface.medKitInfoText, "Interact to heal");
         }
 
-        if (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hole") ||
-            overLapBox.OverLappedCollider == null || !overLapBox.OverLappedCollider.gameObject.tag.Equals("Hole"))
+        if (overLapBox.PreviousOverlappedColliders != null &&
+           (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hole") ||
+            overLapBox.OverLappedCollider == null))
         {
             //overLapBox.PreviousOverlappedColliders = null;
             hasExited = true;
             playerInterface.ResetInfoTexts(playerInterface.repairInfoText, "Interact to repair");
         }
 
-        if (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hook") ||
-            overLapBox.OverLappedCollider == null || !overLapBox.OverLappedCollider.gameObject.tag.Equals("Hook"))
+        if (overLapBox.PreviousOverlappedColliders != null &&
+           (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hook") ||
+            overLapBox.OverLappedCollider == null))
         {
             hasExited = true;
             playerInterface.ResetInfoTexts(playerInterface.destroyHookInfoText, "Attack!");

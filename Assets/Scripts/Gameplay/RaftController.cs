@@ -99,6 +99,8 @@ public class RaftController : MonoBehaviour
         else
             return;
         RudderMovement(change);
+
+        Debug.Log("RaftSpeed: " + moveSpeed);
     }
 
     private void FixedUpdate()
