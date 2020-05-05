@@ -158,7 +158,7 @@ public class TileMapGenerator : MonoBehaviour
             tilesDraw += viewDistance;
 
             // delete tiles behind player
-            if (RaftController.instance.GetRaftPos().x > tilesDeleted + 50)
+            if (RaftController.instance.GetRaftPos().x > tilesDeleted + viewDistance)
             {
                 for (int x2 = tilesDeleted; x2 < (tilesDeleted + viewDistance); x2++)
                 {
@@ -168,8 +168,9 @@ public class TileMapGenerator : MonoBehaviour
                         waterTilemap.SetTile(new Vector3Int(x2, y2, 0), null);
                     }
                 }
+                tilesDeleted += viewDistance;
             }
-            tilesDeleted += viewDistance;
+            
         }
     }
 
