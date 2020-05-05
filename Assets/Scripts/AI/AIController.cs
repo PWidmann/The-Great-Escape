@@ -71,7 +71,7 @@ public class AIController : MonoBehaviour
 
         if (!isMakingAction && !isDebugging && !isWaitingForAi)
         {
-            hookThrowers[Random.Range(0, hookThrowers.Count)].MakeAction();
+            //hookThrowers[Random.Range(0, hookThrowers.Count)].MakeAction();
             stoneThrowers[Random.Range(0, stoneThrowers.Count)].MakeAction();
             spearThrowers[Random.Range(0, spearThrowers.Count)].MakeAction();
         }
@@ -121,7 +121,7 @@ public class AIController : MonoBehaviour
                 hitAccuracy = 0.95f;
                 minHookThrowDelayTimer = 6f;
                 maxHookThrowDelayTimer = 10f;
-                coolDownTimeInSeconds = 10f;
+                coolDownTimeInSeconds = 10000f;
                 break;
             case AiDifficulty.Normal:
                 throwSpeed = 7f;

@@ -42,6 +42,7 @@ public class HoleManager : MonoBehaviour, Iinteractable
         SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[7]);
         playerInterface.medKitInfoText.text = "You repaired the hole.";
         holes.Add(playerController.OverLapBox.OverLappedCollider.gameObject);
+        RaftController.instance.moveSpeed += 0.5f;
         RaftHoleActivator.DisableSpriteRenderer(playerController.OverLapBox.OverLappedCollider.gameObject);
 
         playerInterface.stickCount--;
