@@ -162,11 +162,17 @@ public class PlayerInterface : MonoBehaviour
         if (player4Object)
             p1distance = Vector2.Distance(player1Object.transform.position, endFlag.transform.position);
 
-        if (p1distance < 1f || p2distance < 1f || p3distance < 1f || p4distance < 1f)
+        if ((p1distance < 1f || p2distance < 1f || p3distance < 1f || p4distance < 1f) &&
+            PlayerController.hasTreasureTaken)
         {
             win = true;
             endScreenPanel.SetActive(true);
         }
+        else if ((p1distance < 1f || p2distance < 1f || p3distance < 1f || p4distance < 1f) &&
+            !PlayerController.hasTreasureTaken)
+            treasureWarningText.gameObject.SetActive(true);
+        else 
+            treasureWarningText.gameObject.SetActive(false);
     }
 
     void CheckRaftPositionAndSetCollision()
