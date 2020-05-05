@@ -61,7 +61,11 @@ public class AIController : MonoBehaviour
     { 
         GetThrowerObjectScriptComponents();
         LoadAiDifficulty();
-        SetThrowValuesDependingOnDifficulty();
+
+        if (!TileMapGenerator.instance.NoobMode)
+            SetThrowValuesDependingOnDifficulty();
+        else
+            UseNoobModeSettings();
     }
 
     // Update is called once per frame
@@ -78,8 +82,8 @@ public class AIController : MonoBehaviour
         else if (!isMakingAction && !isDebugging && isWaitingForAi)
             StartCoroutine(Attack(delayTimer));
 
-        //if (!isPreperingHook && !isDebugging)
-        //    hookThrowers[Random.Range(0, hookThrowers.Count)].GetHookInstantiationReady();
+        if (!isPreperingHook && !isDebugging)
+            hookThrowers[Random.Range(0, hookThrowers.Count)].GetHookInstantiationReady();
 
         if (!PlayerInterface.instance.gameOver || !PlayerInterface.instance.win)
             distanceToRaft = GetDistanceBetweenAIandRaft();
@@ -138,6 +142,15 @@ public class AIController : MonoBehaviour
                 coolDownTimeInSeconds = 5f;
                 break;
         }
+    }
+
+    void UseNoobModeSettings()
+    {
+        minHookThrowDelayTimer = 35f;
+        maxHookThrowDelayTimer = 40f;
+        coolDownTimeInSeconds = 40f;
+        throwSpeed = 9f;
+        hitAccuracy = 1f;
     }
 
     public void StartAttackWithDelay()
