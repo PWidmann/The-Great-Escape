@@ -55,8 +55,6 @@ public class HookThrower : MonoBehaviour
             return;
         }
 
-        if (hookInstantiated && !AIController.RaftHooked && hook != null)
-            ThrowHook(hookThrowerAccuaracy, AIController.instance.throwSpeed);
 
         if (hookInstantiated && hook != null)
         {
@@ -75,6 +73,13 @@ public class HookThrower : MonoBehaviour
 
         HookRope();
 
+    }
+
+    private void FixedUpdate()
+    {
+
+        if (hookInstantiated && !AIController.RaftHooked && hook != null)
+            ThrowHook(hookThrowerAccuaracy, AIController.instance.throwSpeed);
     }
 
     public void MakeAction()
