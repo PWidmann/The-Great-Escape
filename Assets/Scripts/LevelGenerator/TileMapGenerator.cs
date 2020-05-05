@@ -48,6 +48,8 @@ public class TileMapGenerator : MonoBehaviour
     int viewDistance = 100;
     int tilesDraw = 0;
 
+    int tilesDeleted = 0;
+
     public bool NoobMode { get => noobMode; set => noobMode = value; }
 
     private void Awake()
@@ -154,6 +156,20 @@ public class TileMapGenerator : MonoBehaviour
                 }
             }
             tilesDraw += viewDistance;
+
+            // delete tiles behind player
+            if (RaftController.instance.GetRaftPos().x > tilesDeleted + 50)
+            {
+                for (int x2 = tilesDeleted; x2 < (tilesDeleted + viewDistance); x2++)
+                {
+                    for (int y2 = 0; y2 < mapHeight; y2++)
+                    {
+                        groundTilemap.SetTile(new Vector3Int(x2, y2, 0), null);
+                        waterTilemap.SetTile(new Vector3Int(x2, y2, 0), null);
+                    }
+                }
+            }
+            tilesDeleted += viewDistance;
         }
     }
 
