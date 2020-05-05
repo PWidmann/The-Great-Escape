@@ -429,7 +429,6 @@ public class PlayerController : MonoBehaviour
             isSteeringRaft = false;
             RaftController.instance.raftIsInUse = false;
             RaftController.instance.raftUser = null;
-            Debug.Log("Player " + PlayerNumber + " stopped steering raft");
         }
         
     }

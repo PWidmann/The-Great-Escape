@@ -298,6 +298,7 @@ GameObject:
   - component: {fileID: 86519851}
   - component: {fileID: 86519853}
   - component: {fileID: 86519852}
+  - component: {fileID: 86519854}
   m_Layer: 5
   m_Name: InventoryPanel
   m_TagString: Untagged
@@ -362,6 +363,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 86519850}
   m_CullTransparentMesh: 0
+--- !u!210 &86519854
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86519850}
+  m_Enabled: 1
+  m_SortingLayerID: -159632061
+  m_SortingLayer: 3
+  m_SortingOrder: 1
 --- !u!1 &97896831
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,7 +684,7 @@ MonoBehaviour:
   isSteeringRaft: 0
   hasShield: 0
   hasTreasure: 0
-  playerHealth: 1
+  playerHealth: 100
   HealthBarImage: {fileID: 327132203585895517}
   healingAnimation: {fileID: 1906128057}
 --- !u!212 &119013016
@@ -2610,7 +2622,7 @@ MonoBehaviour:
   isSteeringRaft: 0
   hasShield: 0
   hasTreasure: 0
-  playerHealth: 70
+  playerHealth: 100
   HealthBarImage: {fileID: 315811672}
   healingAnimation: {fileID: 697449625}
 --- !u!212 &418068503
@@ -5285,7 +5297,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 125, y: -83.65996}
+  m_AnchoredPosition: {x: 125, y: -83.65997}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &769818911
@@ -6971,8 +6983,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 5000
+  m_SortingLayerID: -159632061
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1028916062
 RectTransform:
@@ -7761,7 +7773,7 @@ PrefabInstance:
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
       propertyPath: isWaitingForAi
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
@@ -11094,7 +11106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startWithTutorial: 0
-  skipGameToFinish: 1
+  skipGameToFinish: 0
   tutorialPanel: {fileID: 1018889221}
   tutorialActive: 0
   leafCountText: {fileID: 1397049204}
