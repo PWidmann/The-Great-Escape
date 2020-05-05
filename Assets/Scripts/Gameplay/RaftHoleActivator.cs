@@ -40,7 +40,7 @@ public class RaftHoleActivator : MonoBehaviour
             holeSprite.enabled = true;
             spriteEnabled = true;
             isHit = true;
-            RaftController.instance.moveSpeed -= 0.5f;
+            RaftController.instance.moveSpeed -= 0.13f;
             if (RaftController.instance.moveSpeed < 0)
                 RaftController.instance.moveSpeed = 1;
         }

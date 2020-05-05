@@ -10,8 +10,8 @@ public class HoleManager : MonoBehaviour, Iinteractable
     static HoleManager instance = null;
     public List<GameObject> holes;
 
-    public AttackScript attackScriptHookThrowerReference;
-    public AttackScript attackScriptStoneThrowerReference;
+    //public AttackScript attackScriptHookThrowerReference;
+    //public AttackScript attackScriptStoneThrowerReference;
 
     public static HoleManager Instance { get => instance; }
 
@@ -41,8 +41,7 @@ public class HoleManager : MonoBehaviour, Iinteractable
     {
         SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[7]);
         playerInterface.medKitInfoText.text = "You repaired the hole.";
-        holes.Add(playerController.OverLapBox.OverLappedCollider.gameObject);
-        RaftController.instance.moveSpeed += 0.5f;
+        RaftController.instance.moveSpeed += 0.13f;
         RaftHoleActivator.DisableSpriteRenderer(playerController.OverLapBox.OverLappedCollider.gameObject);
 
         playerInterface.stickCount--;
