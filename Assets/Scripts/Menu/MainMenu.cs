@@ -102,7 +102,15 @@ public class MainMenu : MonoBehaviour
         if (PlayerPrefs.HasKey("levelLength"))
             UIManagement.instance.levelLengthSlider.value = PlayerPrefs.GetInt("levelLength");
         else
-            UIManagement.instance.levelLengthSlider.value = 1000;
+        {
+            if (TileMapGenerator.instance.NoobMode)
+            {
+                UIManagement.instance.levelLengthSlider.value = 1000;
+            }
+            else
+                UIManagement.instance.levelLengthSlider.value = 3000;
+        }
+            
 
         UIManagement.instance.mainMenu.SetActive(false);
         UIManagement.instance.gameOptionsMenu.SetActive(true);
