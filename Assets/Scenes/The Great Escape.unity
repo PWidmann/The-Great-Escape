@@ -7713,7 +7713,7 @@ PrefabInstance:
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
       propertyPath: isDebugging
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
@@ -7773,7 +7773,7 @@ PrefabInstance:
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
       propertyPath: isWaitingForAi
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 846531031370514743, guid: 4aaf994307d90d14490b8d39dbd357c0,
         type: 3}
@@ -9405,7 +9405,7 @@ MonoBehaviour:
   player3: {fileID: 119013013}
   player4: {fileID: 2038882285}
   pickupAmount: 0
-  noobMode: 1
+  noobMode: 0
   pickUps:
   - {fileID: 4444447598075770771, guid: c6e7f0329770b1745a9745b9126c754d, type: 3}
   - {fileID: 4444447598075770771, guid: 442c1d30c715adc4c91b3a811431d0ab, type: 3}
@@ -10294,7 +10294,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.0058785, y: 18.999695}
+  m_AnchoredPosition: {x: 0.0058785, y: 18.999725}
   m_SizeDelta: {x: 1597.5, y: 84.78}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!61 &1577174460

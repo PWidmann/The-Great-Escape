@@ -102,7 +102,7 @@ public class MainMenu : MonoBehaviour
         if (PlayerPrefs.HasKey("levelLength"))
             UIManagement.instance.levelLengthSlider.value = PlayerPrefs.GetInt("levelLength");
         else
-            UIManagement.instance.levelLengthSlider.value = 300;
+            UIManagement.instance.levelLengthSlider.value = 1000;
 
         UIManagement.instance.mainMenu.SetActive(false);
         UIManagement.instance.gameOptionsMenu.SetActive(true);
@@ -488,12 +488,14 @@ public class MainMenu : MonoBehaviour
             { 
                 UIManagement.instance.pickUpAmountSlider.value += Input.GetAxisRaw("J1Horizontal");
                 UIManagement.instance.pickUpAmountSlider.value += Input.GetAxisRaw("Horizontal");
+                PlayerPrefs.SetInt("pickUpAmount", (int)UIManagement.instance.pickUpAmountSlider.value);
             }
 
             if (gameOptionSelectedButton == 5)
             {
-                UIManagement.instance.levelLengthSlider.value += Input.GetAxisRaw("J1Horizontal");
-                UIManagement.instance.levelLengthSlider.value += Input.GetAxisRaw("Horizontal");
+                UIManagement.instance.levelLengthSlider.value += 5 * Input.GetAxisRaw("J1Horizontal");
+                UIManagement.instance.levelLengthSlider.value += 5 * Input.GetAxisRaw("Horizontal");
+                PlayerPrefs.SetInt("levelLength", (int)UIManagement.instance.levelLengthSlider.value);
             }
         }
     }

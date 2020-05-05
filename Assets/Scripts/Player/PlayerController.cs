@@ -133,6 +133,8 @@ public class PlayerController : MonoBehaviour
 
         if (PlayerInterface.instance.win && winAudioCounter == 0)
             UpdateSoundFx();
+
+        
     }
 
     private void FixedUpdate()

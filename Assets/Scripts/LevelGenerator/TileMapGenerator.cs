@@ -45,6 +45,9 @@ public class TileMapGenerator : MonoBehaviour
 
     public int[,] mapArray;
 
+    int viewDistance = 100;
+    int tilesDraw = 0;
+
     public bool NoobMode { get => noobMode; set => noobMode = value; }
 
     private void Awake()
@@ -61,6 +64,11 @@ public class TileMapGenerator : MonoBehaviour
         GenerateTileMap();
     }
 
+    private void Update()
+    {
+        LoadNextTiles();
+    }
+
     private void LoadMapValues()
     {
 
@@ -73,7 +81,7 @@ public class TileMapGenerator : MonoBehaviour
         if (PlayerPrefs.HasKey("levelLength"))
             mapWidth = PlayerPrefs.GetInt("levelLength");
         else
-            mapWidth = 300;
+            mapWidth = 1000;
     }
 
     private void GenerateTileMap()
@@ -87,7 +95,8 @@ public class TileMapGenerator : MonoBehaviour
         GenerateMapArray();
         
 
-        for (int x = 0; x < mapWidth; x++)
+
+        for (int x = tilesDraw; x < (tilesDraw + viewDistance); x++)
         {
             for (int y = 0; y < mapHeight; y++)
             {
@@ -107,8 +116,45 @@ public class TileMapGenerator : MonoBehaviour
                 }
             }
         }
+
+        tilesDraw += viewDistance;
+
+        
+
         GeneratePickups();
         GeneratePlants();
+    }
+
+
+    public void LoadNextTiles()
+    {
+        if (RaftController.instance.GetRaftPos().x > tilesDraw - 50)
+        {
+            for (int x = tilesDraw; x < (tilesDraw + viewDistance); x++)
+            {
+                if (x <= mapWidth -1)
+                {
+                    for (int y = 0; y < mapHeight; y++)
+                    {
+                        switch (mapArray[x, y])
+                        {
+                            case 0:
+                                // Set grass tile
+                                int rnd = Random.Range(0, 3);
+                                groundTilemap.SetTile(new Vector3Int(x, y, 0), tileArray[rnd]);
+                                break;
+                            case 1:
+                                // Set water tile
+                                waterTilemap.SetTile(new Vector3Int(x, y, 0), animatedTileArray[0]);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            tilesDraw += viewDistance;
+        }
     }
 
     public void GenerateMapArray()
@@ -122,8 +168,8 @@ public class TileMapGenerator : MonoBehaviour
             }
         }
 
+
         // Draw river
-        // Vector2Int riverStart = new Vector2Int(10, (int)Math.Round(mapHeight/2, 0));
 
         Vector2Int riverStart = new Vector2Int(10, borderHeight + 10);
 
@@ -153,12 +199,12 @@ public class TileMapGenerator : MonoBehaviour
             {
                 mapArray[riverStart.x + x, riverStart.y + y] = 1;   
             }
-
+        
             if (x % 7 == 0)
             {
                 riverStart.y += riverHeightChange;
-
-
+        
+        
             }
             if (x % 35 == 0 && x != 0)
             {
@@ -169,6 +215,9 @@ public class TileMapGenerator : MonoBehaviour
 
     public void GeneratePickups()
     {
+        Transform leafObject = pickUps[0].transform;
+        Transform stickObject = pickUps[1].transform;
+
         for (int x = 21; x < mapWidth; x++)
         {
             for (int y = 0; y < mapHeight; y++)
@@ -196,8 +245,7 @@ public class TileMapGenerator : MonoBehaviour
                             break;
                     }
 
-                    Transform leafObject = pickUps[0].transform;
-                    Transform stickObject = pickUps[1].transform;
+                    
 
                     leafObject.Rotate(Vector3.forward * rotationChange);
                     stickObject.Rotate(Vector3.forward * rotationChange);
