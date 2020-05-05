@@ -39,6 +39,12 @@ public class PreGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("J1ButtonB") || Input.GetButtonDown("J2ButtonB") || Input.GetButtonDown("J3ButtonB") || Input.GetButtonDown("J4ButtonB"))
+        {
+            if(!confirmPlayers)
+                SceneManager.LoadScene("Main Menu");
+        }
+
         PlayerPanels();
         ConfirmPlayers();
     }
