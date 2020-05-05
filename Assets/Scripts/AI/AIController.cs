@@ -19,6 +19,8 @@ public class AIController : MonoBehaviour
 
     public static AIController instance;
 
+    
+
     [Header("General")]
     [Range(0.0f, 1f)] public float hitAccuracy;
     [Range(1f, 1000f)] public float throwSpeed;

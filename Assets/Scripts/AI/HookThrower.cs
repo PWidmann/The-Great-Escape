@@ -24,6 +24,9 @@ public class HookThrower : MonoBehaviour
     bool isPullingHook = false;
     float hookThrowerAccuaracy = 1f;
 
+    float nextThrowCooldown;
+
+
     Pathfinder pathfinder;
     AttackScript attackScript;
 
@@ -96,8 +99,8 @@ public class HookThrower : MonoBehaviour
             if (!hookInstantiated && !isInstantiating && RaftController.AllPlayersOnRaft)
             {
                 isPullingHook = true;
-                PrepereHookInstantiation();
                 AIController.IsPreperingHook = true;
+                PrepereHookInstantiation();
             }
         }
     }
@@ -105,8 +108,10 @@ public class HookThrower : MonoBehaviour
     void PrepereHookInstantiation()
     {
         if (!RaftController.HookMoving)
-            Invoke("InstantiateHook", Random.Range(AIController.instance.minHookThrowDelayTimer,
-                AIController.instance.maxHookThrowDelayTimer));
+        {
+            InstantiateHook();
+        }
+            
 
         randomHoleNumber = Random.Range(0, HoleManager.Instance.holes.Count);
 
@@ -116,11 +121,13 @@ public class HookThrower : MonoBehaviour
     void InstantiateHook()
     {
         hook = Instantiate(hookPrefab, transform.position, Quaternion.identity);
-        if (gameObject.transform.position.y > raftObject.transform.position.y)
+        if (Time.time > nextThrowCooldown)
+        {
             hook.transform.Rotate(new Vector3(0, 0, 180));
-        
-        hookInstantiated = true;
-        RaftController.HookMoving = true;
+            hookInstantiated = true;
+            RaftController.HookMoving = true;
+            nextThrowCooldown = Time.time + AIController.instance.coolDownTimeInSeconds;
+        }
     }
 
     void LockTarget()
