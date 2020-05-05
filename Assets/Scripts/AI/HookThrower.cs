@@ -22,6 +22,7 @@ public class HookThrower : MonoBehaviour
     bool startAttack = false;
 
     bool isPullingHook = false;
+    float hookThrowerAccuaracy = 1f;
 
     Pathfinder pathfinder;
     AttackScript attackScript;
@@ -55,19 +56,15 @@ public class HookThrower : MonoBehaviour
         }
 
         if (hookInstantiated && !AIController.RaftHooked && hook != null)
-            ThrowHook(AIController.instance.hitAccuracy, AIController.instance.throwSpeed);
+            ThrowHook(hookThrowerAccuaracy, AIController.instance.throwSpeed);
 
         if (hookInstantiated && hook != null)
         {
-            //bool isAboveRaft = hook.transform.position.y > AIController.instance.raftTransform.transform.position.y;
-            //if (isAboveRaft && hook.transform.position.y <= target.y && !AIController.RaftHooked)
-            //    DestroyHook();
-            //else if (!isAboveRaft && hook.transform.position.y >= target.y && !AIController.RaftHooked)
-            //    DestroyHook();
-            if (!AIController.RaftHooked)
-            {
-                Invoke("DestroyHook", 5f);
-            }
+            bool isAboveRaft = hook.transform.position.y > AIController.instance.raftTransform.transform.position.y;
+            if (isAboveRaft && hook.transform.position.y <= target.y && !AIController.RaftHooked)
+                DestroyHook();
+            else if (!isAboveRaft && hook.transform.position.y >= target.y && !AIController.RaftHooked)
+                DestroyHook();
 
         }
 
