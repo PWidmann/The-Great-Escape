@@ -79,7 +79,6 @@ public class MainMenu : MonoBehaviour
 
         ChangeButtonAppearance(mainMenuSelectedButton, gameOptionSelectedButton, soundOptionSelectedButton, pauseMenuSelectedButton);
         ChangeSliderValue();
-
     }
 
     public void ButtonStart()
@@ -93,11 +92,6 @@ public class MainMenu : MonoBehaviour
     {
         isInGameOptionsMenu = true;
         gameOptionSelectedButton = 1;
-
-        if (PlayerPrefs.HasKey("pickUpAmount"))
-            UIManagement.instance.pickUpAmountSlider.value = PlayerPrefs.GetInt("pickUpAmount");
-        else
-            UIManagement.instance.pickUpAmountSlider.value = 55;
 
         if (PlayerPrefs.HasKey("levelLength"))
             UIManagement.instance.levelLengthSlider.value = PlayerPrefs.GetInt("levelLength");
@@ -192,8 +186,6 @@ public class MainMenu : MonoBehaviour
                     case 4:
                         break;
                     case 5:
-                        break;
-                    case 6:
                         ButtonSaveSettings();
                         break;
                 }
@@ -263,7 +255,7 @@ public class MainMenu : MonoBehaviour
             {
                 gameOptionSelectedButton -= 1;
                 if (gameOptionSelectedButton == 0)
-                    gameOptionSelectedButton = 6;
+                    gameOptionSelectedButton = 5;
             }
             else if (isInSoundMenu)
             {
@@ -299,7 +291,7 @@ public class MainMenu : MonoBehaviour
             if (isInGameOptionsMenu)
             {
                 gameOptionSelectedButton += 1;
-                if (gameOptionSelectedButton == 7)
+                if (gameOptionSelectedButton == 6)
                     gameOptionSelectedButton = 1;
             }
             else if (isInSoundMenu)
@@ -338,7 +330,6 @@ public class MainMenu : MonoBehaviour
                     easyButton.IsSelectedButton = true;
                     mediumButton.IsSelectedButton = false;
                     hardButton.IsSelectedButton = false;
-                    pickUpAmountSlider.IsSelectedSlider = false;
                     levelLengthSlider.IsSelectedSlider = false;
                     saveOptionSettingsButton.IsSelectedButton = false;
                     break;
@@ -346,7 +337,6 @@ public class MainMenu : MonoBehaviour
                     easyButton.IsSelectedButton = false;
                     mediumButton.IsSelectedButton = true;
                     hardButton.IsSelectedButton = false;
-                    pickUpAmountSlider.IsSelectedSlider = false;
                     levelLengthSlider.IsSelectedSlider = false;
                     saveOptionSettingsButton.IsSelectedButton = false;
                     break;
@@ -354,7 +344,6 @@ public class MainMenu : MonoBehaviour
                     easyButton.IsSelectedButton = false;
                     mediumButton.IsSelectedButton = false;
                     hardButton.IsSelectedButton = true;
-                    pickUpAmountSlider.IsSelectedSlider = false;
                     levelLengthSlider.IsSelectedSlider = false;
                     saveOptionSettingsButton.IsSelectedButton = false;
                     break;
@@ -362,23 +351,13 @@ public class MainMenu : MonoBehaviour
                     easyButton.IsSelectedButton = false;
                     mediumButton.IsSelectedButton = false;
                     hardButton.IsSelectedButton = false;
-                    pickUpAmountSlider.IsSelectedSlider = true;
-                    levelLengthSlider.IsSelectedSlider = false;
+                    levelLengthSlider.IsSelectedSlider = true;
                     saveOptionSettingsButton.IsSelectedButton = false;
                     break;
                 case 5:
                     easyButton.IsSelectedButton = false;
                     mediumButton.IsSelectedButton = false;
                     hardButton.IsSelectedButton = false;
-                    pickUpAmountSlider.IsSelectedSlider = false;
-                    levelLengthSlider.IsSelectedSlider = true;
-                    saveOptionSettingsButton.IsSelectedButton = false;
-                    break;
-                case 6:
-                    easyButton.IsSelectedButton = false;
-                    mediumButton.IsSelectedButton = false;
-                    hardButton.IsSelectedButton = false;
-                    pickUpAmountSlider.IsSelectedSlider = false;
                     levelLengthSlider.IsSelectedSlider = false;
                     saveOptionSettingsButton.IsSelectedButton = true;
                     break;
@@ -493,13 +472,6 @@ public class MainMenu : MonoBehaviour
         if (isInGameOptionsMenu && !controllerMovementStopped)
         {
             if (gameOptionSelectedButton == 4)
-            { 
-                UIManagement.instance.pickUpAmountSlider.value += Input.GetAxisRaw("J1Horizontal");
-                UIManagement.instance.pickUpAmountSlider.value += Input.GetAxisRaw("Horizontal");
-                PlayerPrefs.SetInt("pickUpAmount", (int)UIManagement.instance.pickUpAmountSlider.value);
-            }
-
-            if (gameOptionSelectedButton == 5)
             {
                 UIManagement.instance.levelLengthSlider.value += 5 * Input.GetAxisRaw("J1Horizontal");
                 UIManagement.instance.levelLengthSlider.value += 5 * Input.GetAxisRaw("Horizontal");

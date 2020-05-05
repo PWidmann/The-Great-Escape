@@ -56,7 +56,6 @@ public class UIManagement : MonoBehaviour
         // Change visible values in game option menu
         if (MainMenu.instance.IsInGameOptions)
         {
-            pickUpAmountText.text = pickUpAmountSlider.value + " %";
             levelLengthText.text = levelLengthSlider.value.ToString();
         } 
     }

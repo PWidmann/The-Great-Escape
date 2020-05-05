@@ -73,11 +73,23 @@ public class TileMapGenerator : MonoBehaviour
 
     private void LoadMapValues()
     {
+        // Easy difficulty
+        if (AIController.instance.aiDifficulty == AiDifficulty.Easy)
+        {
+            pickupAmount = 80;   
+        }
 
-        if (PlayerPrefs.HasKey("pickUpAmount"))
-            pickupAmount = PlayerPrefs.GetInt("pickUpAmount");
-        else
-            pickupAmount = 55;
+        // Medium difficulty
+        if (AIController.instance.aiDifficulty == AiDifficulty.Normal)
+        {
+            pickupAmount = 60;
+        }
+
+        // Hard difficulty
+        if (AIController.instance.aiDifficulty == AiDifficulty.Hard)
+        {
+            pickupAmount = 35;
+        }
 
         if (noobMode)
             mapWidth = 1000;
