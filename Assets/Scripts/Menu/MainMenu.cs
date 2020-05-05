@@ -59,19 +59,15 @@ public class MainMenu : MonoBehaviour
     private void Awake()
     {
         if (instance == null)
-        {
             instance = this;
-        }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         Scene m_Scene = SceneManager.GetActiveScene();
         loadedSceneName = m_Scene.name;
     }
 
-    // Update is called once per frame
     void Update()
     {
         KeyboardInput();
@@ -86,7 +82,6 @@ public class MainMenu : MonoBehaviour
         isPauseMenuActive = false;
         
         SceneManager.LoadScene("Pre Game");
-        //UIManagement.instance.gameOptionsMenu.SetActive(true);
     }
     public void ButtonGameOptions()
     {
@@ -98,14 +93,12 @@ public class MainMenu : MonoBehaviour
         else
         {
             if (TileMapGenerator.instance.NoobMode)
-            {
                 UIManagement.instance.levelLengthSlider.value = 1000;
-            }
+
             else
                 UIManagement.instance.levelLengthSlider.value = 3000;
         }
             
-
         UIManagement.instance.mainMenu.SetActive(false);
         UIManagement.instance.gameOptionsMenu.SetActive(true);
     }
@@ -147,7 +140,6 @@ public class MainMenu : MonoBehaviour
         // Confirm selected button
         if (Input.GetKeyDown(KeyCode.Return))
             ClickOnPointingButton();
-
     }
 
     void ControllerInput()
@@ -278,8 +270,7 @@ public class MainMenu : MonoBehaviour
                 if (pauseMenuSelectedButton == 0)
                     pauseMenuSelectedButton = 2;
             }
-        }
-
+        } 
         oneTimeStickMovement = true;
     }
 
@@ -517,21 +508,18 @@ public class MainMenu : MonoBehaviour
         UIManagement.instance.difficultyText.text = "Difficulty: Easy";
         aiDifficulty = AiDifficulty.Easy;
         PlayerPrefs.SetInt("Difficulty", (int)aiDifficulty);
-        Debug.Log("Difficulty: " + aiDifficulty);
     }
     public void SetDifficultyMedium()
     {
         UIManagement.instance.difficultyText.text = "Difficulty: Medium";
         aiDifficulty = AiDifficulty.Normal;
         PlayerPrefs.SetInt("Difficulty", (int)aiDifficulty);
-        Debug.Log("Difficulty: " + aiDifficulty);
     }
     public void SetDifficultyHard()
     {
         UIManagement.instance.difficultyText.text = "Difficulty: Hard";
         aiDifficulty = AiDifficulty.Hard;
         PlayerPrefs.SetInt("Difficulty", (int)aiDifficulty);
-        Debug.Log("Difficulty: " + aiDifficulty);
     }
 }
 

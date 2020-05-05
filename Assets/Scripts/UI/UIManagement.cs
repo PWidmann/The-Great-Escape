@@ -38,9 +38,7 @@ public class UIManagement : MonoBehaviour
     void Awake()
     {
         if (instance == null)
-        {
             instance = this;
-        }
         else if (instance != this)
             Destroy(this);
     }
@@ -55,22 +53,7 @@ public class UIManagement : MonoBehaviour
     {
         // Change visible values in game option menu
         if (MainMenu.instance.IsInGameOptions)
-        {
             levelLengthText.text = levelLengthSlider.value.ToString();
-        } 
-    }
-
-    
-
-
-    public void SetOptionsMenuElementsActive()
-    {
-        
-    }
-
-    public void SetMainMenuElementsActive()
-    {
-        
     }
 
     public void PlayClickSound()
@@ -82,13 +65,11 @@ public class UIManagement : MonoBehaviour
     {
         pickUpAmount = (int)pickUpAmountSlider.value;
         PlayerPrefs.SetInt("pickUpAmount", (int)pickUpAmountSlider.value);
-        Debug.Log("Setpickupamount" + (int)pickUpAmountSlider.value);
     }
 
     public void OnValueChangeLevelLength()
     {
         levelLength = (int)levelLengthSlider.value;
         PlayerPrefs.SetInt("levelLength", (int)levelLengthSlider.value);
-        Debug.Log("SetLevellength" + (int)levelLengthSlider.value);
     }
 }

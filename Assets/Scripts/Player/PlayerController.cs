@@ -117,27 +117,18 @@ public class PlayerController : MonoBehaviour
         UpdatePlayerHealth();
 
         if (!PauseMenu.instance.isInPauseMenu && CheckInput(this, "StartButton", KeyCode.Escape))
-        {
             PauseMenu.instance.OpenPauseMenu();
-        }  
         else if (PauseMenu.instance.isInPauseMenu && CheckInput(this, "StartButton", KeyCode.Escape))
-        {
             PauseMenu.instance.ResumeGame();
-        }
-
 
         if (Input.GetKeyDown(KeyCode.V))
-        {
             AIAnimation.instance.TriggerAttackAnimation();
-        }
 
         if (PlayerInterface.instance.win && winAudioCounter == 0)
-            UpdateSoundFx();
-
-        
+            UpdateSoundFx(); 
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         if(!PlayerInterface.instance.tutorialActive && !PlayerInterface.instance.win && !PlayerInterface.instance.gameOver)
             Move();
@@ -148,10 +139,7 @@ public class PlayerController : MonoBehaviour
         float targetHealth = (playerHealth / 100);
 
         if (HealthBarImage)
-        {
-
             HealthBarImage.fillAmount = playerHealth / 100;
-        }
 
         // Healing Animation
         if (isHealing)
@@ -165,8 +153,7 @@ public class PlayerController : MonoBehaviour
                 healTimer = 0f;
                 healingAnimation.SetActive(false);
             }
-        }
-            
+        }      
     }
 
     void Move()
@@ -193,11 +180,7 @@ public class PlayerController : MonoBehaviour
                 Animator.SetFloat("moveX", 0.1f);
 
                 if ((change.x > 0 || change.y > 0) && !SoundManager.instance.soundFxSource.isPlaying)
-                {
                     SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[4]);
-                }
-
-                
 
                 RaftController.instance.change = change;
 
@@ -217,9 +200,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         else
-        {
             myRigidbody.MovePosition(transform.position + change * moveSpeed * Time.fixedDeltaTime);
-        }
         
     }
 
@@ -255,7 +236,6 @@ public class PlayerController : MonoBehaviour
                 playerNumber = 2;
                 
                 return PlayerHandler.instance.player2controls;
-
             }
         }
         else
@@ -265,9 +245,7 @@ public class PlayerController : MonoBehaviour
             
             return PlayerHandler.instance.player1controls;
             
-        }
-
-        
+        }      
     }
 
     void InputAxisHandling()
@@ -276,27 +254,16 @@ public class PlayerController : MonoBehaviour
         {
             // Keyboard X Axis
             if (Input.GetAxisRaw("Horizontal") != 0)
-            {
                 changeToNormalize.x = Input.GetAxisRaw("Horizontal");
-
-            }
             else
-            {
                 changeToNormalize.x = 0;
-
-            }
 
             // Keyboard Y Axis
             if (Input.GetAxisRaw("Vertical") != 0)
-            {
                 changeToNormalize.y = Input.GetAxisRaw("Vertical");
 
-            }
             else
-            {
                 changeToNormalize.y = 0;
-
-            }
 
             changeToNormalize.Normalize();
 
@@ -305,29 +272,20 @@ public class PlayerController : MonoBehaviour
                 change.x = changeToNormalize.x;
                 change.y = changeToNormalize.y;
             }
-            
         }
         else
         {
             // Gamepad X Axis
             if (Input.GetAxisRaw(PlayerControls + "Horizontal") != 0)
-            {
                 changeToNormalize.x = Input.GetAxisRaw(PlayerControls + "Horizontal");
-            }
             else
-            {
                 changeToNormalize.x = 0;
-            }
 
             // Gamepad Y Axis
             if (Input.GetAxisRaw(PlayerControls + "Vertical") != 0)
-            {
                 changeToNormalize.y = Input.GetAxisRaw(PlayerControls + "Vertical");
-            }
             else
-            {
                 changeToNormalize.y = 0;
-            }
 
             changeToNormalize.Normalize();
             
@@ -339,9 +297,7 @@ public class PlayerController : MonoBehaviour
         }
 
         if (isOnRaft || RaftIsPulled)
-        {
             MakePlayerUnableToFallOfRaft();
-        }
     }
 
     void MakePlayerUnableToFallOfRaft()
@@ -418,37 +374,27 @@ public class PlayerController : MonoBehaviour
 
         if (isSteeringRaft && distance >= 1f)
         {
-
             SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[3]);
             isSteeringRaft = false;
             RaftController.instance.raftIsInUse = false;
             RaftController.instance.raftUser = null;
-            Debug.Log("Player " + PlayerNumber + " stopped steering raft");
         }
-        
     }
-
-    
 
     //For movement handling on raft
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Raft")
-        {
             isOnRaft = true;
-        }
 
         if (other.gameObject.tag.Equals("RaftExit") && isOnRaft && !hasExitedRaft && 
             PlayerInterface.instance.RaftDistanceToEnd <= 21f)
         {
-            Debug.Log("I try to exit.");
             RaftController.instance.PlayerCounter--;
             if (!hasTreasureTaken)
             {
-                //PlayerInterface.instance.raftPlayerCollider.enabled = true;
                 MakePlayerUnableToFallOfRaft();
                 PlayerInterface.instance.treasureWarningText.gameObject.SetActive(true);
-                Debug.Log("You have to take the treasure!");
             }
             else if (hasTreasureTaken)
             {
@@ -469,16 +415,11 @@ public class PlayerController : MonoBehaviour
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.tag == "Raft")
-        {
             isOnRaft = false;
-        }
 
         if (other.gameObject.tag.Equals("RaftExit") && isOnRaft &&
             PlayerInterface.instance.RaftDistanceToEnd <= 21f)
-        {
             PlayerInterface.instance.treasureWarningText.gameObject.SetActive(false);
-
-        }
     }
 
     void OnOverLappingCollidersEnter2D()
@@ -504,9 +445,7 @@ public class PlayerController : MonoBehaviour
 
         // Shield
         if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Shield"))
-        {
             shield.Interact(this);
-        }
 
         // Spear
         if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Hook"))
@@ -520,9 +459,7 @@ public class PlayerController : MonoBehaviour
 
         // Treasure
         if (overLapBox.OverLappedCollider.gameObject.tag.Equals("Treasure"))
-        {
             treasure.Interact(this);
-        }
     }
 
 
@@ -532,7 +469,6 @@ public class PlayerController : MonoBehaviour
            (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Medkit") ||
             overLapBox.OverLappedCollider == null))
         {
-            //overLapBox.PreviousOverlappedColliders = null;
             hasExited = true;
             playerInterface.ResetInfoTexts(playerInterface.medKitInfoText, "Interact to heal");
         }
@@ -541,7 +477,6 @@ public class PlayerController : MonoBehaviour
            (overLapBox.PreviousOverlappedColliders.gameObject.tag.Equals("Hole") ||
             overLapBox.OverLappedCollider == null))
         {
-            //overLapBox.PreviousOverlappedColliders = null;
             hasExited = true;
             playerInterface.ResetInfoTexts(playerInterface.repairInfoText, "Interact to repair");
         }
@@ -554,7 +489,6 @@ public class PlayerController : MonoBehaviour
             playerInterface.ResetInfoTexts(playerInterface.destroyHookInfoText, "Attack!");
         }
     }
-
 
     void SwordAttack()
     {
@@ -622,16 +556,16 @@ public class PlayerController : MonoBehaviour
             return Input.GetButtonDown(playerControls + button);
         else
             return Input.GetKeyDown(key);
-
-
     }
 
     bool CheckShieldInput(string button, KeyCode key = 0)
     {
         if (!playerControls.Equals("Keyboard") && canMove)
             return Input.GetButtonDown(playerControls + button);
+
         else if (!playerControls.Equals("Keyboard") && !canMove)
             return Input.GetButtonUp(playerControls + button);
+
         else if (playerControls.Equals("Keyboard") && canMove)
             return Input.GetKeyDown(key);
         else

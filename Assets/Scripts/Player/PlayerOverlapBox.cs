@@ -18,14 +18,12 @@ public class PlayerOverlapBox : MonoBehaviour
     public Collider2D PreviousOverlappedColliders { get => previousOverlappedColliders;
         set => previousOverlappedColliders = value; }
 
-    // Start is called before the first frame update
     void Start()
     {
         boxSize = playerNonTriggerCollider.bounds.size;
         point = transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
         MakeOverlapBox();
@@ -35,11 +33,8 @@ public class PlayerOverlapBox : MonoBehaviour
     {
         point = transform.position;
         overLappedCollider = Physics2D.OverlapBox(point, new Vector2(boxSize.x * 2, (boxSize.y * 2) + 0.5f), angle, layerMask);
+
         if (overLappedCollider != null && overLappedCollider != previousOverlappedColliders)
-        {
             previousOverlappedColliders = overLappedCollider;
-            Debug.Log("Overlapped with: " + overLappedCollider.name + " " + "Previous: " + 
-                previousOverlappedColliders.name);
-        }
     }
 }

@@ -28,7 +28,7 @@ public class PreGame : MonoBehaviour
     bool confirmPlayers = false;
     int sfxPlayCount = 0;
 
-    private void Start()
+    void Start()
     {
         player1panel.SetActive(false);
         player2panel.SetActive(false);
@@ -36,7 +36,7 @@ public class PreGame : MonoBehaviour
         player4panel.SetActive(false);
 
     }
-    // Update is called once per frame
+ 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("J1ButtonB") || Input.GetButtonDown("J2ButtonB") || Input.GetButtonDown("J3ButtonB") || Input.GetButtonDown("J4ButtonB"))
@@ -58,9 +58,7 @@ public class PreGame : MonoBehaviour
             player1panel.SetActive(true);
         }
         else
-        {
             player1panel.SetActive(false);
-        }
 
         // Player 2 Panel
         if (PlayerHandler.instance.player2active)
@@ -69,9 +67,7 @@ public class PreGame : MonoBehaviour
             player2panel.SetActive(true);
         }
         else
-        {
             player2panel.SetActive(false);
-        }
 
         // Player 3 Panel
         if (PlayerHandler.instance.player3active)
@@ -80,9 +76,7 @@ public class PreGame : MonoBehaviour
             player3panel.SetActive(true);
         }
         else
-        {
             player3panel.SetActive(false);
-        }
 
         // Player 4 Panel
         if (PlayerHandler.instance.player4active)
@@ -91,9 +85,7 @@ public class PreGame : MonoBehaviour
             player4panel.SetActive(true);
         }
         else
-        {
             player4panel.SetActive(false);
-        }
     }
 
     void ConfirmPlayers()
@@ -111,9 +103,7 @@ public class PreGame : MonoBehaviour
             confirmText.SetActive(true);
         }
         else
-        {
             confirmText.SetActive(false);
-        }
         
         // Keyboard confirmation
         if (Input.GetKeyDown(KeyCode.Return))
@@ -131,9 +121,7 @@ public class PreGame : MonoBehaviour
             {
                 // Check if Panel for J1 is active
                 if (PlayerHandler.instance.player1controls == "Keyboard" || PlayerHandler.instance.player2controls == "Keyboard" || PlayerHandler.instance.player3controls == "Keyboard" || PlayerHandler.instance.player4controls == "Keyboard")
-                {
                     confirmPlayers = true;
-                }
             }
         }
 
@@ -153,9 +141,7 @@ public class PreGame : MonoBehaviour
             {
                 // Check if Panel for J1 is active
                 if (PlayerHandler.instance.player1controls == "J1" || PlayerHandler.instance.player2controls == "J1" || PlayerHandler.instance.player3controls == "J1" || PlayerHandler.instance.player4controls == "J1")
-                {
                     confirmPlayers = true;
-                } 
             }
         }
 
@@ -163,9 +149,7 @@ public class PreGame : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("J1ButtonB"))
         {
             if (confirmPlayers)
-            {
                 confirmPlayers = false;
-            }
         }
     }
 
@@ -192,13 +176,9 @@ public class PreGame : MonoBehaviour
     Sprite AssignControlImage(string controls)
     {
         if (controls == "Keyboard")
-        {
             return keyboardImage;
-        }
         else
-        {
             return controllerImage;
-        }
     }
 
     public void ButtonStart()

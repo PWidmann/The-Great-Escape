@@ -21,7 +21,6 @@ public class MusicInfoDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("ActiveScene: " + SceneManager.GetActiveScene().name);
         if (!SoundManager.instance.backGroundMusicSource.isPlaying)
             UpdateMusicPanel();
         if (SceneManager.GetActiveScene().name.Equals("Pre Game"))
@@ -32,8 +31,6 @@ public class MusicInfoDisplay : MonoBehaviour
 
     void UpdateMusicPanel()
     {
-        Debug.Log("Toggle Enabled? " + randomMusicPlayToogle.isOn);
-        //Debug.Log("Counter: " + counter);
         if (counter == musicPlaylist.Count && !randomMusicPlayToogle.isOn)
             counter = 0;
 
@@ -55,7 +52,6 @@ public class MusicInfoDisplay : MonoBehaviour
 
         StartCoroutine(EnableAudioPanel());
         StartCoroutine(DisableAudioPanel());
-
     }
 
     IEnumerator EnableAudioPanel()

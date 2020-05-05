@@ -110,7 +110,7 @@ public class SoundManager : MonoBehaviour
         soundFxSource.Play();
     }
 
-    // Methods when you need to play a sound effect. Sometimes there overlap so you can use a different audiosource s
+    // Methods when you need to play a sound effect. Sometimes they overlap so you can use a different audiosource 
     // aswell
     public void PlaySoundFx(AudioClip audioClip)
     {

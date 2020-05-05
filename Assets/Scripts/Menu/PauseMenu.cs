@@ -14,13 +14,10 @@ public class PauseMenu : MonoBehaviour
 
     public bool isInPauseMenu = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         if (instance == null)
-        {
             instance = this;
-        }
 
         MainMenu.instance.GetSceneName();
     }
@@ -29,13 +26,9 @@ public class PauseMenu : MonoBehaviour
     void Update()
     {
         if (isInPauseMenu)
-        {
             pauseMenu.SetActive(true);
-        }
         else
-        {
             pauseMenu.SetActive(false);
-        }
     }
 
     public void ResumeGame()
@@ -60,6 +53,4 @@ public class PauseMenu : MonoBehaviour
         MainMenu.instance.IsInPauseMenu = false;
         MainMenu.instance.loadedSceneName = "Main Menu";
     }
-
-    
 }

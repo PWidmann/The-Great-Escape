@@ -52,7 +52,7 @@ public class TileMapGenerator : MonoBehaviour
 
     public bool NoobMode { get => noobMode; set => noobMode = value; }
 
-    private void Awake()
+    void Awake()
     {
         if (instance == null)
         {
@@ -60,36 +60,30 @@ public class TileMapGenerator : MonoBehaviour
         }
     }
 
-    private void Start()
+    void Start()
     {
         LoadMapValues();
         GenerateTileMap();
     }
 
-    private void Update()
+    void Update()
     {
         LoadNextTiles();
     }
 
-    private void LoadMapValues()
+    void LoadMapValues()
     {
         // Easy difficulty
         if (AIController.instance.aiDifficulty == AiDifficulty.Easy)
-        {
             pickupAmount = 80;   
-        }
 
         // Medium difficulty
         if (AIController.instance.aiDifficulty == AiDifficulty.Normal)
-        {
             pickupAmount = 60;
-        }
 
         // Hard difficulty
         if (AIController.instance.aiDifficulty == AiDifficulty.Hard)
-        {
             pickupAmount = 35;
-        }
 
         if (noobMode)
             mapWidth = 1000;
@@ -98,9 +92,7 @@ public class TileMapGenerator : MonoBehaviour
             if (PlayerPrefs.HasKey("levelLength"))
                 mapWidth = PlayerPrefs.GetInt("levelLength");
             else
-            {
                 mapWidth = 3000;
-            }
         }   
     }
 
@@ -114,8 +106,6 @@ public class TileMapGenerator : MonoBehaviour
 
         GenerateMapArray();
         
-
-
         for (int x = tilesDraw; x < (tilesDraw + viewDistance); x++)
         {
             for (int y = 0; y < mapHeight; y++)
@@ -201,9 +191,7 @@ public class TileMapGenerator : MonoBehaviour
             }
         }
 
-
         // Draw river
-
         Vector2Int riverStart = new Vector2Int(10, borderHeight + 10);
 
         // Place Players
@@ -234,15 +222,9 @@ public class TileMapGenerator : MonoBehaviour
             }
         
             if (x % 7 == 0)
-            {
                 riverStart.y += riverHeightChange;
-        
-        
-            }
             if (x % 35 == 0 && x != 0)
-            {
                 riverHeightChange *= -1;
-            }
         }
     }
 
@@ -277,8 +259,6 @@ public class TileMapGenerator : MonoBehaviour
                             rotationChange = 270f;
                             break;
                     }
-
-                    
 
                     leafObject.Rotate(Vector3.forward * rotationChange);
                     stickObject.Rotate(Vector3.forward * rotationChange);
@@ -330,7 +310,6 @@ public class TileMapGenerator : MonoBehaviour
                     int rnd = Random.Range(0, 100);
                     int pickupItem = Random.Range(0, 4);
 
-
                     //Calc plant number
                     if (rnd > 70) 
                     {
@@ -349,7 +328,6 @@ public class TileMapGenerator : MonoBehaviour
                                 Instantiate(plants[3], new Vector3(x, y, -3f), plants[1].transform.rotation).transform.SetParent(instanceGrouping);
                                 break;
                         }
-
                     }
                 }
             }

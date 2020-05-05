@@ -43,6 +43,7 @@ public class AttackScript : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    // For instantiation of Stone and Spear objects.
     public void PrepareAttack()
     {
         isStoneThrower = IsAttackerStoneThrower();
@@ -158,9 +159,9 @@ public class AttackScript : MonoBehaviour
             weapon.GetComponent<Rigidbody2D>().AddForce(direction * hitAccuracy * AIController.instance.spearThrowSpeed);
         hasNoWeaponInHand = true;
         CompareWeaponPositionsToRaft(weapon);
-
     }
 
+    // Needed for the Stone to not trigger the holes at the buttom/top of the raft so it can hit the raft in the middle.
     void IgnoreStoneCollidingWithRaftTemporarly(GameObject weapon)
     {
         if (weapon.tag.Equals("Stone") && Vector2.Distance(weapon.transform.position, target) < 1f)

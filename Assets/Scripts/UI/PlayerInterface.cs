@@ -65,9 +65,7 @@ public class PlayerInterface : MonoBehaviour
     void Start()
     {
         if (instance == null)
-        {
             instance = this;
-        }
 
         if (startWithTutorial)
             tutorialActive = true;
@@ -146,9 +144,7 @@ public class PlayerInterface : MonoBehaviour
         CheckRaftPositionAndSetCollision();
 
         if (gameOver)
-        {
             endScreenPanel.SetActive(true);
-        }
     }
 
     void CheckPlayersForEndCheckPoint()
@@ -180,9 +176,8 @@ public class PlayerInterface : MonoBehaviour
         raftDistanceToEnd = Vector2.Distance(RaftPosition.transform.position, endFlag.transform.position);
 
         if (raftDistanceToEnd <= 21f && PlayerController.hasTreasureTaken)
-        {
             raftPlayerCollider.enabled = false;
-        }
+
         else if (raftDistanceToEnd <= 21f && !PlayerController.hasTreasureTaken)
             treasureObject.layer = 15;
     }

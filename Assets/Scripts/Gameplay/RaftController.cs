@@ -84,9 +84,7 @@ public class RaftController : MonoBehaviour
     void Update()
     {
         if (!raftIsInUse)
-        {
             change = Vector2.zero;
-        }
 
         trackVelocity = (rb.position - lastPos) * 50;
         lastPos = rb.position;
@@ -121,23 +119,21 @@ public class RaftController : MonoBehaviour
     void SteeringInteraction()
     {
         // Show interaction text when player is near rudder
-
         float p1distance = 10f;
         float p2distance = 10f;
         float p3distance = 10f;
         float p4distance = 10f;
 
         if (player1transform)
-            p1distance = Vector2.Distance(player1transform.position, RaftController.instance.rudder.transform.position);
+            p1distance = Vector2.Distance(player1transform.position, rudder.transform.position);
         if (player2transform)
-            p2distance = Vector2.Distance(player2transform.position, RaftController.instance.rudder.transform.position);
+            p2distance = Vector2.Distance(player2transform.position, rudder.transform.position);
         if (player3transform)
-            p3distance = Vector2.Distance(player3transform.position, RaftController.instance.rudder.transform.position);
+            p3distance = Vector2.Distance(player3transform.position, rudder.transform.position);
         if (player4transform)
-            p4distance = Vector2.Distance(player4transform.position, RaftController.instance.rudder.transform.position);
+            p4distance = Vector2.Distance(player4transform.position, rudder.transform.position);
 
-
-        if (!RaftController.instance.raftIsInUse)
+        if (!raftIsInUse)
         {
             if (p1distance < 1f || p2distance < 1f || p3distance < 1f || p4distance < 1f)
             {
@@ -150,14 +146,10 @@ public class RaftController : MonoBehaviour
                 rudderInteractText.SetActive(true);
             }
             else
-            {
                 rudderInteractText.SetActive(false);
-            }
         }
         else
-        {
             rudderInteractText.SetActive(false);
-        }
     }
 
     void PullRaftToShore()
@@ -174,46 +166,38 @@ public class RaftController : MonoBehaviour
     {
         // Change rudder sprite depending on movement
         if (change.y == 0f)
-        {
             rudderSprite.sprite = rudderSpriteArray[0];
-        }
 
         if (change.y > 0f)
-        {
             rudderSprite.sprite = rudderSpriteArray[2];
-        }
 
         if (change.y < 0f)
-        {
             rudderSprite.sprite = rudderSpriteArray[1];
-        }
-
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag.Equals("LandTile") && !AIController.RaftHooked)
         {
             // LandTile hit sound
             SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[16], raftAudio);
             IscollidingWithWall = true;
-            //Debug.Log("Hitting wall!");
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    void OnCollisionExit2D(Collision2D collision)
     {
         iscollidingWithWall = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag.Equals("Hook"))
         {
             SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[8], raftAudio);
             AIController.RaftHooked = true;
-            Debug.Log("Hooked!");
         }
+
         if (collision.gameObject.tag.Equals("Player") && playerCounter <= AttackScript.players.Count && !allPlayersOnRaft)
         {
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
@@ -223,7 +207,6 @@ public class RaftController : MonoBehaviour
                 playerCounter++;
                 player.IsColliding = true;
             }
-            Debug.Log("RaftController playerCounter " + playerCounter);
             if (playerCounter == AttackScript.players.Count)
                 allPlayersOnRaft = true;
         }

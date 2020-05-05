@@ -51,6 +51,5 @@ public class PlayerTracker : MonoBehaviour
         isColliding = true;
         playerController.DoDamage();
         AttackScript.instance.DisableWeapon(gameObject);
-        Debug.Log("Collsion!");
     }
 }

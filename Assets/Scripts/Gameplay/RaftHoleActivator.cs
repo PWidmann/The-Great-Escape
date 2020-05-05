@@ -11,7 +11,6 @@ public class RaftHoleActivator : MonoBehaviour
     public static bool IsHit { get => isHit; set => isHit = value; }
     public static int HitCounter { get => hitCounter; set => hitCounter = value; }
 
-    // Start is called before the first frame update
     void Start()
     {
         holeSprite = GetComponent<SpriteRenderer>();
@@ -19,7 +18,6 @@ public class RaftHoleActivator : MonoBehaviour
 
     private void Update()
     {
-        // test
         if (holeSprite.enabled)
             spriteEnabled = true;
         else
@@ -31,7 +29,7 @@ public class RaftHoleActivator : MonoBehaviour
             gameObject.layer = 15;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag.Equals("Stone"))
         {

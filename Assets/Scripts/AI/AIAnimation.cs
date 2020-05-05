@@ -13,7 +13,6 @@ public class AIAnimation : MonoBehaviour
 
     float checkTimer = 0f;
 
-
     void Start()
     {
         if (instance == null)
@@ -61,7 +60,6 @@ public class AIAnimation : MonoBehaviour
 
     public void TriggerAttackAnimation()
     {
-        
         animator.SetTrigger("isAttacking");
     }
 }

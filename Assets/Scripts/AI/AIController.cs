@@ -69,11 +69,8 @@ public class AIController : MonoBehaviour
             UseNoobModeSettings();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
-
         if (!isMakingAction && !isDebugging && !isWaitingForAi)
         {
             //hookThrowers[Random.Range(0, hookThrowers.Count)].MakeAction();
@@ -160,17 +157,11 @@ public class AIController : MonoBehaviour
         hitAccuracy = 1f;
     }
 
-    public void StartAttackWithDelay()
-    {
-        StartCoroutine(Attack(delayTimer));
-    }
-
     IEnumerator Attack(float delayTimeInSeconds)
     {
         yield return new WaitForSecondsRealtime(delayTimeInSeconds);
         if (distanceToRaft >= 40)
             movementSpeed = 20;
-        //Debug.Log("movementSpeed: " + movementSpeed + "" + "Distance: " + distanceToRaft);
         StartCoroutine(AdjustAiSpeed());
         isWaitingForAi = false;
     }

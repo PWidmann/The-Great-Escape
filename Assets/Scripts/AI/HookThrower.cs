@@ -51,7 +51,6 @@ public class HookThrower : MonoBehaviour
         if (hookInstantiated && (PlayerInterface.instance.gameOver || PlayerInterface.instance.win))
         {
             hook.SetActive(false);
-            //Destroy(gameObject);
             return;
         }
 
@@ -72,12 +71,10 @@ public class HookThrower : MonoBehaviour
             MakeHookAsChildGameObject();
 
         HookRope();
-
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-
         if (hookInstantiated && !AIController.RaftHooked && hook != null)
             ThrowHook(hookThrowerAccuaracy, AIController.instance.throwSpeed);
     }
@@ -135,11 +132,8 @@ public class HookThrower : MonoBehaviour
     }
 
     public void ThrowHook(float hitAccuracy, float throwSpeed)
-    {
-        
+    {  
         LockTarget();
-
-        
 
         if (!hasNoHookInHand)
             SoundManager.instance.PlaySoundFx(SoundManager.instance.soundFx[5], hookThrowerSfx);
@@ -149,8 +143,6 @@ public class HookThrower : MonoBehaviour
         hook.transform.position = Vector3.MoveTowards(hook.transform.position,
             new Vector2(target.x * hitAccuracy, target.y), Time.deltaTime * throwSpeed);
         hasNoHookInHand = true;
-
-        
     }
 
     void MakeHookAsChildGameObject()

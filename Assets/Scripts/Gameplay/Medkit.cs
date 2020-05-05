@@ -11,21 +11,16 @@ public class Medkit : MonoBehaviour, Iinteractable
     {
         // Check for amount of leafes
         if (playerController.CheckInput(playerController, "ButtonA", KeyCode.E) && playerInterface.leafCount < 2)
-        {
             playerInterface.medKitInfoText.text = "Not enough leafes.";
-        }
 
         // Check for Playerhealth 
         else if (playerController.CheckInput(playerController, "ButtonA", KeyCode.E) 
             && playerController.playerHealth == 100)
-        {
             playerInterface.medKitInfoText.text = "You already have max health.";
-        }
+
         else if (playerController.CheckInput(playerController, "ButtonA", KeyCode.E) 
             && playerController.playerHealth < 100)
-        {
             Heal(playerController);
-        }
     }
 
     void Heal(PlayerController playerController)
@@ -41,6 +36,5 @@ public class Medkit : MonoBehaviour, Iinteractable
         playerInterface.leafCount -= 2;
         if (playerInterface.leafCount < 0)
             playerInterface.leafCount = 0;
-
     }
 }

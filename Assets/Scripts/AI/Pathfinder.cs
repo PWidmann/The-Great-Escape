@@ -23,10 +23,6 @@ public class Pathfinder : MonoBehaviour
     {
         raftTransform = AIController.instance.raftTransform;
     }
-    private void Update()
-    {
-
-    }
 
     public void Move()
     {

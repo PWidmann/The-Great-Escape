@@ -67,7 +67,6 @@ public class Endscreen : MonoBehaviour
                 PlayerController.instance.GameOver = false;
                 SceneManager.LoadScene("Main Menu");
             }
-        }
-        
+        }  
     }
 }

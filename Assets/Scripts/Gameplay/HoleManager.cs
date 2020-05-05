@@ -10,9 +10,6 @@ public class HoleManager : MonoBehaviour, Iinteractable
     static HoleManager instance = null;
     public List<GameObject> holes;
 
-    //public AttackScript attackScriptHookThrowerReference;
-    //public AttackScript attackScriptStoneThrowerReference;
-
     public static HoleManager Instance { get => instance; }
 
     private void Awake()
@@ -28,13 +25,10 @@ public class HoleManager : MonoBehaviour, Iinteractable
         // Check sticks amount
         if ((Input.GetKeyDown(KeyCode.E) || playerController.CheckInput(playerController, "ButtonA"))
                 && playerInterface.stickCount < 1)
-        {
             playerInterface.repairInfoText.text = "Not enough sticks.";
-        }
+
         else if (Input.GetKeyDown(KeyCode.E) || playerController.CheckInput(playerController, "ButtonA"))
-        {
             RepairHole(playerController);
-        }
     }
 
     void RepairHole(PlayerController playerController)

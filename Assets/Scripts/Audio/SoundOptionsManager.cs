@@ -20,8 +20,7 @@ public class SoundOptionsManager : MonoBehaviour
             SoundManager.instance.GetDecibelPercentage("MusicVolume").ToString() + "%";
         
         UIManagement.instance.sfxVolSliderTextCount.text =
-            SoundManager.instance.GetDecibelPercentage("SFXVolume").ToString() + "%";
-        
+            SoundManager.instance.GetDecibelPercentage("SFXVolume").ToString() + "%";  
     }
 
     public void ChangeMasterVolume()
@@ -54,7 +53,6 @@ public class SoundOptionsManager : MonoBehaviour
         UIManagement.instance.sfxVolSliderTextCount.text = 
             SoundManager.instance.GetDecibelPercentage("SFXVolume").ToString() + "%";
     }   
-
 
     public void SaveRandomPlayToggle()
     {
