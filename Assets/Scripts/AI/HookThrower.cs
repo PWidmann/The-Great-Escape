@@ -59,11 +59,15 @@ public class HookThrower : MonoBehaviour
 
         if (hookInstantiated && hook != null)
         {
-            bool isAboveRaft = hook.transform.position.y > AIController.instance.raftTransform.transform.position.y;
-            if (isAboveRaft && hook.transform.position.y <= target.y && !AIController.RaftHooked)
-                DestroyHook();
-            else if (!isAboveRaft && hook.transform.position.y >= target.y && !AIController.RaftHooked)
-                DestroyHook();
+            //bool isAboveRaft = hook.transform.position.y > AIController.instance.raftTransform.transform.position.y;
+            //if (isAboveRaft && hook.transform.position.y <= target.y && !AIController.RaftHooked)
+            //    DestroyHook();
+            //else if (!isAboveRaft && hook.transform.position.y >= target.y && !AIController.RaftHooked)
+            //    DestroyHook();
+            if (!AIController.RaftHooked)
+            {
+                Invoke("DestroyHook", 5f);
+            }
 
         }
 
