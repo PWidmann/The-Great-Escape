@@ -6710,8 +6710,6 @@ MonoBehaviour:
   - {fileID: 143981665}
   - {fileID: 1868051095}
   - {fileID: 1662901174}
-  attackScriptHookThrowerReference: {fileID: 0}
-  attackScriptStoneThrowerReference: {fileID: 0}
 --- !u!82 &1008975799
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11106,7 +11104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 801d5f5f3b98c3f4ea2ed059def84e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startWithTutorial: 0
+  startWithTutorial: 1
   skipGameToFinish: 0
   tutorialPanel: {fileID: 1018889221}
   tutorialActive: 0
@@ -11119,8 +11117,8 @@ MonoBehaviour:
   player2health: {fileID: 1969949623}
   player3health: {fileID: 1219943817}
   player4health: {fileID: 111666960}
-  leafCount: 100
-  stickCount: 2
+  leafCount: 0
+  stickCount: 0
   gameOver: 0
   win: 0
   endScreenPanel: {fileID: 3224014494752081291}
